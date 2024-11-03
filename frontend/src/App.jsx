@@ -18,7 +18,7 @@ function App() {
         <Box bg="gray.200" width="100%" paddingTop={65}>
         <HStack justify="center" spacing={8} height={10} display={isMediumScreen ? "none" : "flex"}>
           <Link href="#home">Home</Link>
-          <Link href="#our-story">Our Story</Link>
+          <Link href="/create">Our Story</Link>
           <Link href="#our-process">Our Process</Link>
           <Link href="#contact-us">Contact Us</Link>
           <Link href="#halal-certifications">Halal Certifications</Link>
