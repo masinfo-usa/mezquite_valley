@@ -200,7 +200,7 @@ function TestPage() {
         />
         <VStack align="start" spacing={4} mt={10} p={4}>
           <Link href="#home" onClick={onNavClose}>Home</Link>
-          <Link href="#our-story" onClick={onNavClose}>Our Story</Link>
+          <Link href="/create" onClick={onNavClose}>Our Story</Link>
           <Link href="#our-process" onClick={onNavClose}>Our Process</Link>
           <Link href="#contact-us" onClick={onNavClose}>Contact Us</Link>
           <Link href="#halal-certifications" onClick={onNavClose}>Halal Certifications</Link>
