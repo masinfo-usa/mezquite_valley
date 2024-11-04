@@ -170,7 +170,7 @@ function TestPage() {
         />
         <VStack spacing={4} p={4}>
           <Text fontSize="2xl" fontWeight="bold">Your Cart</Text>
-          <Text>Cart Items go here</Text>
+          <Text>Cart Itemz go here</Text>
           {/* Add cart items here */}
         </VStack>
       </MotionBox>
