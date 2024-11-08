@@ -8,7 +8,7 @@ const ProductCard = ({product}) => {
     const textColor = useColorModeValue("gray.600", "gray.200");
     const bg = useColorModeValue("white", "gray.800");
 
-    const {deleteProduct, updateProduct} = useProductStore()
+    const {updateProduct, deleteProduct} = useProductStore()
     const toast = useToast()
     const { isOpen, onOpen, onClose } = useDisclosure()
 
@@ -58,11 +58,13 @@ const ProductCard = ({product}) => {
 
     return (
     <Box
-    shadow='lg'
+    //shadow='lg'
     rounded='lg'
+    borderWidth={1}
+    borderColor={"black"}
     overflow='hidden'
-    transition='all 0.3s'
-    _hover={{transform: "translateY(-5px)", shadow: 'xl'}}
+    transition='all 0.1s'
+    _hover={{transform: "translateY(-5px)"}}
     bg={bg}
     >
         <Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />

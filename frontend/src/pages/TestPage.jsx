@@ -48,7 +48,7 @@ function TestPage() {
       <Box position="fixed" top="0" width="100%" bg="gray.100" zIndex="1000" shadow="sm">
         <Flex align="center" px={4} py={2} justify="space-between">
           {/* Logo and Hamburger Icon Wrapper */}
-          <Flex align="center" minW="180px">
+          <Flex align="center" minW={isSearchFocused && isMediumScreen ? "0" : "180px"}>
             {isMediumScreen && !isSearchFocused && (
               <IconButton
                 icon={<HamburgerIcon />}
@@ -57,15 +57,18 @@ function TestPage() {
                 mr={2}
               />
             )}
+            { !isSearchFocused && (
             <Link href="/" display="flex" alignItems="center" mr={2}>
               <Image
                 src="https://www.pngkey.com/png/detail/405-4059414_green-leaf-leaf-logo-transparent-background.png"
-                boxSize="40px"
+                boxSize={isSearchFocused && isMediumScreen ? "0" : "40px"}
                 borderRadius="full"
                 alt="Logo"
               />
             </Link>
-            {!isSearchFocused && (
+            )}
+            
+            { !isSearchFocused && (
               <Text fontSize="lg" fontWeight="bold" as="a" href="/" cursor="pointer">
                 Your Brand
               </Text>
@@ -74,8 +77,8 @@ function TestPage() {
 
           {/* Search Bar */}
           <InputGroup
-            maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "70%" : "50%"}
-            mx={4}
+            maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "100%" : "100%"}
+            mx={2}
             position="relative"
           >
             <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.400" />} />
@@ -110,7 +113,7 @@ function TestPage() {
                   {productSuggestions
                     .filter((product) => product.toLowerCase().includes(searchText.toLowerCase()))
                     .map((suggestion) => (
-                      <ListItem key={suggestion} p={2} _hover={{ bg: "gray.100" }}>
+                      <ListItem key={suggestion} p={2} _hover={{ bg: "gray.100" }} onClick={() => { setIsSearchFocused(false); setSearchText(''); }}>
                         {suggestion}
                       </ListItem>
                     ))}
@@ -120,7 +123,7 @@ function TestPage() {
           </InputGroup>
 
           {/* Log In Button and Cart */}
-          <Flex align="center" minW="140px" justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
+          <Flex align="center" justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
             {!isMediumScreen && (
               <Button as="a" href="/login" colorScheme="blue" mr={2}>
                 Log In
