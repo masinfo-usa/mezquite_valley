@@ -14,27 +14,16 @@ const HomePage = () => {
   console.log('products', products)
 
   return (
-    <Container maxW='container.xl' py={12}>
+    <Container maxW={['95%', '90%', '70%']} py={12}>
       <VStack spacing={8}>
-      <Text
-        fontSize={30}
-        fontWeight={"bold"}
-        textTransform={"uppercase"}
-        textAlign={"center"}
-        bgGradient={"linear(to-r, cyan.400, blue.500)"}
-        bgClip={"text"}
-      >
-        Current Products 🚀
-
-      </Text>
-
+      
       <SimpleGrid
         columns={{
-          base:1,
+          base:2,
           md:2, 
           lg:3,
         }}
-        spacing={10}
+        spacing={5}
         width={'full'}
       >
         {products.map((product) => (

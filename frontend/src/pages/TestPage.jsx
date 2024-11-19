@@ -46,7 +46,7 @@ function TestPage() {
     <ChakraProvider>
       {/* Fixed Top Navbar */}
       <Box position="fixed" top="0" width="100%" bg="gray.100" zIndex="1000" shadow="sm">
-        <Flex align="center" px={4} py={2} justify="space-between">
+        <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} height={"10vh"}>
           {/* Logo and Hamburger Icon Wrapper */}
           <Flex align="center" minW={isSearchFocused && isMediumScreen ? "0" : "180px"}>
             {isMediumScreen && !isSearchFocused && (
@@ -57,7 +57,7 @@ function TestPage() {
                 mr={2}
               />
             )}
-            { !isSearchFocused && (
+            { !(isMediumScreen && isSearchFocused) && (
             <Link href="/" display="flex" alignItems="center" mr={2}>
               <Image
                 src="https://www.pngkey.com/png/detail/405-4059414_green-leaf-leaf-logo-transparent-background.png"
@@ -68,8 +68,9 @@ function TestPage() {
             </Link>
             )}
             
-            { !isSearchFocused && (
-              <Text fontSize="lg" fontWeight="bold" as="a" href="/" cursor="pointer">
+            { !(isMediumScreen && isSearchFocused) && (
+              <Text fontSize="lg" fontWeight="bold" 
+              as="a" href="/" cursor="pointer">
                 Your Brand
               </Text>
             )}
@@ -77,7 +78,7 @@ function TestPage() {
 
           {/* Search Bar */}
           <InputGroup
-            maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "100%" : "100%"}
+            maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "80%" : "50%"}
             mx={2}
             position="relative"
           >
@@ -89,6 +90,7 @@ function TestPage() {
               onBlur={() => setIsSearchFocused(false)}
               onChange={(e) => setSearchText(e.target.value)}
               _focus={{ boxShadow: '0 0 0 1px #3182ce', borderColor: '#3182ce' }}
+              border={"1px"}
             />
             {isSearchFocused && isMediumScreen && (
               <Button ml={2} onClick={() => { setIsSearchFocused(false); setSearchText(''); }}>
@@ -154,11 +156,11 @@ function TestPage() {
         top="0"
         right="0"
         height="100%"
-        width="250px"
+        width={{ base: '100%', md: '50%', lg: '25%' }}
         bg="gray.200"
         boxShadow="md"
-        initial={{ x: 300 }} // Start off-screen
-        animate={isCartOpen ? { x: 0 } : { x: 300 }} // Slide in or out
+        initial={{ x: 1000 }} // Start off-screen
+        animate={isCartOpen ? { x: 0 } : { x: 1000 }} // Slide in or out
         transition={{ duration: 0.1 }} // 0.1 seconds transition
         zIndex="1000"
       >
