@@ -48,17 +48,17 @@ function TestPage() {
       <Box position="fixed" top="0" width="100%" bg="gray.100" zIndex="1000" shadow="sm">
         <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} height={"10vh"}>
           {/* Logo and Hamburger Icon Wrapper */}
-          <Flex align="center" minW={isSearchFocused && isMediumScreen ? "0" : "180px"}>
+          <Flex align="center" minW={isSearchFocused && isMediumScreen ? "0" : "30vw"}>
             {isMediumScreen && !isSearchFocused && (
               <IconButton
                 icon={<HamburgerIcon />}
                 aria-label="Open Menu"
                 onClick={onNavOpen}
-                mr={2}
+                mr={0}
               />
             )}
             { !(isMediumScreen && isSearchFocused) && (
-            <Link href="/" display="flex" alignItems="center" mr={2}>
+            <Link href="/" display="flex" alignItems="center" mr={1}>
               <Image
                 src="https://www.pngkey.com/png/detail/405-4059414_green-leaf-leaf-logo-transparent-background.png"
                 boxSize={isSearchFocused && isMediumScreen ? "0" : "40px"}

@@ -66,15 +66,16 @@ const ProductCard = ({product}) => {
     transition='all 0.1s'
     _hover={{transform: "translateY(-5px)"}}
     bg={bg}
+    aspectRatio={1 / 1.3}
     >
-        <Image src={product.image} alt={product.name} h={48} w='full' objectFit='cover' />
+        <Image src={product.image} alt={product.name} h={"55%"} w='full' objectFit='cover' />
         
-        <Box p={4}>
-            <Heading as='h3' size='md' mb={2}>
+        <Box p={2} >
+            <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0}>
                 {product.name}
-            </Heading>
+            </Text>
 
-            <Text fontWeight='bold' fontSize='xl' color={textColor} mb={4}>
+            <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} color={textColor} mb={0}>
                 ${product.price}
             </Text>
             
@@ -87,7 +88,7 @@ const ProductCard = ({product}) => {
 
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent>
+            <ModalContent  maxW={"80vw"} alignSelf={"center"}>
                 <ModalHeader>Update Product</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
