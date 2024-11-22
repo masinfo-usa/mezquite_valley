@@ -46,9 +46,9 @@ function TestPage() {
     <ChakraProvider>
       {/* Fixed Top Navbar */}
       <Box position="fixed" top="0" width="100%" bg="gray.100" zIndex="1000" shadow="sm">
-        <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} height={"10vh"}>
+        <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} minH={"65px"}>
           {/* Logo and Hamburger Icon Wrapper */}
-          <Flex align="center" minW={isSearchFocused && isMediumScreen ? "0" : "30vw"}>
+          <Flex align="center" bgColor={"transparent"} minW={isSearchFocused && isMediumScreen ? "0vw" : "40vw"}>
             {isMediumScreen && !isSearchFocused && (
               <IconButton
                 icon={<HamburgerIcon />}
@@ -61,7 +61,8 @@ function TestPage() {
             <Link href="/" display="flex" alignItems="center" mr={1}>
               <Image
                 src="https://www.pngkey.com/png/detail/405-4059414_green-leaf-leaf-logo-transparent-background.png"
-                boxSize={isSearchFocused && isMediumScreen ? "0" : "40px"}
+                boxSize={"40px"}
+                minW={"40px"}
                 borderRadius="full"
                 alt="Logo"
               />
@@ -69,7 +70,7 @@ function TestPage() {
             )}
             
             { !(isMediumScreen && isSearchFocused) && (
-              <Text fontSize="lg" fontWeight="bold" 
+              <Text fontSize="clamp(12px, 2.5vw, 20px)" fontWeight="bold" 
               as="a" href="/" cursor="pointer">
                 Your Brand
               </Text>
@@ -125,7 +126,7 @@ function TestPage() {
           </InputGroup>
 
           {/* Log In Button and Cart */}
-          <Flex align="center" justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
+          <Flex align="center" bgColor={"transparent"} justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
             {!isMediumScreen && (
               <Button as="a" href="/login" colorScheme="blue" mr={2}>
                 Log In
