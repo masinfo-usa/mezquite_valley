@@ -21,7 +21,7 @@ const HomePage = () => {
         columns={{
           base:2,
           md:2, 
-          lg:3,
+          lg:4,
         }}
         spacing={5}
         width={'full'}

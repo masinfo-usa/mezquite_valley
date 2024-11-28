@@ -62,7 +62,7 @@ const ProductCard = ({product}) => {
     rounded='lg'
     borderWidth={1}
     borderColor={"black"}
-    overflow='hidden'
+    overflow='clip'
     transition='all 0.1s'
     _hover={{transform: "translateY(-5px)"}}
     bg={bg}
@@ -71,13 +71,16 @@ const ProductCard = ({product}) => {
         <Image src={product.image} alt={product.name} h={"55%"} w='full' objectFit='cover' />
         
         <Box p={2} >
-            <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0}>
-                {product.name}
-            </Text>
-
+            <Button width={"full"} p={"5"}>Add to Cart</Button>
             <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} color={textColor} mb={0}>
                 ${product.price}
             </Text>
+
+            <Text fontWeight='normal' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0}>
+                {product.name}
+            </Text>
+
+            
             
             <HStack spacing={2}>
                 <IconButton icon={<EditIcon />} onClick={() => onOpen()} colorScheme='blue'/>
@@ -88,7 +91,7 @@ const ProductCard = ({product}) => {
 
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent  maxW={"80vw"} alignSelf={"center"}>
+            <ModalContent  maxW={"80vw"} >
                 <ModalHeader>Update Product</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
