@@ -60,7 +60,7 @@ const ProductCard = ({product}) => {
     <Box
     //shadow='lg'
     rounded='lg'
-    borderWidth={1}
+    borderWidth={0}
     borderColor={"black"}
     overflow='clip'
     transition='all 0.1s'
@@ -70,23 +70,23 @@ const ProductCard = ({product}) => {
     >
         <Image src={product.image} alt={product.name} h={"55%"} w='full' objectFit='cover' />
         
-        <Box p={2} >
-            <Button width={"full"} p={"5"}>Add to Cart</Button>
+        <Box p={0} >
             <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} color={textColor} mb={0}>
                 ${product.price}
             </Text>
 
-            <Text fontWeight='normal' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0}>
+            <Text fontWeight='normal' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0} p={2}>
                 {product.name}
             </Text>
-
+            <Button width={"full"} p={"2"} bg={"lightgreen"}>Add to Cart</Button>
             
-            
+            {
+            (false && (
             <HStack spacing={2}>
                 <IconButton icon={<EditIcon />} onClick={() => onOpen()} colorScheme='blue'/>
                 <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme='red'/>
-            </HStack>
-
+            </HStack>)
+            )}
         </Box>
 
         <Modal isOpen={isOpen} onClose={onClose}>

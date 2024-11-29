@@ -13,7 +13,7 @@ function App() {
 
   return (
     <>
-      <Box minH={"100vh"} px={0} bg={useColorModeValue("gray.100", "gray.900")}>
+      <Box minH={"100vh"} px={0} bg={useColorModeValue("white", "gray.900")}>
         <TestPage />
         <Box bg="gray.200" width="100%" paddingTop={65}>
         <HStack justify="center" spacing={8} height={10} display={isMediumScreen ? "none" : "flex"}>

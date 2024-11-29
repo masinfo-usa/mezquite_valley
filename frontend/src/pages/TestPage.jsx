@@ -45,7 +45,7 @@ function TestPage() {
   return (
     <ChakraProvider>
       {/* Fixed Top Navbar */}
-      <Box position="fixed" top="0" width="100%" bg="gray.100" zIndex="1000" shadow="sm">
+      <Box position="fixed" top="0" border={5} borderBottomColor={"black"} width="100%" bg="#f7f5f0" zIndex="1000" shadow="md">
         <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} minH={"65px"}>
           {/* Logo and Hamburger Icon Wrapper */}
           <Flex align="center" bgColor={"transparent"} minW={isSearchFocused && isMediumScreen ? "0vw" : "40vw"}>
@@ -77,8 +77,8 @@ function TestPage() {
             )}
           </Flex>
 
-          {/* Search Bar */}
-          <InputGroup
+          {/* Search Bar */
+          (false) && (<InputGroup
             maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "80%" : "50%"}
             mx={2}
             position="relative"
@@ -124,10 +124,11 @@ function TestPage() {
               </Box>
             )}
           </InputGroup>
+          )}
 
-          {/* Log In Button and Cart */}
+          {/* Log In Button and Cart !isMediumScreen */}
           <Flex align="center" bgColor={"transparent"} justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
-            {!isMediumScreen && (
+            {true && (
               <Button as="a" href="/login" colorScheme="blue" mr={2}>
                 Log In
               </Button>
