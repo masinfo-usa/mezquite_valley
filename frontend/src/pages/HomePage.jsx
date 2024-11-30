@@ -18,7 +18,7 @@ const HomePage = () => {
       <VStack spacing={8}>
       
       <SimpleGrid
-        minChildWidth="200px"
+        minChildWidth="150px"
         spacing={5}
         width={'full'}
       >

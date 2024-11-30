@@ -145,7 +145,7 @@ function FixedNavBar() {
           {/* Log In Button and Cart  */}
           <Flex align="center" bgColor={"transparent"} justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
             {!isMediumScreen && (
-              <Button as="a" href="/login" colorScheme="blue" mr={2} height={"35px"} borderRadius={"full"}>
+              <Button as="a" href="/login" colorScheme="blue" mr={2} minH={"35px"} borderRadius={"full"}>
                 Log In
               </Button>
             )}
@@ -158,6 +158,7 @@ function FixedNavBar() {
               px="10px"
               py="6px"
               cursor="pointer"
+              minH={"40px"}
               onClick={onCartOpen}
             >
               <FaShoppingCart fontSize="20px" color="white" />

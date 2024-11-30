@@ -66,14 +66,13 @@ const ProductCard = ({product}) => {
     transition='all 0.1s'
     _hover={{transform: "translateY(-1px)"}}
     align="center"
-    aspectRatio={1 / 1.3}
     display="flex" 
     flexDirection="column" 
     alignItems="stretch"
     onClick={() => onOpen()}
     >
     
-        <Box borderRadius="lg" overflow="hidden" height="55%" width={"90%"} m={3}>
+        <Box borderRadius="lg" overflow="hidden"  width={"90%"} m={3}     aspectRatio={1 / 1.12}>
             <Image src={product.image} alt={product.name} height="100%" width="100%" objectFit="cover" />
         </Box>
 
