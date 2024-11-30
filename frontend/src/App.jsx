@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom"
 import HomePage from "./pages/HomePage"
 import CreatePage from "./pages/CreatePage"
 import Navbar from "./components/Navbar"
-import TestPage from "./pages/TestPage"
+import FixedNavBar from "./pages/FixedNavBar"
 
 
 
@@ -14,7 +14,7 @@ function App() {
   return (
     <>
       <Box minH={"100vh"} px={0} bg={useColorModeValue("white", "gray.900")}>
-        <TestPage />
+        <FixedNavBar />
         <Box bg="gray.200" width="100%" paddingTop={65}>
         <HStack justify="center" spacing={8} height={10} display={isMediumScreen ? "none" : "flex"}>
           <Link href="#home">Homess</Link>
@@ -29,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/create" element={<CreatePage />} />
-          <Route path="/testpage" element={<TestPage />} />
+          <Route path="/testpage" element={<FixedNavBar />} />
         </Routes>
       </Box>
 

@@ -14,15 +14,11 @@ const HomePage = () => {
   console.log('products', products)
 
   return (
-    <Container maxW={['95%', '90%', '70%']} py={12}>
+    <Container maxW={['95%', '90%', '70%']} py={5}>
       <VStack spacing={8}>
       
       <SimpleGrid
-        columns={{
-          base:2,
-          md:2, 
-          lg:4,
-        }}
+        minChildWidth="200px"
         spacing={5}
         width={'full'}
       >

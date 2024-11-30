@@ -24,14 +24,14 @@ import { motion } from 'framer-motion';
 
 const MotionBox = motion(Box);
 
-function TestPage() {
+function FixedNavBar() {
   const { isOpen: isCartOpen, onOpen: onCartOpen, onClose: onCartClose } = useDisclosure();
   const { isOpen: isNavOpen, onOpen: onNavOpen, onClose: onNavClose } = useDisclosure();
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [searchText, setSearchText] = useState('');
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [cartItemCount, setCartItemCount] = useState(5); // Example item count
-  const placeholders = ["Try Searching Product_1", "Try Searching Product_2", "Try Searching Product_3"];
+  const placeholders = ["Search Product, Recipes, Etc...", "Search Chicken Breast", "Search Thigh Boneless"];
   const productSuggestions = ["Halal Beef", "Chicken Breast", "Lamb Full", "Beef Brisket", "Thigh Boneless","Halal Beef", "Chicken Breast", "Lamb Full", "Beef Brisket", "Thigh Boneless"];
   const isMediumScreen = useBreakpointValue({ base: true, md: false });
 
@@ -45,16 +45,19 @@ function TestPage() {
   return (
     <ChakraProvider>
       {/* Fixed Top Navbar */}
-      <Box position="fixed" top="0" border={5} borderBottomColor={"black"} width="100%" bg="#f7f5f0" zIndex="1000" shadow="md">
-        <Flex align="center" px={4} py={2} justify="space-between" bgColor={"grey.100"} minH={"65px"}>
+      <Box position="fixed" top="0" width="100%" border={"5"} bgColor={"black"} zIndex="1000" shadow="sm">
+        <Flex align="center" px={4} py={1} justify="space-between" bgColor={"#f7f5f0"} minH={"75px"} borderBottom="1px solid #dfdbce">
           {/* Logo and Hamburger Icon Wrapper */}
-          <Flex align="center" bgColor={"transparent"} minW={isSearchFocused && isMediumScreen ? "0vw" : "40vw"}>
+          <Flex align="center">
             {isMediumScreen && !isSearchFocused && (
               <IconButton
                 icon={<HamburgerIcon />}
                 aria-label="Open Menu"
                 onClick={onNavOpen}
-                mr={0}
+                mr={2}
+                w={5}
+                bgColor={"inherit"}
+                _hover={{bgColor:"#dfdbce"}}
               />
             )}
             { !(isMediumScreen && isSearchFocused) && (
@@ -78,23 +81,36 @@ function TestPage() {
           </Flex>
 
           {/* Search Bar */
-          (false) && (<InputGroup
+          (true) && (<InputGroup
             maxW={isSearchFocused && isMediumScreen ? "100%" : isMediumScreen ? "80%" : "50%"}
             mx={2}
             position="relative"
+            minH={"50px"}
+            alignItems={"center"}
           >
-            <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.400" />} />
+            <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.400"/>}  alignItems={"center"} minH={"inherit"} />
             <Input
-              placeholder={placeholders[placeholderIndex]}
+              placeholder={placeholders[0]}
+              _placeholder={{
+                color: 'gray.400',   // Change placeholder text color
+                fontSize: 'sm',      // Change placeholder text size
+                fontWeight: 'bold',  // Change placeholder text weight
+              }}
+              color={"blackAlpha.700"}
+              fontWeight= {'bold'}
               value={searchText}
               onFocus={() => setIsSearchFocused(true)}
               onBlur={() => setIsSearchFocused(false)}
               onChange={(e) => setSearchText(e.target.value)}
-              _focus={{ boxShadow: '0 0 0 1px #3182ce', borderColor: '#3182ce' }}
+              _focus={{ border:'5', borderColor: 'black' }}
               border={"1px"}
+              borderColor={""}
+              bgColor={"white"}
+              borderRadius={"full"}
+              minH={"inherit"}
             />
             {isSearchFocused && isMediumScreen && (
-              <Button ml={2} onClick={() => { setIsSearchFocused(false); setSearchText(''); }}>
+              <Button ml={2} onClick={() => { setIsSearchFocused(false); setSearchText(''); }} bgColor="#dfdbce">
                 Cancel
               </Button>
             )}
@@ -126,10 +142,10 @@ function TestPage() {
           </InputGroup>
           )}
 
-          {/* Log In Button and Cart !isMediumScreen */}
+          {/* Log In Button and Cart  */}
           <Flex align="center" bgColor={"transparent"} justify="flex-end" display={!isSearchFocused || !isMediumScreen ? "flex" : "none"}>
-            {true && (
-              <Button as="a" href="/login" colorScheme="blue" mr={2}>
+            {!isMediumScreen && (
+              <Button as="a" href="/login" colorScheme="blue" mr={2} height={"35px"} borderRadius={"full"}>
                 Log In
               </Button>
             )}
@@ -138,12 +154,13 @@ function TestPage() {
               alignItems="center"
               justifyContent="center"
               bg={cartItemCount > 0 ? "green.500" : "gray.300"}
-              borderRadius="full"
-              padding="10px"
+              borderRadius={"full"}
+              px="10px"
+              py="6px"
               cursor="pointer"
               onClick={onCartOpen}
             >
-              <FaShoppingCart fontSize="24px" color="white" />
+              <FaShoppingCart fontSize="20px" color="white" />
               <Text color="white" ml={1} fontWeight="bold">
                 {cartItemCount > 0 ? cartItemCount : ""}
               </Text>
@@ -159,7 +176,7 @@ function TestPage() {
         right="0"
         height="100%"
         width={{ base: '100%', md: '50%', lg: '25%' }}
-        bg="gray.200"
+        bg="white"
         boxShadow="md"
         initial={{ x: 1000 }} // Start off-screen
         animate={isCartOpen ? { x: 0 } : { x: 1000 }} // Slide in or out
@@ -185,11 +202,11 @@ function TestPage() {
       {/* Navbar Drawer for Small Screens with Slide Transition */}
       <MotionBox
         position="fixed"
+        bg="white" 
         top="0"
         left="0"
         height="100%"
         width="250px"
-        bg="gray.200"
         boxShadow="md"
         initial={{ x: -250 }} // Start off-screen
         animate={isNavOpen ? { x: 0 } : { x: -250 }} // Slide in or out
@@ -221,4 +238,4 @@ function TestPage() {
   );
 }
 
-export default TestPage;
+export default FixedNavBar;

@@ -58,28 +58,41 @@ const ProductCard = ({product}) => {
 
     return (
     <Box
+    key={product.id} 
     //shadow='lg'
     rounded='lg'
     borderWidth={0}
-    borderColor={"black"}
-    overflow='clip'
+    borderColor={"#dfdbce"}
     transition='all 0.1s'
-    _hover={{transform: "translateY(-5px)"}}
-    bg={bg}
+    _hover={{transform: "translateY(-1px)"}}
+    align="center"
     aspectRatio={1 / 1.3}
+    display="flex" 
+    flexDirection="column" 
+    alignItems="stretch"
+    onClick={() => onOpen()}
     >
-        <Image src={product.image} alt={product.name} h={"55%"} w='full' objectFit='cover' />
-        
-        <Box p={0} >
-            <Text fontWeight='bold' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} color={textColor} mb={0}>
+    
+        <Box borderRadius="lg" overflow="hidden" height="55%" width={"90%"} m={3}>
+            <Image src={product.image} alt={product.name} height="100%" width="100%" objectFit="cover" />
+        </Box>
+
+
+        <Box align={"center"}>
+        <Button width={"90%"} bg={"green.300"} color={"white"} fontSize={"100%"} 
+            onClick={(e) => {
+                e.stopPropagation(); // Prevent the event from bubbling up to the parent
+                console.log("Button Clicked");
+              }}>+ Add to Cart</Button>
+            <Text fontWeight='bold' align={"left"} fontSize={"120%"} color={textColor} ml={3}>
                 ${product.price}
             </Text>
 
-            <Text fontWeight='normal' fontSize={{ base: 'sm', md: 'lg', lg: 'xl' }} mb={0} p={2}>
+            <Text fontWeight='normal' align={"left"} fontSize={"100%"} ml={3}>
                 {product.name}
             </Text>
-            <Button width={"full"} p={"2"} bg={"lightgreen"}>Add to Cart</Button>
             
+
             {
             (false && (
             <HStack spacing={2}>
