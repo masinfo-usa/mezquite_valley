@@ -224,9 +224,9 @@ function FixedNavBar() {
           right={4}
         />
         <VStack align="start" spacing={4} mt={10} p={4}>
-          <Link href="#home" onClick={onNavClose}>Home</Link>
+          <Link href="/" onClick={onNavClose}>Home</Link>
           <Link href="/create" onClick={onNavClose}>Our Story</Link>
-          <Link href="#our-process" onClick={onNavClose}>Our Process</Link>
+          <Link href="/AAA_1" onClick={onNavClose}>Our Process</Link>
           <Link href="#contact-us" onClick={onNavClose}>Contact Us</Link>
           <Link href="#halal-certifications" onClick={onNavClose}>Halal Certifications</Link>
           <Link href="#faqs" onClick={onNavClose}>FAQs</Link>
@@ -237,10 +237,11 @@ function FixedNavBar() {
             },
             _active: {
               backgroundColor: "blue.700", // Custom active background color
-              outline: "none", // Remove focus rectangle on mobile active state
+              outline: "none", // Remove fo cus rectangle on mobile active state
             },
-          }}>
-            Log In
+          }}
+          rounded={'full'}>
+            Log Ins
           </Button>
         </VStack>
       </MotionBox>

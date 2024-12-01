@@ -124,7 +124,7 @@ const AAA_1 = () => {
                       width="250px"
                       p={4}
                       mr={4}
-                      onClick={() => handleCardClick(product)}
+                      // onClick={() => handleCardClick(product)}
                       cursor="pointer"
                       bg="white"
                       boxShadow="sm"
@@ -178,7 +178,7 @@ const AAA_1 = () => {
                                 handleAddToCart(index, category);
                               }}
                             >
-                              + Add To Cart
+                              + Add To Cartss
                             </Button>
                           )}
                         </Flex>
