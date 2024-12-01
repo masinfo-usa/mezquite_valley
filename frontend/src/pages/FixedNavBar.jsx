@@ -230,7 +230,16 @@ function FixedNavBar() {
           <Link href="#contact-us" onClick={onNavClose}>Contact Us</Link>
           <Link href="#halal-certifications" onClick={onNavClose}>Halal Certifications</Link>
           <Link href="#faqs" onClick={onNavClose}>FAQs</Link>
-          <Button as="a" href="/login" colorScheme="blue" mt={4} onClick={onNavClose}>
+          <Button as="a" href="/login" colorScheme="blue" mt={4} onClick={onNavClose}
+          sx={{
+            _focus: {
+              boxShadow: "none", // Remove default focus outline
+            },
+            _active: {
+              backgroundColor: "blue.700", // Custom active background color
+              outline: "none", // Remove focus rectangle on mobile active state
+            },
+          }}>
             Log In
           </Button>
         </VStack>
