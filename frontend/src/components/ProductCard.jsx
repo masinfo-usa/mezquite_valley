@@ -68,26 +68,27 @@ const ProductCard = ({product}) => {
     align="center"
     display="flex" 
     flexDirection="column" 
-    alignItems="stretch"
+    alignItems="center"
     onClick={() => onOpen()}
     >
     
-        <Box borderRadius="lg" overflow="hidden"  width={"90%"} m={3}     aspectRatio={1 / 1.12}>
+        <Box borderRadius="lg" overflow="hidden"  width={"95%"} align={'center'} margin={1} aspectRatio={1 / 1.12}>
             <Image src={product.image} alt={product.name} height="100%" width="100%" objectFit="cover" />
         </Box>
 
 
-        <Box align={"center"}>
-        <Button width={"90%"} bg={"green.300"} color={"white"} fontSize={"100%"} 
+        <Box width={"95%"} margin={1}>
+        <Button width={"100%"}  bg={"white"} color={"green.500"} height={'8'} 
+        borderWidth={1} borderColor={"green.500"} marginBottom={2}
             onClick={(e) => {
                 e.stopPropagation(); // Prevent the event from bubbling up to the parent
                 console.log("Button Clicked");
               }}>+ Add to Cart</Button>
-            <Text fontWeight='bold' align={"left"} fontSize={"120%"} color={textColor} ml={3}>
+            <Text fontWeight='bold' align={"left"} fontSize={"120%"} color={textColor}>
                 ${product.price}
             </Text>
 
-            <Text fontWeight='normal' align={"left"} fontSize={"100%"} ml={3}>
+            <Text fontWeight='normal' align={"left"} fontSize={"100%"}>
                 {product.name}
             </Text>
             
@@ -103,7 +104,7 @@ const ProductCard = ({product}) => {
 
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent  maxW={"80vw"} >
+            <ModalContent  maxW={['80%', '65%', '40%']} >
                 <ModalHeader>Update Product</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>

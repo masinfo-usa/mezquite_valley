@@ -153,7 +153,7 @@ function FixedNavBar() {
               display="flex"
               alignItems="center"
               justifyContent="center"
-              bg={cartItemCount > 0 ? "green.500" : "gray.300"}
+              bg={cartItemCount > 0 ? "#108910" : "gray.300"}
               borderRadius={"full"}
               px="10px"
               py="6px"

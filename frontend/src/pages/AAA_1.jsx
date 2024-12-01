@@ -17,7 +17,7 @@ import {
   useDisclosure,
   IconButton,
 } from '@chakra-ui/react';
-import { AddIcon, MinusIcon, ChevronLeftIcon, ChevronRightIcon } from '@chakra-ui/icons';
+import { AddIcon, MinusIcon, ChevronLeftIcon, ChevronRightIcon, DeleteIcon } from '@chakra-ui/icons';
 
 const categories = ["Chicken", "Goat", "Lamb", "Beef"];
 const productImageUrl = "https://images.unsplash.com/photo-1515054562254-30a1b0ebe227?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -105,12 +105,11 @@ const AAA_1 = () => {
             {loading
               ? Array.from({ length: 4 }).map((_, idx) => (
                   <Box key={idx} width="250px" height="350px" p={4} mr={4}>
-                    <Skeleton height="150px" />
-                    <Skeleton mt={4} height="20px" width="60%" />
-                    <Skeleton mt={2} height="20px" width="40%" />
-                    <Skeleton mt={2} height="15px" />
-                    <Skeleton mt={2} height="20px" width="80%" />
-                    <Skeleton mt={4} height="30px" />
+                    <Skeleton height="150px" rounded={'lg'}/>
+                    <Skeleton mt={4} height="20px" width="60%"  rounded={'lg'}/>
+                    <Skeleton mt={2} height="15px"  rounded={'lg'}/>
+                    <Skeleton mt={2} height="20px" width="80%"  rounded={'lg'}/>
+                    <Skeleton mt={4} height="30px"  rounded={'lg'}/>
                   </Box>
                 ))
               : sampleProducts.slice(currentIndex, currentIndex + 4).map((product, index) => {
@@ -138,39 +137,48 @@ const AAA_1 = () => {
 
                         <Flex alignItems="center" justifyContent="space-between" mt={2}>
                           {isInCart ? (
-                            <Flex alignItems="center" bg="teal.100" p={1} borderRadius="md">
+                            <Flex justifyContent="space-between" align={'center'} bg='#108910' p={0} 
+                            width={'80%'} height={'9'} borderRadius="lg"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                            }}>
                               <IconButton
-                                icon={<MinusIcon />}
+                                icon={cart[key] == 1 ? <DeleteIcon color={'white'}/> : <MinusIcon color={'white'}/>}
                                 size="sm"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleRemoveFromCart(index, category);
                                 }}
-                                colorScheme="teal"
-                                variant="outline"
+                                bg="#108910"
+                                _hover={{bg:"green.700"}}
                               />
-                              <Text mx={2}>{cart[key]}</Text>
+                              <Text fontWeight={'bold'} color={'white'}>{cart[key]}</Text>
                               <IconButton
-                                icon={<AddIcon />}
+                                icon={<AddIcon  color={'white'}/>}
                                 size="sm"
                                 onClick={(e) => {
                                   e.stopPropagation();
                                   handleAddToCart(index, category);
                                 }}
-                                colorScheme="teal"
-                                variant="outline"
+                                bg="#108910"
+                                _hover={{bg:"green.700"}}
                               />
                             </Flex>
                           ) : (
                             <Button
-                              colorScheme="teal"
-                              size="sm"
+                              borderColor="#108910"
+                              borderWidth={2}
+                              bg={'transparent'}
+                              color={'#108910'}
+                              _hover={{bgColor:'gray.100'}}
+                              width={'80%'}
+                              height={'9'}
                               onClick={(e) => {
                                 e.stopPropagation();
                                 handleAddToCart(index, category);
                               }}
                             >
-                              Add to Cart
+                              + Add To Cart
                             </Button>
                           )}
                         </Flex>
