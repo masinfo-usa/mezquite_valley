@@ -64,7 +64,7 @@ const ProductCard = ({product}) => {
     borderWidth={0}
     borderColor={"#dfdbce"}
     transition='all 0.1s'
-    _hover={{transform: "translateY(-1px)"}}
+    _hover={{transform: "translateY(0px)"}}
     align="center"
     display="flex" 
     flexDirection="column" 
@@ -95,7 +95,7 @@ const ProductCard = ({product}) => {
 
             {
             (false && (
-            <HStack spacing={2}>
+            <HStack spacing={2} my={2}>
                 <IconButton icon={<EditIcon />} onClick={() => onOpen()} colorScheme='blue'/>
                 <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme='red'/>
             </HStack>)
@@ -109,7 +109,13 @@ const ProductCard = ({product}) => {
                 <ModalCloseButton />
                 <ModalBody>
                     <VStack spacing={4}>
-                    <Input
+                        <Input
+                        placeholder='Product Category'
+                        name='category'
+                        value={updatedProduct.category}
+                        onChange={(e) => setUpdatedProduct({...updatedProduct, category: e.target.value})}
+                        />
+                        <Input
                         placeholder='Product Name'
                         name='name'
                         value={updatedProduct.name}

@@ -4,6 +4,7 @@ import { useProductStore } from '../store/product';
 
 const CreatePage = () => {
     const [newProduct, setNewProduct] = useState({
+        category: "",
         name: "",
         price: "",
         image: "",
@@ -29,7 +30,7 @@ const CreatePage = () => {
                 isClosable: true,
             });
         }
-        setNewProduct({name:"", price: "", image: ""});
+        setNewProduct({category:"",name:"", price: "", image: ""});
     };
 
   return (
@@ -46,6 +47,13 @@ const CreatePage = () => {
             p={6} rounded={"lg"} shadow={"md"}
             >
                 <VStack spacing={4}>
+                <Input
+                    placeholder="Product Category"
+                    name="category"
+                    value={newProduct.category}
+                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
+                    />
+
                 <Input
                     placeholder="Product Name"
                     name="name"

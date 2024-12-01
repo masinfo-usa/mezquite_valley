@@ -14,12 +14,15 @@ const HomePage = () => {
   console.log('products', products)
 
   return (
-    <Container maxW={['95%', '90%', '75%']} py={5}>
-      <VStack spacing={8}>
-      
+    <Container maxW={['95%', '90%', '70%']} py={5}>
+      <VStack spacing={2} >
+      <Text fontSize="3xl" fontWeight="semibold" alignSelf="flex-start" color="gray.800" ml={2} display="flex">
+        Chicken
+      </Text>
+
       <SimpleGrid
         minChildWidth="150px"
-        spacing={[3,5,7]}
+        spacing={[3, 5, 7]}
         width={'full'}
       >
         {products.map((product) => (
