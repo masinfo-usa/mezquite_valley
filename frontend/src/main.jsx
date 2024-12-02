@@ -1,15 +1,33 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { ChakraProvider } from '@chakra-ui/react'
+import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import {BrowserRouter} from 'react-router-dom'
 import App from './App.jsx'
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#108910', // Green color for primary
+    },
+    secondary: {
+      main: '#f7f5f0', // Beige color for secondary
+    },
+  },
+  typography: {
+    fontFamily: 'Roboto, Arial, sans-serif',
+  },
+});
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
       <BrowserRouter>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <ChakraProvider>
           <App />
         </ChakraProvider>
+      </ThemeProvider>
       </BrowserRouter>
   </StrictMode>,
 )

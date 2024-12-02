@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage"
 import CreatePage from "./pages/CreatePage"
 import AAA_1 from "./pages/AAA_1"
 import FixedNavBar from "./pages/FixedNavBar"
+import FixedNavBarMui from "./pages/FixedNavBarMui"
+import Login from "./pages/Login"
 
 
 
@@ -14,7 +16,7 @@ function App() {
   return (
     <>
       <Box minH={"100vh"} px={0} bg={useColorModeValue("white", "gray.900")}>
-        <FixedNavBar />
+        <FixedNavBarMui />
         <Box bg="#f7f5f0" width="100%" paddingTop={'72px'}>
         <HStack justify="center" spacing={8} height={10} display={isMediumScreen ? "none" : "flex"}>
           <Link href="/">Home</Link>
@@ -31,6 +33,7 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/testpage" element={<FixedNavBar />} />
           <Route path="/AAA_1" element={<AAA_1 />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </Box>
 
