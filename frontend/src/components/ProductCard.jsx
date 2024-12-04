@@ -61,10 +61,11 @@ const ProductCard = ({ product }) => {
           flexDirection: 'column',
           alignItems: 'center',
           p: 2,
+          border: '0.5px solid #000000',
           borderRadius: 2,
-          boxShadow: 3,
+          boxShadow: 'none',
           transition: 'transform 0.1s',
-          '&:hover': { transform: 'translateY(-5px)' },
+          '&:hover': { transform: 'translateY(0px)' },
         }}
         onClick={handleOpenModal}
       >
@@ -75,11 +76,10 @@ const ProductCard = ({ product }) => {
           sx={{
             borderRadius: 2,
             aspectRatio: '1 / 1.12',
-            width: '95%',
-            objectFit: 'cover',
+            m:'0',
           }}
         />
-        <CardContent sx={{ width: '95%' }}>
+        <CardContent sx={{ width: '100%'}}>
           <Button
             fullWidth
             variant="outlined"
@@ -98,7 +98,7 @@ const ProductCard = ({ product }) => {
           <Typography variant="body1" color="text.secondary" align="left">
             {product.name}
           </Typography>
-          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+          {false && (<Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
             <IconButton color="primary" onClick={handleOpenModal}>
               <Edit />
             </IconButton>
@@ -106,6 +106,7 @@ const ProductCard = ({ product }) => {
               <Delete />
             </IconButton>
           </Box>
+        )}
         </CardContent>
       </Card>
 

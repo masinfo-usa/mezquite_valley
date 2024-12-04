@@ -13,7 +13,7 @@ const HomePage = () => {
   console.log("products", products);
 
   return (
-    <Container maxWidth="lg" sx={{ py: 5 }}>
+    <Container maxWidth="md" sx={{ py: 5 }}>
       <Box display="flex" flexDirection="column" gap={2}>
         <Typography
           variant="h4"
