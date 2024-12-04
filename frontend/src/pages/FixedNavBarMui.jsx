@@ -33,6 +33,9 @@ const theme = createTheme({
   },
 });
 
+
+
+
 function FixedNavBarMui() {
   const [isCartOpen, setCartOpen] = useState(false);
   const [isNavOpen, setNavOpen] = useState(false);
@@ -61,102 +64,168 @@ function FixedNavBarMui() {
     return () => clearInterval(interval);
   }, []);
 
+
+
+
+
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AppBar position="fixed" sx={{ backgroundColor: "black", zIndex: theme.zIndex.drawer - 1, boxShadow: 'none', 
                }}>
-        <Toolbar sx={{ backgroundColor: "#f7f5f0", borderBottom: "1px solid #dfdbce", boxShadow: 'none' }}>
+        <Toolbar 
+        
+        sx={{ backgroundColor: "#f7f5f0",  
+        borderBottom: "1px solid #dfdbce", 
+        boxShadow: 'none' , display:'flex',
+        justifyContent: "space-between", // Spread left and right sections
+        alignItems: "center", // Center vertically
+  
+      }}>
+          
+          {/* MenuIcon */}
           {isMediumScreen && !isSearchFocused && (
             <IconButton
-              color="inherit"
+              color=""
               edge="start"
               onClick={() => setNavOpen(true)}
-              sx={{ marginRight: 2 }}
+              sx={{ marginLeft: '0px',
+                marginRight: '2px',
+                backgroundColor: 'default', 
+                color: 'default', 
+                borderRadius: '8px',
+               }}
             >
               <MenuIcon />
             </IconButton>
           )}
+          {/* Title */}
           {!(isMediumScreen && isSearchFocused) && (
-            <Typography variant="h6" fontWeight={'bold'} color="#000000" noWrap component="a" href="/" sx={{ flexGrow: 1 }}>
+            <Typography variant="h6" fontWeight={'bold'} color="#000000"  component="a" href="/" sx={{ minWidth:'30%', textDecoration: 'none' }}>
               Your Brand
             </Typography>
           )}
-
-          <Box sx={{ flexGrow: 1, position: "relative", display: "flex", alignItems: "center" }}>
-            <SearchIcon sx={{ position: "absolute", marginLeft: 2, color: "gray.400" }} />
-            <InputBase
-              placeholder={placeholders[placeholderIndex]}
-              value={searchText}
-              onFocus={() => setIsSearchFocused(true)}
-              onBlur={() => setIsSearchFocused(false)}
-              onChange={(e) => setSearchText(e.target.value)}
+            
+            <Box name="searchMainBg"
               sx={{
-                backgroundColor: "white",
-                borderRadius: 50,
-                padding: "6px 10px 6px 40px",
-                flex: 1,
-                borderWidth:1,
-                borderColor: '#000000'
+                backgroundColor: "#fff",
+                width: '100%',
+                position: "relative",
+                display: "flex",
+                justifyContent: 'space-evenly',
+                alignItems: "center",
+                borderRadius: 10,
+                border: isSearchFocused ? '2px solid #000' :'1px solid #BBB7AA', // Ensure border is set on the container
               }}
-            />
-            {isSearchFocused && isMediumScreen && (
-              <Button
+            >
+              <Box name='searchicon'
+                sx={{position: "relative", left: 5,
+                  color: "gray", display: "flex",
+                  alignItems: "center"
+                }}
+              >
+                <SearchIcon />
+              </Box>
+              <InputBase
+                placeholder={placeholders[0]}
+                value={searchText}
+                onFocus={() => setIsSearchFocused(true)}
+                onBlur={() => setIsSearchFocused(false)}
+                onChange={(e) => setSearchText(e.target.value)}
+                sx={{
+                  backgroundColor: "#fff",
+                  padding: "6px 2px 6px 5px",
+                  borderRadius: 5,
+                  flex: 0.95,
+                }}
+              />
+
+
+              
+              
+
+              {!isMediumScreen && (
+                <IconButton name='searchClose'
                 onClick={() => {
                   setIsSearchFocused(false);
                   setSearchText("");
                 }}
-                sx={{ marginLeft: 1 }}
+                sx={{position: "relative", 
+                  backgroundColor: 'transparent',
+                  color: "gray", display: "flex",
+                  mr: '0px',
+                  visibility: isSearchFocused && !isMediumScreen ? 'visible' : 'hidden',
+                  '&:hover': {
+                    backgroundColor: '', // No background color on hover
+                  },
+                  '&:active': {
+                    backgroundColor: '', // No background color on press
+                  },
+                }}
               >
-                Cancel
-              </Button>
+                <CloseIcon />
+              </IconButton>
+              )}
+            
+
+          </Box>
+          {isSearchFocused && isMediumScreen && (
+                <Button
+                  onClick={() => {
+                    setIsSearchFocused(false);
+                    setSearchText("");
+                  }}
+                  sx={{ marginLeft: 1 }}
+                >
+                  Cancel
+                </Button>
+              )}
+              
+          {!(isSearchFocused && isMediumScreen) && (
+              <Button
+              name='Login'
+              variant="contained"
+              href="/Login"            
+              sx={{
+                display: 'flex',
+                bgcolor:"#4287f5",
+                alignItems: 'center',
+                borderRadius: 20, 
+                padding: '8px 16px', 
+                textTransform: 'none',
+                boxShadow: 'none', 
+                marginLeft: 1,
+                '&:hover': {
+                  boxShadow: 'none', // Remove shadow on hover
+                }, 
+              }}>
+                Login
+            </Button>
             )}
 
           {!(isSearchFocused && isMediumScreen) && (
-            <Button
-            variant="contained"
-            
-href="/Login"            sx={{
-              display: 'flex',
-            bgcolor:"#4287f5",
-              alignItems: 'center',
-              borderRadius: 20, 
-              padding: '8px 16px', 
-              textTransform: 'none',
-              boxShadow: 'none', 
-              marginLeft: 1,
-              '&:hover': {
-                boxShadow: 'none', // Remove shadow on hover
-              }, 
-            }}>
-              Login
-          </Button>
-          )}
-
-        {!(isSearchFocused && isMediumScreen) && (
-            <Button
-            variant="contained"
-            color="primary"
-            onClick={() => setCartOpen(true)}
-            sx={{
-              display: 'flex',
-              alignItems: 'center',
-              borderRadius: 20, 
-              padding: '8px 16px', 
-              textTransform: 'none',
-              boxShadow: 'none', 
-              marginLeft: 1,
-              '&:hover': {
-                boxShadow: 'none', // Remove shadow on hover
-              }, 
-            }}>
-              <ShoppingCartIcon sx={{ marginRight: 0 }} />
-              {cartItemCount}
-          </Button>
-          )}
-
-          </Box>
-
+              <Button
+              name='cart'
+              variant="contained"
+              color="primary"
+              onClick={() => setCartOpen(true)}
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                borderRadius: 20, 
+                padding: '8px 16px', 
+                textTransform: 'none',
+                boxShadow: 'none', 
+                marginLeft: 1,
+                '&:hover': {
+                  boxShadow: 'none', // Remove shadow on hover
+                }, 
+              }}>
+                <ShoppingCartIcon sx={{ marginRight: 0 }} />
+                {cartItemCount}
+            </Button>
+            )}
         </Toolbar>
       </AppBar>
 
@@ -167,35 +236,87 @@ href="/Login"            sx={{
             exit: 100,  
           },
         }}
-        
+        sx={{
+          '& .MuiDrawer-paper': {
+            width: {
+              xs: "100%",
+              sm: "100%", 
+              md: "50%", 
+              lg: "30%", 
+              xl: "25%"
+            }, 
+          },
+        }}
         >
-        <Box sx={{ width: 300, padding: 2 }}>
-          <IconButton onClick={() => setCartOpen(false)}>
-            <CloseIcon />
-          </IconButton>
-          <Typography variant="h6" gutterBottom>
-            Your Cart
-          </Typography>
-          <Typography variant="body1">Cart items go here...</Typography>
+         <Box name='cart_header' 
+         sx={{           
+          backgroundColor: '#ffffff',
+          display: 'flex',
+          alignItems: 'center',  // Center elements vertically
+          padding: 1.2,
+          borderBottom: '1px solid #eeeeee',}}>
+            <IconButton onClick={() => setCartOpen(false)}
+              sx={{
+                borderRadius: 2,
+                zIndex: 1,
+                width: '45px',
+                height: '45px',
+                justifySelf: 'center',
+               }}
+              >
+              <CloseIcon />
+            </IconButton>
+
+            <Typography variant="h6" gutterBottom 
+            sx={{ backgroundColor:'#fff', //'red', 
+              mr:'10%', width:'100%', 
+              mt: '10px',
+              textAlign: 'center', fontWeight:'bold' }}>
+              Your Cart
+            </Typography>
+
+          </Box>
+
+
+       <Box sx={{           
+          backgroundColor: '#fff',//'#f1f1f1',
+          width: {
+            
+          }, 
+          height: "100%",
+          padding: 2 }}>
+          
+          <Typography variant="body1" sx={{ textAlign: 'center' }}>Cart items go here...</Typography>
         </Box>
       </Drawer>
 
       <Drawer anchor="left" open={isNavOpen} onClose={() => setNavOpen(false)}>
-        <Box sx={{ width: 250, padding: 2 }}>
-          <IconButton onClick={() => setNavOpen(false)}>
-            <CloseIcon />
-          </IconButton>
-          <List>
-            {["Home", "Our Story", "Our Process", "Contact Us", "Halal Certifications", "FAQs"].map(
-              (text) => (
-                <ListItem button key={text} onClick={() => setNavOpen(false)}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              )
-            )}
-          </List>
-        </Box>
-      </Drawer>
+  <Box sx={{ width: 250, padding: 2, position: 'relative' }}>
+    <IconButton
+      onClick={() => setNavOpen(false)}
+      sx={{
+        borderRadius: 2,
+        position: 'absolute',
+        top: 16,
+        right: 16,
+        zIndex: 1,
+      }}
+    >
+      <CloseIcon />
+    </IconButton>
+    <List sx={{ paddingTop: 6 }}>
+      {["Home", "Our Story", "Our Process", "Contact Us", "Halal Certifications", "FAQs"].map(
+        (text) => (
+          <ListItem button key={text} onClick={() => setNavOpen(false)}>
+            <ListItemText primary={text} />
+          </ListItem>
+        )
+      )}
+    </List>
+  </Box>
+</Drawer>
+
+
     </ThemeProvider>
   );
 }

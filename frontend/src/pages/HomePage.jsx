@@ -1,61 +1,65 @@
-import {Box, Container, SimpleGrid, Text, textDecoration, VStack} from "@chakra-ui/react"
-import {Link} from 'react-router-dom'
-import { useProductStore } from "../store/product"
-import { useEffect } from "react"
-import ProductCard from "../components/ProductCard"
+import { Box, Container, Grid, Typography, Link } from "@mui/material";
+import { useProductStore } from "../store/product";
+import { useEffect } from "react";
+import ProductCard from "../components/ProductCard";
 
 const HomePage = () => {
-  const {fetchProducts, products} = useProductStore()
+  const { fetchProducts, products } = useProductStore();
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
 
-  console.log('products', products)
+  console.log("products", products);
 
   return (
-    <Container maxW={['95%', '90%', '70%']} py={5}>
-      <VStack spacing={2} >
-      <Text fontSize="3xl" fontWeight="semibold" alignSelf="flex-start" color="gray.800" ml={2} display="flex">
-        Chicken
-      </Text>
+    <Container maxWidth="lg" sx={{ py: 5 }}>
+      <Box display="flex" flexDirection="column" gap={2}>
+        <Typography
+          variant="h4"
+          fontWeight="semibold"
+          alignSelf="flex-start"
+          color="text.primary"
+          ml={2}
+        >
+          Chicken
+        </Typography>
 
-      <SimpleGrid
-        minChildWidth="150px"
-        spacing={[3, 5, 7]}
-        width={'full'}
-      >
-        {products.map((product) => (
-          <ProductCard key={product._id} product={product}/> 
-        ))}
-      </SimpleGrid>
+        <Grid container spacing={3}>
+          {products.map((product) => (
+            <Grid item xs={12} sm={6} md={4} key={product._id}>
+              <ProductCard product={product} />
+            </Grid>
+          ))}
+        </Grid>
 
-      {products.length === 0 && (
-        <Text
-        fontSize="xl"
-        fontWeight={"bold"}
-        textAlign={"center"}
-        color={"grey.500"}
-      >
-        No Products Found 😢{" "}
+        {products.length === 0 && (
+          <Typography
+            variant="h6"
+            fontWeight="bold"
+            textAlign="center"
+            color="text.secondary"
+          >
+            No Products Found 😢{" "}
+            <Link
+              href="/create"
+              underline="hover"
+              sx={{ color: "primary.main", cursor: "pointer" }}
+            >
+              Create a Product
+            </Link>
+          </Typography>
+        )}
+      </Box>
 
-        <Link to={"/create"}>
-          <Text as='span' color='blue.500' _hover={{textDecoration: 'underline'}}>
-            Create a Product
-          </Text>
-        </Link>
-
-      </Text>
-      )}
-
-      </VStack>
-
-      <Box p={6} mt="120px">
-        <Text>Welcome to Your Brand. Scroll down to see more content...</Text>
-        <Box height="1000px"></Box>
+      <Box sx={{ p: 3, mt: "120px" }}>
+        <Typography>
+          Welcome to Your Brand. Scroll down to see more content...
+        </Typography>
+        <Box sx={{ height: "1000px" }}></Box>
       </Box>
     </Container>
-  )
-}
+  );
+};
 
-export default HomePage
+export default HomePage;

@@ -3,7 +3,7 @@ import { Box, Typography, Button, Divider, Stack, Container } from '@mui/materia
 import GoogleIcon from '@mui/icons-material/Google';
 import AppleIcon from '@mui/icons-material/Apple';
 
-function Login() {
+function LoginPage() {
   return (
     <Container
       maxWidth="xs"
@@ -82,4 +82,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginPage;

@@ -1,94 +1,109 @@
-import { Container, Box, Heading, useColorModeValue, VStack, Input, Button, useToast } from '@chakra-ui/react';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import {
+  Container,
+  Box,
+  Typography,
+  TextField,
+  Button,
+  useTheme,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 import { useProductStore } from '../store/product';
 
 const CreatePage = () => {
-    const [newProduct, setNewProduct] = useState({
-        category: "",
-        name: "",
-        price: "",
-        image: "",
-    });
-    const toast = useToast()
+  const [newProduct, setNewProduct] = useState({
+    category: '',
+    name: '',
+    price: '',
+    image: '',
+  });
+  const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
 
-    const {createProduct} = useProductStore()
-    const handleAddProduct = async () => {
-        const {success, message} = await createProduct(newProduct)
-        
-        if(!success){
-            toast({
-                title: "Error",
-                description: message,
-                status: "error",
-                isClosable: true,
-            });
-        }else{
-            toast({
-                title: "Success",
-                description: message,
-                status: "success",
-                isClosable: true,
-            });
-        }
-        setNewProduct({category:"",name:"", price: "", image: ""});
-    };
+  const theme = useTheme();
+  const { createProduct } = useProductStore();
+
+  const handleAddProduct = async () => {
+    const { success, message } = await createProduct(newProduct);
+
+    setToast({
+      open: true,
+      message,
+      severity: success ? 'success' : 'error',
+    });
+
+    if (success) {
+      setNewProduct({ category: '', name: '', price: '', image: '' });
+    }
+  };
+
+  const handleToastClose = () => {
+    setToast({ ...toast, open: false });
+  };
 
   return (
-    <Container maxW={"container.sm"}>
-        <VStack
-        spacing={8}
+    <Container maxWidth="sm">
+      <Box display="flex" flexDirection="column" alignItems="center" gap={3} my={4}>
+        <Typography variant="h4" component="h1" textAlign="center" gutterBottom>
+          Create New Product
+        </Typography>
+
+        <Box
+          width="100%"
+          bgcolor={theme.palette.background.paper}
+          p={3}
+          borderRadius={2}
+          boxShadow={3}
         >
-            <Heading as={"h1"} size={"2xl"} textAlign={"center"} mb={8}>
-                Create New Product
-            </Heading>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="Product Category"
+              variant="outlined"
+              fullWidth
+              value={newProduct.category}
+              onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+            />
+            <TextField
+              label="Product Name"
+              variant="outlined"
+              fullWidth
+              value={newProduct.name}
+              onChange={(e) => setNewProduct({ ...newProduct, name: e.target.value })}
+            />
+            <TextField
+              label="Price"
+              variant="outlined"
+              type="number"
+              fullWidth
+              value={newProduct.price}
+              onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+            />
+            <TextField
+              label="Image URL"
+              variant="outlined"
+              fullWidth
+              value={newProduct.image}
+              onChange={(e) => setNewProduct({ ...newProduct, image: e.target.value })}
+            />
+            <Button variant="contained" color="primary" fullWidth onClick={handleAddProduct}>
+              Add Product
+            </Button>
+          </Box>
+        </Box>
+      </Box>
 
-            <Box
-            w={"full"} bg={useColorModeValue("white", "gray.800")}
-            p={6} rounded={"lg"} shadow={"md"}
-            >
-                <VStack spacing={4}>
-                <Input
-                    placeholder="Product Category"
-                    name="category"
-                    value={newProduct.category}
-                    onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
-                    />
-
-                <Input
-                    placeholder="Product Name"
-                    name="name"
-                    value={newProduct.name}
-                    onChange={(e) => setNewProduct({...newProduct, name: e.target.value})}
-                    />
-
-                <Input
-                    placeholder="Price"
-                    name="price"
-                    type='number'
-                    value={newProduct.price}
-                    onChange={(e) => setNewProduct({...newProduct, price: e.target.value})}
-                    />
-
-                <Input
-                    placeholder="Image URL"
-                    name="image"
-                    value={newProduct.image}
-                    onChange={(e) => setNewProduct({...newProduct, image: e.target.value})}
-                    />
-
-
-                <Button colorScheme='blue' onClick={handleAddProduct} w={"full"}>
-                    Add Product
-                </Button>
-
-                </VStack>
-
-            </Box>
-
-        </VStack>
-
+      <Snackbar
+        open={toast.open}
+        autoHideDuration={3000}
+        onClose={handleToastClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={toast.severity} onClose={handleToastClose}>
+          {toast.message}
+        </Alert>
+      </Snackbar>
     </Container>
-  )
-}
+  );
+};
 
-export default CreatePage
+export default CreatePage;

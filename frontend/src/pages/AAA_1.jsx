@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import {
   Box,
-  Image,
-  Text,
-  Stack,
+  Typography,
   Button,
-  Flex,
-  Skeleton,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalCloseButton,
-  ModalBody,
-  ModalFooter,
-  useDisclosure,
   IconButton,
-} from '@chakra-ui/react';
-import { AddIcon, MinusIcon, ChevronLeftIcon, ChevronRightIcon, DeleteIcon } from '@chakra-ui/icons';
+  Card,
+  CardMedia,
+  CardContent,
+  CardActions,
+  Modal,
+  Skeleton,
+  Grid,
+} from '@mui/material';
+import { Add, Remove, ChevronLeft, ChevronRight, Delete } from '@mui/icons-material';
 
 const categories = ["Chicken", "Goat", "Lamb", "Beef"];
 const productImageUrl = "https://images.unsplash.com/photo-1515054562254-30a1b0ebe227?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
@@ -36,10 +31,9 @@ const AAA_1 = () => {
   const [loading, setLoading] = useState(true);
   const [cart, setCart] = useState({});
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [isModalOpen, setModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Simulate loading data
   useEffect(() => {
     setTimeout(() => setLoading(false), 2000);
   }, []);
@@ -65,7 +59,11 @@ const AAA_1 = () => {
 
   const handleCardClick = (product) => {
     setSelectedProduct(product);
-    onOpen();
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
   };
 
   const handleNext = () => {
@@ -77,137 +75,100 @@ const AAA_1 = () => {
   };
 
   return (
-    <Box p={5}>
+    <Box padding={5}>
       {categories.map((category) => (
-        <Box key={category} mb={8}>
-          <Flex alignItems="center" justifyContent="space-between" mb={4}>
-            <Text fontSize="2xl" fontWeight="bold">{category}</Text>
+        <Box key={category} marginBottom={8}>
+          <Box display="flex" alignItems="center" justifyContent="space-between" marginBottom={2}>
+            <Typography variant="h4">{category}</Typography>
             <Box>
-              <IconButton
-                icon={<ChevronLeftIcon />}
-                onClick={handlePrev}
-                isDisabled={currentIndex === 0}
-                bg={currentIndex === 0 ? "gray.200" : "teal.400"}
-                _hover={{ bg: "teal.500" }}
-                mr={2}
-              />
-              <IconButton
-                icon={<ChevronRightIcon />}
-                onClick={handleNext}
-                isDisabled={currentIndex >= sampleProducts.length - 4}
-                bg={currentIndex >= sampleProducts.length - 4 ? "gray.200" : "teal.400"}
-                _hover={{ bg: "teal.500" }}
-              />
+              <IconButton onClick={handlePrev} disabled={currentIndex === 0}>
+                <ChevronLeft />
+              </IconButton>
+              <IconButton onClick={handleNext} disabled={currentIndex >= sampleProducts.length - 4}>
+                <ChevronRight />
+              </IconButton>
             </Box>
-          </Flex>
+          </Box>
 
-          <Flex overflowX={{ base: "scroll", md: "hidden" }} justify="center">
+          <Grid container spacing={2}>
             {loading
               ? Array.from({ length: 4 }).map((_, idx) => (
-                  <Box key={idx} width="250px" height="350px" p={4} mr={4}>
-                    <Skeleton height="150px" rounded={'lg'}/>
-                    <Skeleton mt={4} height="20px" width="60%"  rounded={'lg'}/>
-                    <Skeleton mt={2} height="15px"  rounded={'lg'}/>
-                    <Skeleton mt={2} height="20px" width="80%"  rounded={'lg'}/>
-                    <Skeleton mt={4} height="30px"  rounded={'lg'}/>
-                  </Box>
+                  <Grid item key={idx} xs={12} sm={6} md={3}>
+                    <Skeleton variant="rectangular" width="100%" height={150} />
+                    <Skeleton width="60%" />
+                    <Skeleton width="80%" />
+                  </Grid>
                 ))
               : sampleProducts.slice(currentIndex, currentIndex + 4).map((product, index) => {
                   const key = `${category}-${index}`;
                   const isInCart = cart[key];
                   return (
-                    <Box
-                      key={index}
-                      borderWidth="1px"
-                      borderRadius="lg"
-                      overflow="hidden"
-                      width="250px"
-                      p={4}
-                      mr={4}
-                      // onClick={() => handleCardClick(product)}
-                      cursor="pointer"
-                      bg="white"
-                      boxShadow="sm"
-                    >
-                      <Image src={product.imageUrl} alt="Product" width="100%" height="150px" objectFit="cover" borderTopRadius="lg" />
-                      <Stack mt={4} spacing={1}>
-                        <Text fontSize="lg" fontWeight="bold">{product.price}</Text>
-                        <Text fontSize="sm" color="gray.500">{product.weight}</Text>
-                        <Text color="gray.500">{product.details}</Text>
-
-                        <Flex alignItems="center" justifyContent="space-between" mt={2}>
+                    <Grid item key={index} xs={12} sm={6} md={3}>
+                      <Card>
+                        <CardMedia
+                          component="img"
+                          height="150"
+                          image={product.imageUrl}
+                          alt="Product"
+                          onClick={() => handleCardClick(product)}
+                          style={{ cursor: 'pointer' }}
+                        />
+                        <CardContent>
+                          <Typography variant="h6">{product.price}</Typography>
+                          <Typography color="textSecondary">{product.weight}</Typography>
+                          <Typography variant="body2">{product.details}</Typography>
+                        </CardContent>
+                        <CardActions>
                           {isInCart ? (
-                            <Flex justifyContent="space-between" align={'center'} bg='#108910' p={0} 
-                            width={'80%'} height={'9'} borderRadius="lg"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                            }}>
-                              <IconButton
-                                icon={cart[key] == 1 ? <DeleteIcon color={'white'}/> : <MinusIcon color={'white'}/>}
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleRemoveFromCart(index, category);
-                                }}
-                                bg="#108910"
-                                _hover={{bg:"green.700"}}
-                              />
-                              <Text fontWeight={'bold'} color={'white'}>{cart[key]}</Text>
-                              <IconButton
-                                icon={<AddIcon  color={'white'}/>}
-                                size="sm"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleAddToCart(index, category);
-                                }}
-                                bg="#108910"
-                                _hover={{bg:"green.700"}}
-                              />
-                            </Flex>
+                            <Box display="flex" alignItems="center" width="100%">
+                              <IconButton onClick={() => handleRemoveFromCart(index, category)}>
+                                {cart[key] === 1 ? <Delete /> : <Remove />}
+                              </IconButton>
+                              <Typography>{cart[key]}</Typography>
+                              <IconButton onClick={() => handleAddToCart(index, category)}>
+                                <Add />
+                              </IconButton>
+                            </Box>
                           ) : (
                             <Button
-                              borderColor="#108910"
-                              borderWidth={2}
-                              bg={'transparent'}
-                              color={'#108910'}
-                              _hover={{bgColor:'gray.100'}}
-                              width={'80%'}
-                              height={'9'}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                handleAddToCart(index, category);
-                              }}
+                              variant="outlined"
+                              color="primary"
+                              fullWidth
+                              onClick={() => handleAddToCart(index, category)}
                             >
-                              + Add To Cartss
+                              + Add to Cart
                             </Button>
                           )}
-                        </Flex>
-                      </Stack>
-                    </Box>
+                        </CardActions>
+                      </Card>
+                    </Grid>
                   );
                 })}
-          </Flex>
+          </Grid>
         </Box>
       ))}
 
       {/* Modal for Product Details */}
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{selectedProduct?.details}</ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <Image src={selectedProduct?.imageUrl} alt="Product Image" boxSize="300px" mx="auto" mb={4} />
-            <Text fontSize="lg" fontWeight="bold">{selectedProduct?.price}</Text>
-            <Text fontSize="sm" color="gray.500">{selectedProduct?.weight}</Text>
-            <Text mt={2}>{selectedProduct?.details}</Text>
-          </ModalBody>
-          <ModalFooter>
-            <Button colorScheme="blue" mr={3} onClick={onClose}>
-              Close
-            </Button>
-          </ModalFooter>
-        </ModalContent>
+      <Modal open={isModalOpen} onClose={handleCloseModal}>
+        <Box
+          position="absolute"
+          top="50%"
+          left="50%"
+          transform="translate(-50%, -50%)"
+          width={400}
+          bgcolor="background.paper"
+          boxShadow={24}
+          p={4}
+        >
+          {selectedProduct && (
+            <>
+              <Typography variant="h6">{selectedProduct.details}</Typography>
+              <img src={selectedProduct.imageUrl} alt="Product" style={{ width: '100%', marginTop: 16 }} />
+              <Typography>{selectedProduct.price}</Typography>
+              <Typography>{selectedProduct.weight}</Typography>
+            </>
+          )}
+        </Box>
       </Modal>
     </Box>
   );

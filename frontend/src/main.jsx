@@ -4,6 +4,7 @@ import { ChakraProvider } from '@chakra-ui/react'
 import { ThemeProvider, CssBaseline, createTheme } from '@mui/material';
 import {BrowserRouter} from 'react-router-dom'
 import App from './App.jsx'
+import Login from "./pages/Login"
 
 const theme = createTheme({
   palette: {
@@ -24,9 +25,7 @@ createRoot(document.getElementById('root')).render(
       <BrowserRouter>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <ChakraProvider>
           <App />
-        </ChakraProvider>
       </ThemeProvider>
       </BrowserRouter>
   </StrictMode>,

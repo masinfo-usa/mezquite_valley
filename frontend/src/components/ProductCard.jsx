@@ -1,158 +1,179 @@
-import { DeleteIcon, EditIcon } from '@chakra-ui/icons'
-import { Box, Button, Heading, HStack, IconButton, Image, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useColorModeValue, useDisclosure, useToast, VStack } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  CardMedia,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  IconButton,
+  TextField,
+  Typography,
+  useTheme,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import { useProductStore } from '../store/product';
 
-const ProductCard = ({product}) => {
-    const [updatedProduct, setUpdatedProduct] = useState(product)
-    const textColor = useColorModeValue("gray.600", "gray.200");
-    const bg = useColorModeValue("white", "gray.800");
+const ProductCard = ({ product }) => {
+  const [updatedProduct, setUpdatedProduct] = useState(product);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
 
-    const {updateProduct, deleteProduct} = useProductStore()
-    const toast = useToast()
-    const { isOpen, onOpen, onClose } = useDisclosure()
+  const { updateProduct, deleteProduct } = useProductStore();
+  const theme = useTheme();
 
-    const handleDeleteProduct = async(pid) => {
-        const {success, message} = await deleteProduct(pid)
-        if(!success){
-            toast({
-                title: "Error",
-                description: message,
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            })
-        }else{
-            toast({ 
-                title: "Success",
-                description: message,
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-            })
-        }
-    }
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
 
-    const handleUpdateProduct = async(pid, updatedProduct) => {
-        const {success, message} = await updateProduct(pid, updatedProduct);
-        onClose();
-        if(!success){
-            toast({
-                title: "Error",
-                description: message,
-                status: "error",
-                duration: 3000,
-                isClosable: true,
-            })
-        }else{
-            toast({ 
-                title: "Success",
-                description: "Product updated successfully!",
-                status: "success",
-                duration: 3000,
-                isClosable: true,
-            })
-        } 
+  const handleDeleteProduct = async (pid) => {
+    const { success, message } = await deleteProduct(pid);
+    setToast({
+      open: true,
+      message,
+      severity: success ? 'success' : 'error',
+    });
+  };
 
-    }
+  const handleUpdateProduct = async (pid, updatedProduct) => {
+    const { success, message } = await updateProduct(pid, updatedProduct);
+    setIsModalOpen(false);
+    setToast({
+      open: true,
+      message: success ? 'Product updated successfully!' : message,
+      severity: success ? 'success' : 'error',
+    });
+  };
 
-    return (
-    <Box
-    key={product.id} 
-    //shadow='lg'
-    rounded='lg'
-    borderWidth={0}
-    borderColor={"#dfdbce"}
-    transition='all 0.1s'
-    _hover={{transform: "translateY(0px)"}}
-    align="center"
-    display="flex" 
-    flexDirection="column" 
-    alignItems="center"
-    onClick={() => onOpen()}
-    >
-    
-        <Box borderRadius="lg" overflow="hidden"  width={"95%"} align={'center'} margin={1} aspectRatio={1 / 1.12}>
-            <Image src={product.image} alt={product.name} height="100%" width="100%" objectFit="cover" />
-        </Box>
+  const handleToastClose = () => {
+    setToast({ ...toast, open: false });
+  };
 
-
-        <Box width={"95%"} margin={1}>
-        <Button width={"100%"}  bg={"white"} color={"green.500"} height={'8'} 
-        borderWidth={1} borderColor={"green.500"} marginBottom={2}
+  return (
+    <>
+      <Card
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          p: 2,
+          borderRadius: 2,
+          boxShadow: 3,
+          transition: 'transform 0.1s',
+          '&:hover': { transform: 'translateY(-5px)' },
+        }}
+        onClick={handleOpenModal}
+      >
+        <CardMedia
+          component="img"
+          image={product.image}
+          alt={product.name}
+          sx={{
+            borderRadius: 2,
+            aspectRatio: '1 / 1.12',
+            width: '95%',
+            objectFit: 'cover',
+          }}
+        />
+        <CardContent sx={{ width: '95%' }}>
+          <Button
+            fullWidth
+            variant="outlined"
+            color="success"
+            sx={{ mb: 1 }}
             onClick={(e) => {
-                e.stopPropagation(); // Prevent the event from bubbling up to the parent
-                console.log("Button Clicked");
-              }}>+ Add to Cart</Button>
-            <Text fontWeight='bold' align={"left"} fontSize={"120%"} color={textColor}>
-                ${product.price}
-            </Text>
+              e.stopPropagation();
+              console.log('Button Clicked');
+            }}
+          >
+            + Add to Cart
+          </Button>
+          <Typography variant="h6" color="text.primary" align="left">
+            ${product.price}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" align="left">
+            {product.name}
+          </Typography>
+          <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+            <IconButton color="primary" onClick={handleOpenModal}>
+              <Edit />
+            </IconButton>
+            <IconButton color="error" onClick={() => handleDeleteProduct(product._id)}>
+              <Delete />
+            </IconButton>
+          </Box>
+        </CardContent>
+      </Card>
 
-            <Text fontWeight='normal' align={"left"} fontSize={"100%"}>
-                {product.name}
-            </Text>
-            
+      <Dialog open={isModalOpen} onClose={handleCloseModal}>
+        <DialogTitle>Update Product</DialogTitle>
+        <DialogContent>
+          <Box display="flex" flexDirection="column" gap={2}>
+            <TextField
+              label="Product Category"
+              value={updatedProduct.category}
+              onChange={(e) =>
+                setUpdatedProduct({ ...updatedProduct, category: e.target.value })
+              }
+              fullWidth
+            />
+            <TextField
+              label="Product Name"
+              value={updatedProduct.name}
+              onChange={(e) =>
+                setUpdatedProduct({ ...updatedProduct, name: e.target.value })
+              }
+              fullWidth
+            />
+            <TextField
+              label="Price"
+              type="number"
+              value={updatedProduct.price}
+              onChange={(e) =>
+                setUpdatedProduct({ ...updatedProduct, price: e.target.value })
+              }
+              fullWidth
+            />
+            <TextField
+              label="Image URL"
+              value={updatedProduct.image}
+              onChange={(e) =>
+                setUpdatedProduct({ ...updatedProduct, image: e.target.value })
+              }
+              fullWidth
+            />
+          </Box>
+        </DialogContent>
+        <DialogActions>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => handleUpdateProduct(product._id, updatedProduct)}
+          >
+            Update
+          </Button>
+          <Button variant="outlined" onClick={handleCloseModal}>
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
 
-            {
-            (false && (
-            <HStack spacing={2} my={2}>
-                <IconButton icon={<EditIcon />} onClick={() => onOpen()} colorScheme='blue'/>
-                <IconButton icon={<DeleteIcon />} onClick={() => handleDeleteProduct(product._id)} colorScheme='red'/>
-            </HStack>)
-            )}
-        </Box>
+      <Snackbar
+        open={toast.open}
+        autoHideDuration={3000}
+        onClose={handleToastClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert severity={toast.severity} onClose={handleToastClose}>
+          {toast.message}
+        </Alert>
+      </Snackbar>
+    </>
+  );
+};
 
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <ModalOverlay />
-            <ModalContent  maxW={['80%', '65%', '40%']} >
-                <ModalHeader>Update Product</ModalHeader>
-                <ModalCloseButton />
-                <ModalBody>
-                    <VStack spacing={4}>
-                        <Input
-                        placeholder='Product Category'
-                        name='category'
-                        value={updatedProduct.category}
-                        onChange={(e) => setUpdatedProduct({...updatedProduct, category: e.target.value})}
-                        />
-                        <Input
-                        placeholder='Product Name'
-                        name='name'
-                        value={updatedProduct.name}
-                        onChange={(e) => setUpdatedProduct({...updatedProduct, name: e.target.value})}
-                        />
-                        <Input
-                        placeholder='Price'
-                        name='price'
-                        type='number'
-                        value={updatedProduct.price}
-                        onChange={(e) => setUpdatedProduct({...updatedProduct, price: e.target.value})}
-                        />
-                        <Input
-                        placeholder='Image URL'
-                        name='image'
-                        value={updatedProduct.image}
-                        onChange={(e) => setUpdatedProduct({...updatedProduct, image: e.target.value})}
-                        />
-                    </VStack>
-                </ModalBody>
-                <ModalFooter>
-                    <Button colorScheme='blue' mr={3} 
-                    onClick={() => handleUpdateProduct(product._id, updatedProduct)}>
-                        Update                            
-                    </Button>
-                    
-                    <Button variant={'ghost'} onClick={onClose}>
-                        Cancel                            
-                    </Button>
-                    
-                </ModalFooter>
-
-            </ModalContent>
-        </Modal>
-
-    </Box>
-    )
-}
-
-export default ProductCard
+export default ProductCard;
