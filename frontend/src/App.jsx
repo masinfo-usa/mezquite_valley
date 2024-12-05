@@ -16,21 +16,22 @@ function App() {
   return (
       <Box px={0}>
         <FixedNavBarMui />
-        <Box bg="#f7f5f0" width="100%" paddingTop={'72px'}>
+        <Box sx={{backgroundColor:"#f7f5f0", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
           <Stack
-            direction="row"
-            justifyContent="center"
+            direction="auto"
+            justifyContent="space-evenly"
             spacing={8}
-            height={10}
+            height={30}
             display={isMediumScreen ? "none" : "flex"}
+            width="80%"
           >
-            <Link href="/" underline="none">Home</Link>
-            <Link href="/create" underline="none">Our Story</Link>
-            <Link href="/AAA_1" underline="none">Our Process</Link>
-            <Link href="#contact-us" underline="none">Contact Us</Link>
-            <Link href="#halal-certifications" underline="none">Halal Certifications</Link>
-            <Link href="#faqs" underline="none">FAQs</Link>
-            <Link href="#faqs" underline="none">TestPage</Link>
+            <Link href="/" color='#000' underline="none">Home</Link>
+            <Link href="/create" color='#000' underline="none">Our Story</Link>
+            <Link href="/AAA_1" color='#000' underline="none">Our Process</Link>
+            <Link href="#contact-us" color='#000' underline="none">Contact Us</Link>
+            <Link href="#halal-certifications" color='#000' underline="none">Halal Certifications</Link>
+            <Link href="#faqs" color='#000' underline="none">FAQs</Link>
+            <Link href="#faqs" color='#000' underline="none">TestPage</Link>
           </Stack>
         </Box>
 

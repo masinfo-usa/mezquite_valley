@@ -55,65 +55,92 @@ const ProductCard = ({ product }) => {
 
   return (
     <>
-      <Card
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          p: 2,
-          border: '0.5px solid #000000',
-          borderRadius: 2,
-          boxShadow: 'none',
-          transition: 'transform 0.1s',
-          '&:hover': { transform: 'translateY(0px)' },
-        }}
-        onClick={handleOpenModal}
-      >
-        <CardMedia
-          component="img"
-          image={product.image}
-          alt={product.name}
-          sx={{
-            borderRadius: 2,
-            aspectRatio: '1 / 1.12',
-            m:'0',
-          }}
-        />
-        <CardContent sx={{ width: '100%'}}>
-          <Button
-            fullWidth
-            variant="outlined"
-            color="success"
-            sx={{ mb: 1 }}
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log('Button Clicked');
-            }}
-          >
-            + Add to Cart
-          </Button>
-          <Typography variant="h6" color="text.primary" align="left">
-            ${product.price}
-          </Typography>
-          <Typography variant="body1" color="text.secondary" align="left">
-            {product.name}
-          </Typography>
-          {false && (<Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-            <IconButton color="primary" onClick={handleOpenModal}>
-              <Edit />
-            </IconButton>
-            <IconButton color="error" onClick={() => handleDeleteProduct(product._id)}>
-              <Delete />
-            </IconButton>
-          </Box>
-        )}
-        </CardContent>
-      </Card>
+      <Box
+  sx={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    maxWidth: {
+      xs: "180PX",
+      sm: "200px", 
+      md: "200px", 
+      lg: "250px", 
+      xl: "250px"
+    },
+    
+    
+    border: '0.0px solid #000000',
+    borderRadius: 2,
+    boxShadow: 'none',
+    transition: 'transform 0.1s',
+    '&:hover': { transform: 'translateY(0px)' },
+    overflow: 'hidden', // Prevent content from spilling outside the box
+  }}
+  onClick={handleOpenModal}
+>
+  <Box
+    component="img"
+    src={product.image}
+    alt={product.name}
+    sx={{
+      width: '100%', // Ensures image fills the container
+      objectFit: 'cover', // Ensures the image fits within the container
+      borderRadius: 2,
+      aspectRatio: '1 / 1.12', // Maintains a specific aspect ratio
+    }}
+  />
+
+
+
+
+
+  <Box
+    sx={{
+      border: '0px solid red',
+      width: '100%',
+      padding: 0,
+      mt: '5px',
+      '&:last-child': {
+        paddingBottom: 0, // Removes default padding applied to the last child
+      },
+    }}
+  >
+    <Button
+      fullWidth
+      variant="outlined"
+      color="success"
+      sx={{ mb: 1 }}
+      onClick={(e) => {
+        e.stopPropagation();
+        console.log('Button Clicked');
+      }}
+    >
+      + Add to Cart
+    </Button>
+    <Typography variant="h6" color="text.primary" align="left">
+      ${product.price}
+    </Typography>
+    <Typography variant="body1" color="text.secondary" align="left">
+      {product.name}
+    </Typography>
+    {false && (
+      <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+        <IconButton color="primary" onClick={handleOpenModal}>
+          <Edit />
+        </IconButton>
+        <IconButton color="error" onClick={() => handleDeleteProduct(product._id)}>
+          <Delete />
+        </IconButton>
+      </Box>
+    )}
+  </Box>
+</Box>
+
 
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <DialogTitle>Update Product</DialogTitle>
         <DialogContent>
-          <Box display="flex" flexDirection="column" gap={2}>
+          <Box display="flex" flexDirection="column" gap={2} sx={{m:3}}>
             <TextField
               label="Product Category"
               value={updatedProduct.category}

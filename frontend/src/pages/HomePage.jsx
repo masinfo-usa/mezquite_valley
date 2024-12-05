@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Typography, Link } from "@mui/material";
+import { Box, Container, Typography, Link, Grid2 } from "@mui/material";
 import { useProductStore } from "../store/product";
 import { useEffect } from "react";
 import ProductCard from "../components/ProductCard";
@@ -13,8 +13,18 @@ const HomePage = () => {
   console.log("products", products);
 
   return (
-    <Container maxWidth="md" sx={{ py: 5 }}>
-      <Box display="flex" flexDirection="column" gap={2}>
+    <Container maxWidth="100%"  sx={{
+      backgroundColor: '#fff',
+      width: {
+        xs: "95%",
+        sm: "95%", 
+        md: "90%", 
+        lg: "75%", 
+        xl: "75%"
+      },
+      p:1
+     }}>
+      <Box display="flex" flexDirection="column" gap={2} sx={{backgroundColor: '#fff', justifyContent:'center'}}>
         <Typography
           variant="h4"
           fontWeight="semibold"
@@ -25,13 +35,13 @@ const HomePage = () => {
           Chicken
         </Typography>
 
-        <Grid container spacing={3}>
+        <Grid2 container spacing={'3vw'} sx={{backgroundColor: '#fff', justifyContent:'center'}}>
           {products.map((product) => (
-            <Grid item xs={12} sm={6} md={4} key={product._id}>
+            <Grid2 item  key={product._id}>
               <ProductCard product={product} />
-            </Grid>
+            </Grid2>
           ))}
-        </Grid>
+        </Grid2>
 
         {products.length === 0 && (
           <Typography

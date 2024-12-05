@@ -72,7 +72,7 @@ function FixedNavBarMui() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: "black", zIndex: theme.zIndex.drawer - 1, boxShadow: 'none', 
+      <AppBar position="fixed" sx={{ backgroundColor: "transparent", zIndex: theme.zIndex.drawer - 1, boxShadow: 'none', 
                }}>
         <Toolbar 
         
@@ -182,7 +182,7 @@ function FixedNavBarMui() {
                 </Button>
               )}
               
-          {!(isSearchFocused && isMediumScreen) && (
+          {!(isSearchFocused || isMediumScreen) && (
               <Button
               name='Login'
               variant="contained"
@@ -313,6 +313,25 @@ function FixedNavBarMui() {
         )
       )}
     </List>
+    <Button
+              name='Login'
+              variant="contained"
+              href="/Login"            
+              sx={{
+                display: 'flex',
+                bgcolor:"#4287f5",
+                alignItems: 'center',
+                borderRadius: 20, 
+                padding: '8px 16px', 
+                textTransform: 'none',
+                boxShadow: 'none', 
+                marginLeft: 1,
+                '&:hover': {
+                  boxShadow: 'none', // Remove shadow on hover
+                }, 
+              }}>
+                Login
+            </Button>
   </Box>
 </Drawer>
 
