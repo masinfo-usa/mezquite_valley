@@ -61,7 +61,7 @@ const ProductCard = ({ product }) => {
     flexDirection: 'column',
     alignItems: 'center',
     maxWidth: {
-      xs: "180PX",
+      xs: "150PX",
       sm: "200px", 
       md: "200px", 
       lg: "250px", 
