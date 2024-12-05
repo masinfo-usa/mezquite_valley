@@ -32,10 +32,10 @@ const HomePage = () => {
           color="text.primary"
           ml={2}
         >
-          Chicken
+          Chicken {window.innerWidth}x{window.innerHeight}
         </Typography>
 
-        <Grid2 container spacing={'3vw'} sx={{backgroundColor: '#fff', justifyContent:'center'}}>
+        <Grid2 container spacing={'5vw'} sx={{backgroundColor: '#fff', justifyContent:'center'}}>
           {products.map((product) => (
             <Grid2 item  key={product._id}>
               <ProductCard product={product} />

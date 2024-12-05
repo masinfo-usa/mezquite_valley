@@ -62,10 +62,10 @@ const ProductCard = ({ product }) => {
     alignItems: 'center',
     maxWidth: {
       xs: "150PX",
-      sm: "200px", 
-      md: "200px", 
-      lg: "250px", 
-      xl: "250px"
+      sm: "150px", 
+      md: "170px", 
+      lg: "200px", 
+      xl: "200px"
     },
     
     
@@ -86,7 +86,7 @@ const ProductCard = ({ product }) => {
       width: '100%', // Ensures image fills the container
       objectFit: 'cover', // Ensures the image fits within the container
       borderRadius: 2,
-      aspectRatio: '1 / 1.12', // Maintains a specific aspect ratio
+      aspectRatio: '1 / 1.02', // Maintains a specific aspect ratio
     }}
   />
 
@@ -117,8 +117,10 @@ const ProductCard = ({ product }) => {
     >
       + Add to Cart
     </Button>
-    <Typography variant="h6" color="text.primary" align="left">
+    {/* fontSize={window.innerWidth*0.03} */}
+    <Typography variant="h6"  color="text.primary" align="left">
       ${product.price}
+      
     </Typography>
     <Typography variant="body1" color="text.secondary" align="left">
       {product.name}
