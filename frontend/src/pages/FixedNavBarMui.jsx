@@ -76,10 +76,11 @@ function FixedNavBarMui() {
                }}>
         <Toolbar 
         
-        sx={{ backgroundColor: "#f7f5f0",  
-        borderBottom: "1px solid #dfdbce", 
+        sx={{ backgroundColor: '#000',//"#f7f5f0",  
+        borderBottom: "1px solid #dfdbce",
+        m:0, p:1, 
         boxShadow: 'none' , display:'flex',
-        justifyContent: "space-between", // Spread left and right sections
+        justifyContent: "space-around", // Spread left and right sections
         alignItems: "center", // Center vertically
   
       }}>
@@ -87,13 +88,12 @@ function FixedNavBarMui() {
           {/* MenuIcon */}
           {isMediumScreen && !isSearchFocused && (
             <IconButton
-              color=""
               edge="start"
               onClick={() => setNavOpen(true)}
               sx={{ marginLeft: '0px',
                 marginRight: '2px',
                 backgroundColor: 'default', 
-                color: 'default', 
+                color: 'yellow', 
                 borderRadius: '8px',
                }}
             >
@@ -102,7 +102,7 @@ function FixedNavBarMui() {
           )}
           {/* Title */}
           {!(isMediumScreen && isSearchFocused) && (
-            <Typography variant="h6" fontWeight={'bold'} color="#000000"  component="a" href="/" sx={{ minWidth:'30%', textDecoration: 'none' }}>
+            <Typography variant="h6" fontWeight={'bold'} color="#fff"  component="a" href="/" sx={{ minWidth:'30%', textDecoration: 'none' }}>
               Your Brand
             </Typography>
           )}
@@ -208,21 +208,22 @@ function FixedNavBarMui() {
               <Button
               name='cart'
               variant="contained"
-              color="primary"
               onClick={() => setCartOpen(true)}
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                backgroundColor: 'yellow',
                 borderRadius: 20, 
                 padding: '8px 16px', 
                 textTransform: 'none',
                 boxShadow: 'none', 
                 marginLeft: 1,
+                color:'#000',
                 '&:hover': {
                   boxShadow: 'none', // Remove shadow on hover
                 }, 
               }}>
-                <ShoppingCartIcon sx={{ marginRight: 0 }} />
+                <ShoppingCartIcon sx={{ marginRight: 0, color:'#000' }} />
                 {cartItemCount}
             </Button>
             )}

@@ -12,30 +12,39 @@ const HomePage = () => {
 
   console.log("products", products);
 
+  let cardCount = 2;
+  let cardWPercentage = 0.80;
+  let cardWidth = cardWPercentage * window.innerWidth/cardCount;
+  let cardsGap = ((1-cardWPercentage) * window.innerWidth)/(cardCount+1);
+
+
+
   return (
     <Container maxWidth="100%"  sx={{
       backgroundColor: '#fff',
       width: {
-        xs: "95%",
+        xs: "100%",
         sm: "95%", 
         md: "90%", 
         lg: "75%", 
         xl: "75%"
       },
-      p:1
+      p:0
      }}>
       <Box display="flex" flexDirection="column" gap={2} sx={{backgroundColor: '#fff', justifyContent:'center'}}>
         <Typography
           variant="h4"
+          fontSize={`30px`}
           fontWeight="semibold"
           alignSelf="flex-start"
           color="text.primary"
           ml={2}
         >
-          Chicken {window.innerWidth}x{window.innerHeight}, Aspect Ratio: {(window.innerWidth/window.innerHeight).toFixed(2)}
+          Chicken 
+          {/* {window.innerWidth}x{window.innerHeight}, Aspect Ratio: {(window.innerWidth/window.innerHeight).toFixed(2)} */}
         </Typography>
 
-        <Grid2 container pl={3} spacing={'5vw'} sx={{backgroundColor: '#fff', justifyContent:'flex-start'}}>
+        <Grid2 container pl={`${cardsGap}px`} columnSpacing={`${cardsGap}px`} rowSpacing={`${cardsGap*1.5}px`} sx={{backgroundColor: '#fff', justifyContent:'flex-start'}}>
           {products.map((product) => (
             <Grid2 item  key={product._id}>
               <ProductCard product={product} />

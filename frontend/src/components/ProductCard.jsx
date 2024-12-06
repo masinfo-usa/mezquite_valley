@@ -53,6 +53,11 @@ const ProductCard = ({ product }) => {
     setToast({ ...toast, open: false });
   };
 
+  let cardCount = 2;
+  let cardWPercentage = 0.80;
+  let cardWidth = cardWPercentage * window.innerWidth/cardCount;
+  let cardsGap = ((1-cardWPercentage) * window.innerWidth)/(cardCount+1);
+
   return (
     <>
       <Box
@@ -61,7 +66,7 @@ const ProductCard = ({ product }) => {
     flexDirection: 'column',
     alignItems: 'center',
     maxWidth: {
-      xs: "150PX",
+      xs: `${cardWidth}px`,
       sm: "150px", 
       md: "170px", 
       lg: "200px", 
@@ -98,27 +103,24 @@ const ProductCard = ({ product }) => {
     sx={{
       border: '0px solid red',
       width: '100%',
-      padding: 0,
       mt: '5px',
-      '&:last-child': {
-        paddingBottom: 0, // Removes default padding applied to the last child
-      },
     }}
   >
     <Button
       fullWidth
       variant="outlined"
       color="success"
-      sx={{ mb: 1 }}
+      sx={{ mb: 1, mt:0, backgroundColor:'#000', color:'yellow'}}
       onClick={(e) => {
         e.stopPropagation();
         console.log('Button Clicked');
       }}
+
     >
       + Add to Cart
     </Button>
     {/* fontSize={window.innerWidth*0.03} */}
-    <Typography variant="h6"  color="text.primary" align="left">
+    <Typography variant="h6" color="text.primary" align="left">
       ${product.price}
       
     </Typography>
