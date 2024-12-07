@@ -180,15 +180,16 @@ const ProductCard = ({ product }) => {
             />
           </Box>
         </DialogContent>
-        <DialogActions>
+        <DialogActions sx={{m:'20px', justifyContent:'space-evenly'}}>
           <Button
             variant="contained"
             color="primary"
             onClick={() => handleUpdateProduct(product._id, updatedProduct)}
+            sx={{backgroundColor: 'yellow', color:'#000', fontWeight:'bold', border: '1px solid #000', boxShadow: 'none'}}
           >
             Update
           </Button>
-          <Button variant="outlined" onClick={handleCloseModal}>
+          <Button variant="outlined" onClick={handleCloseModal} sx={{backgroundColor: '', color:'#000', fontWeight:'bold', border: '1px solid #000', boxShadow: 'none'}}>
             Cancel
           </Button>
         </DialogActions>
