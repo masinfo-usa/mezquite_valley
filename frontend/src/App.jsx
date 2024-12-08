@@ -7,16 +7,17 @@ import AAA_1 from "./pages/AAA_1";
 import FixedNavBar from "./pages/FixedNavBar";
 import FixedNavBarMui from "./pages/FixedNavBarMui";
 import Login from "./pages/Login";
+import Test from "./pages/Test";
 import { useMediaQuery, useTheme } from '@mui/material';
 
 function App() {
   const theme = useTheme();
   const isMediumScreen = useMediaQuery(theme.breakpoints.down('md')); // Returns true if screen width is less than 'md'
-
+//"#f7f5f0"
   return (
-      <Box px={0}>
+      <Box px={0} sx={{backgroundColor:'#fff'}}>
         <FixedNavBarMui />
-        <Box sx={{backgroundColor:"#f7f5f0", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
+        <Box sx={{backgroundColor:"#000", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
           <Stack
             direction="auto"
             justifyContent="space-evenly"
@@ -25,13 +26,13 @@ function App() {
             display={isMediumScreen ? "none" : "flex"}
             width="80%"
           >
-            <Link href="/" color='#000' underline="none">Home</Link>
-            <Link href="/create" color='#000' underline="none">Our Story</Link>
-            <Link href="/AAA_1" color='#000' underline="none">Our Process</Link>
-            <Link href="#contact-us" color='#000' underline="none">Contact Us</Link>
-            <Link href="#halal-certifications" color='#000' underline="none">Halal Certifications</Link>
-            <Link href="#faqs" color='#000' underline="none">FAQs</Link>
-            <Link href="#faqs" color='#000' underline="none">TestPage</Link>
+            <Link href="/" color='#fff' underline="none">Home</Link>
+            <Link href="/create" color='#fff' underline="none">Our Story</Link>
+            <Link href="/AAA_1" color='#fff' underline="none">Our Process</Link>
+            <Link href="#contact-us" color='#fff' underline="none">Contact Us</Link>
+            <Link href="#halal-certifications" color='#fff' underline="none">Halal Certifications</Link>
+            <Link href="#faqs" color='#fff' underline="none">FAQs</Link>
+            <Link href="#faqs" color='#fff' underline="none">TestPage</Link>
           </Stack>
         </Box>
 
@@ -41,7 +42,7 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/AAA_1" element={<AAA_1 />} />
           <Route path="/testpage" element={<FixedNavBar />} />
-          <Route path="/Login" element={<Login />} />
+          <Route path="/Login" element={<Test />} />
         </Routes>
       </Box>
   );

@@ -19,6 +19,8 @@ import { Search as SearchIcon, Menu as MenuIcon, Close as CloseIcon } from "@mui
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { motion } from "framer-motion";
+import { useProductStore } from "../store/product";
+
 
 const MotionBox = motion(Box);
 
@@ -66,7 +68,11 @@ function FixedNavBarMui() {
 
 
 
-
+  const {
+    cartItems, addOneToCart, removeOneFromCart, 
+    deleteFromCart, updateCartItemQuantity, calculateTotalPrice
+  } = useProductStore();
+  
 
 
   return (
@@ -82,7 +88,7 @@ function FixedNavBarMui() {
         boxShadow: 'none' , display:'flex',
         justifyContent: "space-around", // Spread left and right sections
         alignItems: "center", // Center vertically
-  
+          
       }}>
           
           {/* MenuIcon */}
@@ -95,6 +101,7 @@ function FixedNavBarMui() {
                 backgroundColor: 'default', 
                 color: 'yellow', 
                 borderRadius: '8px',
+                
                }}
             >
               <MenuIcon />
@@ -131,7 +138,7 @@ function FixedNavBarMui() {
                 placeholder={placeholders[0]}
                 value={searchText}
                 onFocus={() => setIsSearchFocused(true)}
-                onBlur={() => setIsSearchFocused(false)}
+               // onBlur={() => setIsSearchFocused(false)}
                 onChange={(e) => setSearchText(e.target.value)}
                 sx={{
                   backgroundColor: "#fff",
@@ -172,11 +179,11 @@ function FixedNavBarMui() {
           </Box>
           {isSearchFocused && isMediumScreen && (
                 <Button
-                  onClick={() => {
+                  onMouseUp={() => {
                     setIsSearchFocused(false);
                     setSearchText("");
                   }}
-                  sx={{ marginLeft: 1 }}
+                  sx={{ marginLeft: 1, color:'#fff', textTransform:'none', backgroundColor: '#727272' }}
                 >
                   Cancel
                 </Button>
@@ -212,84 +219,187 @@ function FixedNavBarMui() {
               sx={{
                 display: 'flex',
                 alignItems: 'center',
+                justifyContent: 'center',
                 backgroundColor: 'yellow',
                 borderRadius: 20, 
-                padding: '8px 16px', 
+                padding: '5px 10px', 
                 textTransform: 'none',
                 boxShadow: 'none', 
                 marginLeft: 1,
+                fontWeight: 'bold',
+                fontSize: '15px',
                 color:'#000',
                 '&:hover': {
                   boxShadow: 'none', // Remove shadow on hover
                 }, 
               }}>
                 <ShoppingCartIcon sx={{ marginRight: 0, color:'#000' }} />
-                {cartItemCount}
+                {cartItems.length}
             </Button>
             )}
         </Toolbar>
       </AppBar>
 
-      <Drawer anchor="right" open={isCartOpen} onClose={() => setCartOpen(false)}
-        SlideProps={{
-          timeout: {
-            enter: 100, 
-            exit: 100,  
-          },
-        }}
-        sx={{
-          '& .MuiDrawer-paper': {
-            width: {
-              xs: "100%",
-              sm: "100%", 
-              md: "50%", 
-              lg: "30%", 
-              xl: "25%"
-            }, 
-          },
-        }}
-        >
-         <Box name='cart_header' 
-         sx={{           
-          backgroundColor: '#ffffff',
-          display: 'flex',
-          alignItems: 'center',  // Center elements vertically
-          padding: 1.2,
-          borderBottom: '1px solid #eeeeee',}}>
-            <IconButton onClick={() => setCartOpen(false)}
-              sx={{
-                borderRadius: 2,
-                zIndex: 1,
-                width: '45px',
-                height: '45px',
-                justifySelf: 'center',
-               }}
-              >
-              <CloseIcon />
-            </IconButton>
+      <Drawer
+  anchor="right"
+  open={isCartOpen}
+  onClose={() => setCartOpen(false)}
+  SlideProps={{
+    timeout: {
+      enter: 100,
+      exit: 100,
+    },
+    
+  }}
+  sx={{
+    '& .MuiDrawer-paper': {
+      width: {
+        xs: "100%",
+        sm: "100%",
+        md: "50%",
+        lg: "30%",
+        xl: "25%"
+      },
+    },
+  }}
+>
+  <Box
+    name="cart_header"
+    sx={{
+      backgroundColor: '#000',
+      display: 'flex',
+      position: 'sticky',
+    top: 0,
+    zIndex: 10,
+    alignItems: 'center',
+      padding: 1.2,
+      borderBottom: '3px solid yellow',
+    }}
+  >
+    <IconButton
+  onClick={() => setCartOpen(false)}
+  sx={{
+    borderRadius: 2,
+    zIndex: 1,
+    width: '45px',
+    height: '45px',
+    justifySelf: 'center',
+    color: 'yellow',
+    '&:hover': {
+      color: '', // Color when hovered
+      backgroundColor: 'rgba(100, 100, 100, 0.99)', // Optional: background color on hover
+    },
+    '&:active': {
+      color: '', // Color when clicked/pressed
+      backgroundColor: 'rgba(100, 100, 100, 0.99)', // Optional: background color when pressed
+    },
+  }}
+>
+  <CloseIcon />
+</IconButton>
 
-            <Typography variant="h6" gutterBottom 
-            sx={{ backgroundColor:'#fff', //'red', 
-              mr:'10%', width:'100%', 
-              mt: '10px',
-              textAlign: 'center', fontWeight:'bold' }}>
-              Your Cart
+    <Typography
+      variant="h6"
+      gutterBottom
+      sx={{
+        color: 'yellow',
+        mr: '10%',
+        width: '100%',
+        mt: '10px',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        fontFamily:'Roboto Slab'
+      }}
+    >
+    Your Cart
+    </Typography>
+  </Box>
+
+    {/* Cart Items */}
+    
+    <Box sx={{ p: 2, flexGrow: 1, overflowY: 'auto', backgroundColor: '#fff'}}>
+      <Typography variant="h6" fontFamily='Roboto Slab' gutterBottom>
+        Cart Items
+      </Typography>
+      {cartItems.length === 0 ? (
+        <Typography fontFamily='Roboto Slab'>No items in the cart.</Typography>
+      ) : (
+        cartItems.map((item) => (
+          <Box
+            key={item._id}
+            sx={{ mb: 2, p: 1, border: '1px solid #ddd', borderRadius: 2 }}
+          >
+            <Typography variant="subtitle1" fontFamily='Roboto Slab'>
+              {item.name}: {item.quantity}
             </Typography>
-
+            <Typography variant="body2" fontFamily='Roboto Slab'>Price per unit: ${item.price}</Typography>
+            <Typography variant="body2" fontFamily='Roboto Slab'>Total: ${(item.price * item.quantity).toFixed(2)}</Typography>
+            <Button
+              variant="text"
+              color="error"
+              onClick={() => deleteFromCart(item._id)}
+              sx={{ textTransform: 'none', textDecoration: 'underline', fontFamily:'Roboto Slab', mt: 1 }}
+            >
+              Remove
+            </Button>
           </Box>
+        ))
+      )}
+    </Box>
+    {/* Checkout */}
+{(true) && (    <Box
+  sx={{
+    position: 'sticky',
+    bottom: 0,
+    zIndex: 10,
+    alignContent:'center',
+    height: '150px',
+    p: 2,
+    borderTop: '2px solid yellow',
+    backgroundColor: '#000',
+  }}
+>
+  <Button
+    sx={{
+      backgroundColor: 'yellow',
+      borderRadius: '30px',
+      color: '#000',
+      fontWeight: 'bold',
+      fontSize: '1.1rem',
+      fontFamily: 'Roboto Slab',
+      width: '100%',
+      height: '50px',
+      textTransform: 'none', // Prevent capitalization
+      position: 'relative', // Relative positioning for internal elements
+      display: 'flex',
+      justifyContent: 'center', // Center the text
+      alignItems: 'center', // Align text vertically
+    }}
+    onClick={() => {
+      alert('Proceeding to checkout!');
+    }}
+  >
+    Go to checkout
+    <Box
+      sx={{
+        position: 'absolute',
+        right: '16px', // Position from the right side
+        backgroundColor: '#3f3f00',
+        color: 'yellow',
+        fontSize: '0.9rem',
+        fontWeight: 'bold',
+        px: 2,
+        py: 0.5,
+        borderRadius: '20px',
+      }}
+    >
+      ${calculateTotalPrice()}
+    </Box>
+  </Button>
+</Box>)}
 
+</Drawer>
 
-       <Box sx={{           
-          backgroundColor: '#fff',//'#f1f1f1',
-          width: {
-            
-          }, 
-          height: "100%",
-          padding: 2 }}>
-          
-          <Typography variant="body1" sx={{ textAlign: 'center' }}>Cart items go here...</Typography>
-        </Box>
-      </Drawer>
 
       <Drawer anchor="left" open={isNavOpen} onClose={() => setNavOpen(false)}>
   <Box sx={{ width: 250, padding: 2, position: 'relative' }}>

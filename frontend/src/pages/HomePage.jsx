@@ -10,7 +10,9 @@ const HomePage = () => {
     fetchProducts();
   }, [fetchProducts]);
 
-  console.log("products", products);
+  console.log("products from HomePage: ", products);
+
+
 
   let cardCount = 2;
   let cardWPercentage = 0.80;

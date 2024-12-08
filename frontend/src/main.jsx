@@ -16,7 +16,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Roboto, Arial, sans-serif',
+    fontFamily: 'Roboto Slab, Arial, sans-serif',
     
   },
 });

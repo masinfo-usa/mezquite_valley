@@ -1,6 +1,108 @@
 import {create} from "zustand"
 
-export const useProductStore = create((set) => ({
+
+const saveToLocalStorage = (key, value) => {
+    localStorage.setItem(key, JSON.stringify(value));
+  };
+  
+const getFromLocalStorage = (key, defaultValue) => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : defaultValue;
+  };
+
+
+export const useProductStore = create((set, get) => ({
+
+    // Cart state and methods
+    cartItems: getFromLocalStorage("cartItems", []),
+
+    addOneToCart: (product) =>
+        set((state) => {
+          const existingProduct = state.cartItems.find((item) => item._id === product._id);
+          const updatedCartItems = existingProduct
+            ? state.cartItems.map((item) => {
+                if (item._id === product._id) {
+                    console.log("p_id: "+item._id);
+                    console.log("product quantity: " + item.quantity); // log before returning the updated item
+                    return { ...item, quantity: item.quantity + 1 };
+                }
+                return item;
+              })
+            : [...state.cartItems, { ...product, quantity: 1 }];
+          
+          saveToLocalStorage("cartItems", updatedCartItems); // Save updated cart to localStorage
+          return { cartItems: updatedCartItems };
+        }),
+
+        
+    removeOneFromCart: (product) =>
+        set((state) => {
+            const existingProduct = state.cartItems.find((item) => item._id === product._id);
+            let updatedCartItems;
+        
+            if (existingProduct) {
+            if (existingProduct.quantity > 1) {
+                // If the quantity is greater than 1, just decrease the quantity
+                updatedCartItems = state.cartItems.map((item) =>
+                item._id === product._id
+                    ? { ...item, quantity: item.quantity - 1 }
+                    : item
+                );
+            } else {
+                // If the quantity is 1, remove the item from the cart
+                updatedCartItems = state.cartItems.filter((item) => item._id !== product._id);
+            }
+            } else {
+            updatedCartItems = state.cartItems; // If the product is not in the cart, do nothing
+            }
+        
+            saveToLocalStorage("cartItems", updatedCartItems); // Save updated cart to localStorage
+            return { cartItems: updatedCartItems };
+        }),
+      
+    deleteFromCart: (id) =>
+        set((state) => {
+            const updatedCartItems = state.cartItems.filter((item) => item._id !== id);
+            saveToLocalStorage("cartItems", updatedCartItems); // Save updated cart to localStorage
+            return { cartItems: updatedCartItems };
+        }),
+  
+    updateCartItemQuantity: (id, quantity) =>
+        set((state) => {
+            const updatedCartItems = state.cartItems.map((item) =>
+            item._id === id ? { ...item, quantity } : item
+            );
+            saveToLocalStorage("cartItems", updatedCartItems); // Save updated cart to localStorage
+            return { cartItems: updatedCartItems };
+        }),
+  
+    clearCart: () => {
+      saveToLocalStorage("cartItems", []); // Clear cart in localStorage
+      set({ cartItems: [] });
+    },
+
+    calculateTotalPrice: () =>
+        get()
+            .cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+            .toFixed(2),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
     products: [],
     setProducts: (products) => set({products}),
     
@@ -55,7 +157,8 @@ export const useProductStore = create((set) => ({
         }));
         return {success:true, message: data.message};
 
-    }
+    },
 
 
-}));  
+
+}));
