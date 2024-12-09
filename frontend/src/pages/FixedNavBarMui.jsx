@@ -272,8 +272,8 @@ function FixedNavBarMui() {
     top: 0,
     zIndex: 10,
     alignItems: 'center',
-      padding: 1.2,
-      borderBottom: '3px solid yellow',
+      padding: 0.5,
+      borderBottom: '2px solid yellow',
     }}
   >
     <IconButton
@@ -327,8 +327,30 @@ function FixedNavBarMui() {
         cartItems.map((item) => (
           <Box
             key={item._id}
-            sx={{ mb: 2, p: 1, border: '1px solid #ddd', borderRadius: 2 }}
+             sx={{ mb: 2, p: 1, 
+              display: 'flex',
+              flexDirection: 'row',  
+              border: '1px solid #ddd', borderRadius: 2 }}
           >
+            <Box
+              component="img"
+              src={item.image}
+              alt={item.name}
+              sx={{
+                width: '20%',
+                objectFit: 'cover',
+                borderRadius: 2,
+                aspectRatio: '1 / 1.02',
+              }}
+            />
+
+            <Box              
+            sx={{ mb: 2, p: 1, 
+              display: 'flex',
+              width: '100%',
+              flexDirection: 'column',  
+              border: '1px solid #ddd', borderRadius: 2 }}> 
+            
             <Typography variant="subtitle1" fontFamily='Roboto Slab'>
               {item.name}: {item.quantity}
             </Typography>
@@ -342,6 +364,11 @@ function FixedNavBarMui() {
             >
               Remove
             </Button>
+            
+            
+            </Box>
+
+
           </Box>
         ))
       )}
@@ -353,8 +380,8 @@ function FixedNavBarMui() {
     bottom: 0,
     zIndex: 10,
     alignContent:'center',
-    height: '150px',
-    p: 2,
+   // height: '150px',
+    p: '15px 10px 30px 10px',
     borderTop: '2px solid yellow',
     backgroundColor: '#000',
   }}
@@ -418,7 +445,8 @@ function FixedNavBarMui() {
     <List sx={{ paddingTop: 6 }}>
       {["Home", "Our Story", "Our Process", "Contact Us", "Halal Certifications", "FAQs"].map(
         (text) => (
-          <ListItem button key={text} onClick={() => setNavOpen(false)}>
+
+          <ListItem button key={text} href='/'>
             <ListItemText primary={text} />
           </ListItem>
         )
