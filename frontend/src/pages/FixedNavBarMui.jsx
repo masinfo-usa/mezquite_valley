@@ -21,6 +21,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useProductStore } from "../store/product";
 
+import { Add, Remove, Delete } from '@mui/icons-material';
+
 
 const MotionBox = motion(Box);
 
@@ -317,7 +319,7 @@ function FixedNavBarMui() {
 
     {/* Cart Items */}
     
-    <Box sx={{ p: 2, flexGrow: 1, overflowY: 'auto', backgroundColor: '#fff'}}>
+    <Box sx={{ pl: 1, flexGrow: 1, overflowY: 'auto', backgroundColor: '#fff'}}>
       <Typography variant="h6" fontFamily='Roboto Slab' gutterBottom>
         Cart Items
       </Typography>
@@ -325,51 +327,229 @@ function FixedNavBarMui() {
         <Typography fontFamily='Roboto Slab'>No items in the cart.</Typography>
       ) : (
         cartItems.map((item) => (
+          
           <Box
-            key={item._id}
-             sx={{ mb: 2, p: 1, 
-              display: 'flex',
-              flexDirection: 'row',  
-              border: '1px solid #ddd', borderRadius: 2 }}
-          >
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: '80px 1fr auto',
+            gap: 2,
+            pl: 0,
+            pb: 3,
+            mb: 3,
+        //    border: '0px solid #ddd',
+            borderBottom: '1px solid #ddd',
+            borderRadius: 0,
+            backgroundColor: '#fff',
+          }}
+        >
+          {/* Product Image */}
+          <Box
+            component="img"
+            src={item.image}
+            alt={item.name}
+            sx={{
+              width: 80,
+              height: 80,
+              borderRadius: 2,
+              objectFit: 'cover',
+            }}
+          />
+        
+          {/* Product Details and Price */}
+          <Box sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            {/* Title and Price Row */}
             <Box
-              component="img"
-              src={item.image}
-              alt={item.name}
               sx={{
-                width: '20%',
-                objectFit: 'cover',
-                borderRadius: 2,
-                aspectRatio: '1 / 1.02',
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'flex-start',
+                marginBottom: 1,
               }}
-            />
-
-            <Box              
-            sx={{ mb: 2, p: 1, 
-              display: 'flex',
-              width: '100%',
-              flexDirection: 'column',  
-              border: '1px solid #ddd', borderRadius: 2 }}> 
-            
-            <Typography variant="subtitle1" fontFamily='Roboto Slab'>
-              {item.name}: {item.quantity}
-            </Typography>
-            <Typography variant="body2" fontFamily='Roboto Slab'>Price per unit: ${item.price}</Typography>
-            <Typography variant="body2" fontFamily='Roboto Slab'>Total: ${(item.price * item.quantity).toFixed(2)}</Typography>
-            <Button
-              variant="text"
-              color="error"
-              onClick={() => deleteFromCart(item._id)}
-              sx={{ textTransform: 'none', textDecoration: 'underline', fontFamily:'Roboto Slab', mt: 1 }}
             >
-              Remove
-            </Button>
-            
-            
+              {/* Title */}
+              <Typography
+                variant="subtitle1"
+                sx={{
+                  fontWeight: 'normal',
+                  whiteSpace: 'normal',
+                  wordWrap: 'break-word',
+                  fontSize: '0.8rem',
+                  flex: 1,
+                  marginRight: 1,
+                }}
+              >
+                {item.name}
+              </Typography>
+        
+              {/* Price Details */}
+              <Box sx={{ textAlign: 'right', minWidth: '80px' }}>
+                <Typography
+                  sx={{
+                    fontWeight: 'bold',
+                    color: '#333',
+                    fontSize: '0.9rem',
+                  }}
+                >
+                  ${item.price}
+                </Typography>
+                {item.priceBeforeDiscount && (
+                  <Typography
+                    sx={{
+                      textDecoration: 'line-through',
+                      fontSize: '0.85rem',
+                      color: '#888',
+                    }}
+                  >
+                    ${item.priceBeforeDiscount}
+                  </Typography>
+                )}
+              </Box>
             </Box>
+        
+            {/* Extra Info item.extraInfo */}
+            {true && (
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#555',
+                  fontSize: '0.85rem',
+                  marginBottom: 1,
+                }}
+              >
+                {item.extraInfo}
+                $2.5/Lb
+              </Typography>
+            )}
+        
+            {/* Action Row */}
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                marginTop: 'auto',
+              }}
+            >
+              {/* Remove Button */}
+              <Box
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 0.0,
+                  cursor: 'pointer',
+                  color: '#727272',
+                  textDecoration: 'underline',
+                }}
+                onClick={() => handleRemoveFromCart(item._id)}
+              >
+                <Delete fontSize="vs" />
+                <Typography
+                  variant="body2"
+                  sx={{ fontWeight: 'bold', color: '#727272', textDecoration: 'underline' }}
+                >
+                  Remove
+                </Typography>
+              </Box>
+        
+              {/* Quantity Adjuster */}
+              <Box
+    sx={{
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      backgroundColor: '#fff',
+      color: 'yellow',
+      borderRadius: 2,
+      border: '1px solid #000',
+      padding: '0 0px',
+      width: 110,
+      height: 30,
+      marginRight: 2,
+    }}
+    onClick={(e) => e.stopPropagation()}
+  >
+    <IconButton
+      size="small"
+      sx={{ color: '#000'}}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleRemoveFromCart();
+      }}
+    >
+      {item.quantity === 1 ? <Delete /> : <Remove />}
+    </IconButton>
+    <Typography sx={{ color: '#000', fontSize: 16, fontWeight: 'bold' }}>
+      {item.quantity}
+    </Typography>
+    <IconButton
+      size="small"
+      sx={{ color: '#000' }}
+      onClick={(e) => {
+        e.stopPropagation();
+        handleAddToCart();
+      }}
+    >
+      <Add />
+    </IconButton>
+  </Box>
 
 
+              
+            </Box>
           </Box>
+        </Box>
+        
+
+
+
+
+
+          
+          // <Box
+          //   key={item._id}
+          //    sx={{ mb: 2, p: 1, 
+          //     display: 'flex',
+          //     flexDirection: 'row',  
+          //     border: '1px solid #ddd', borderRadius: 2 }}
+          // >
+          //   <Box
+          //     component="img"
+          //     src={item.image}
+          //     alt={item.name}
+          //     sx={{
+          //       width: '20%',
+          //       objectFit: 'cover',
+          //       borderRadius: 2,
+          //       aspectRatio: '1 / 1.02',
+          //     }}
+          //   />
+
+          //   <Box              
+          //   sx={{ mb: 2, p: 1, 
+          //     display: 'flex',
+          //     width: '100%',
+          //     flexDirection: 'column',  
+          //     border: '1px solid #ddd', borderRadius: 2 }}> 
+            
+          //   <Typography variant="subtitle1" fontFamily='Roboto Slab'>
+          //     {item.name}: {item.quantity}
+          //   </Typography>
+          //   <Typography variant="body2" fontFamily='Roboto Slab'>Price per unit: ${item.price}</Typography>
+          //   <Typography variant="body2" fontFamily='Roboto Slab'>Total: ${(item.price * item.quantity).toFixed(2)}</Typography>
+          //   <Button
+          //     variant="text"
+          //     color="error"
+          //     onClick={() => deleteFromCart(item._id)}
+          //     sx={{ textTransform: 'none', textDecoration: 'underline', fontFamily:'Roboto Slab', mt: 1 }}
+          //   >
+          //     Remove
+          //   </Button>
+            
+            
+          //   </Box>
+
+
+          // </Box>
         ))
       )}
     </Box>
