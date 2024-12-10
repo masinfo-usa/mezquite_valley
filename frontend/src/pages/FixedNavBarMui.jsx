@@ -331,8 +331,8 @@ function FixedNavBarMui() {
           <Box
           sx={{
             display: 'grid',
-            gridTemplateColumns: '80px 1fr auto',
-            gap: 2,
+            gridTemplateColumns: '70px 1fr auto',
+            gap: 1,
             pl: 0,
             pb: 3,
             mb: 3,
@@ -348,8 +348,8 @@ function FixedNavBarMui() {
             src={item.image}
             alt={item.name}
             sx={{
-              width: 80,
-              height: 80,
+              width: 60,
+              height: 60,
               borderRadius: 2,
               objectFit: 'cover',
             }}
@@ -363,7 +363,8 @@ function FixedNavBarMui() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                marginBottom: 1,
+                marginBottom: 0.25,
+                backgroundColor: '#fff'
               }}
             >
               {/* Title */}
@@ -373,7 +374,7 @@ function FixedNavBarMui() {
                   fontWeight: 'normal',
                   whiteSpace: 'normal',
                   wordWrap: 'break-word',
-                  fontSize: '0.8rem',
+                  fontSize: '0.9rem',
                   flex: 1,
                   marginRight: 1,
                 }}
@@ -388,9 +389,10 @@ function FixedNavBarMui() {
                     fontWeight: 'bold',
                     color: '#333',
                     fontSize: '0.9rem',
+                    pr: 1,
                   }}
                 >
-                  ${item.price}
+                  ${item.price * item.quantity}
                 </Typography>
                 {item.priceBeforeDiscount && (
                   <Typography
@@ -412,7 +414,7 @@ function FixedNavBarMui() {
                 variant="body2"
                 sx={{
                   color: '#555',
-                  fontSize: '0.85rem',
+                  fontSize: '0.75rem',
                   marginBottom: 1,
                 }}
               >
@@ -428,28 +430,29 @@ function FixedNavBarMui() {
                 justifyContent: 'space-between',
                 alignItems: 'center',
                 marginTop: 'auto',
+                backgroundColor:'#fff'
               }}
             >
               {/* Remove Button */}
-              <Box
+              <Button
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: 0.0,
-                  cursor: 'pointer',
                   color: '#727272',
-                  textDecoration: 'underline',
+                  borderRadius: 2,
+                  pl:0,
                 }}
                 onClick={() => handleRemoveFromCart(item._id)}
               >
                 <Delete fontSize="vs" />
                 <Typography
                   variant="body2"
-                  sx={{ fontWeight: 'bold', color: '#727272', textDecoration: 'underline' }}
+                  sx={{ fontWeight: 'bold', color: '#727272', textDecoration: 'none', textTransform:'none' }}
                 >
                   Remove
                 </Typography>
-              </Box>
+              </Button>
         
               {/* Quantity Adjuster */}
               <Box
@@ -462,9 +465,9 @@ function FixedNavBarMui() {
       borderRadius: 2,
       border: '1px solid #000',
       padding: '0 0px',
-      width: 110,
-      height: 30,
-      marginRight: 2,
+      width: '40%',
+      height: '90%',
+      marginRight: 1,
     }}
     onClick={(e) => e.stopPropagation()}
   >
