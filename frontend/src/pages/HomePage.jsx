@@ -50,7 +50,7 @@ const HomePage = () => {
           {products.map((product) => (
             <Grid2 item  key={product._id}>
               <ProductCard product={product} />
-            </Grid2>
+              </Grid2>
           ))}
         </Grid2>
 

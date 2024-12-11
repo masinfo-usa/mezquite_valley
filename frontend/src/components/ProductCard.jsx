@@ -161,7 +161,7 @@ const ProductCard = ({ product }) => {
             justifyContent: expanded ? 'space-between' : 'center',
             backgroundColor: '#000',
             color: 'yellow',
-            borderRadius: 2,
+            borderRadius: 5,
             border: itemCount === 0 ? '3px solid #fff' : '3px solid yellow',
             padding: expanded ? '0 5px' : 0,
             width: expanded ? 'calc(80% - 16px)' : 40,
@@ -220,7 +220,7 @@ const ProductCard = ({ product }) => {
           <Typography variant="h6" color="text.primary" align="left">
             ${product.price}
           </Typography>
-          <Typography variant="body1" color="text.secondary" align="left">
+          <Typography varaiant="body1" color="text.secondary" align="left">
             {product.name}
           </Typography>
         </Box>
