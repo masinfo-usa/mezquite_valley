@@ -20,8 +20,10 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useProductStore } from "../store/product";
+import ProductPanel from "../components/ProductPanel";
 
-import { Add, Remove, Delete } from '@mui/icons-material';
+
+
 
 
 const MotionBox = motion(Box);
@@ -345,205 +347,211 @@ function FixedNavBarMui() {
       ) : (
         cartItems.map((item) => (
           
-          <Box
-          name='panelParentGrid'
-          sx={{
-            display: 'grid',
-            gridTemplateColumns: '72px auto auto',
-            gap: 0,
-            pl: 0,
-            pb: 3,
-            mb: 3,
-            ml: 0,
-            fontFamily:'Roboto Slab',
-        //    border: '0px solid #ddd',
-            borderBottom: '1px solid #e1e1e1',
-            borderRadius: 0,
-            backgroundColor: '#fff',
-          }}
-        >
-          {/* Product Image */}
-          <Box
-            component="img"
-            src={item.image}
-            alt={item.name}
-            sx={{
-              width: '90%',
-              aspectRatio:'1/1',
+          <ProductPanel product={item} />
+
+
+        //   <Box
+        //   name='panelParentGrid'
+        //   sx={{
+        //     display: 'grid',
+        //     gridTemplateColumns: '72px auto auto',
+        //     gap: 0,
+        //     pl: 0,
+        //     pb: 3,
+        //     mb: 3,
+        //     ml: 0,
+        //     fontFamily:'Roboto Slab',
+        // //    border: '0px solid #ddd',
+        //     borderBottom: '1px solid #e1e1e1',
+        //     borderRadius: 0,
+        //     backgroundColor: '#fff',
+        //   }}
+        // >
+        //   {/* Product Image */}
+        //   <Box
+        //     component="img"
+        //     src={item.image}
+        //     alt={item.name}
+        //     sx={{
+        //       width: '90%',
+        //       aspectRatio:'1/1',
               
-              borderRadius: 2,
-              objectFit: 'cover',
-            }}
-          />
+        //       borderRadius: 2,
+        //       objectFit: 'cover',
+        //     }}
+        //   />
         
-          {/* Product Details*/}
-          <Box sx={{ display: 'flex', flexDirection: 'column',
-            pl:0, overflow: 'hidden', backgroundColor:'#fff' }}>
-            {/* Title and Price Row */}
-            <Box
-              sx={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                marginBottom: 0.25,     
-                backgroundColor: ''
-              }}
-            >
-              {/* Title */}
-              <Typography
-                variant="body1"
-                sx={{
-                  fontWeight: 'normal',
-                  whiteSpace: 'normal',
-                  wordWrap: 'break-word',
-                  fontSize: '0.9rem',
-                  flex: 1,
-                  fontFamily:'Roboto Slab',
-                  marginRight: 1,
-                  color: '#777777'
-                }}
-              >
-                {item.name}
-              </Typography>
+        //   {/* Product Details*/}
+        //   <Box sx={{ display: 'flex', flexDirection: 'column',
+        //     pl:0, overflow: 'hidden', backgroundColor:'#fff' }}>
+        //     {/* Title and Price Row */}
+        //     <Box
+        //       sx={{
+        //         display: 'flex',
+        //         justifyContent: 'space-between',
+        //         alignItems: 'flex-start',
+        //         marginBottom: 0.25,     
+        //         backgroundColor: ''
+        //       }}
+        //     >
+        //       {/* Title */}
+        //       <Typography
+        //         variant="body1"
+        //         sx={{
+        //           fontWeight: 'normal',
+        //           whiteSpace: 'normal',
+        //           wordWrap: 'break-word',
+        //           fontSize: '0.9rem',
+        //           flex: 1,
+        //           fontFamily:'Roboto Slab',
+        //           marginRight: 1,
+        //           color: '#777777'
+        //         }}
+        //       >
+        //         {item.name}
+        //       </Typography>
         
-            </Box>
+        //     </Box>
 
 
 
 
-            {/* Extra Info item.extraInfo */}
-            {true && (
-              <Typography
-                variant="body2"
-                sx={{
-                  backgroundColor: '#fff',
-                  color: '#555',
-                  fontSize: '0.75rem',
-                  fontFamily:'Roboto Slab',
-                  marginBottom: 2,
+        //     {/* Extra Info item.extraInfo */}
+        //     {true && (
+        //       <Typography
+        //         variant="body2"
+        //         sx={{
+        //           backgroundColor: '#fff',
+        //           color: '#555',
+        //           fontSize: '0.75rem',
+        //           fontFamily:'Roboto Slab',
+        //           marginBottom: 2,
 
-                }}
-              >
-                {item.extraInfo}
-                $2.5/Lb
-              </Typography>
-            )}
+        //         }}
+        //       >
+        //         {item.extraInfo}
+        //         $2.5/Lb
+        //       </Typography>
+        //     )}
         
             
-          </Box>
+        //   </Box>
 
-              {/* Col3: Price Details */}
-              <Box sx={{ textAlign: 'right',}}>
-                <Typography
-                  sx={{
-                    fontWeight: 'bold',
-                    color: '#333',
-                    fontSize: '0.9rem',
-                    pr: 1,
-                    fontFamily:'Roboto Slab',
-                  }}
-                >
-                  ${item.price * item.quantity}
-                </Typography>
-                {true && (
-                  <Typography
-                    sx={{
-                      textDecoration: 'line-through',
-                      fontSize: '0.85rem',
-                      color: '#f77b72',
-                      pr: 1,
-                      fontFamily:'Roboto Slab',
-                    }}
-                  >
-                    $24.99 {item.priceBeforeDiscount}
-                  </Typography>
-                )}
-              </Box>
+        //       {/* Col3: Price Details */}
+        //       <Box sx={{ textAlign: 'right',}}>
+        //         <Typography
+        //           sx={{
+        //             fontWeight: 'bold',
+        //             color: '#333',
+        //             fontSize: '0.9rem',
+        //             pr: 1,
+        //             fontFamily:'Roboto Slab',
+        //           }}
+        //         >
+        //           ${item.price * item.quantity}
+        //         </Typography>
+        //         {true && (
+        //           <Typography
+        //             sx={{
+        //               textDecoration: 'line-through',
+        //               fontSize: '0.85rem',
+        //               color: '#f77b72',
+        //               pr: 1,
+        //               fontFamily:'Roboto Slab',
+        //             }}
+        //           >
+        //             $24.99 {item.priceBeforeDiscount}
+        //           </Typography>
+        //         )}
+        //       </Box>
 
 
-          {/* Action Row */}
-          <Box
-              sx={{
-                display: 'flex',
-                gridColumn: '2/4',
-                gridRow: '3',
-              //  width:'50%',
-                justifyContent: 'right',
-                alignItems: 'center',
-                marginTop: 'auto',
-                backgroundColor:'#fff'
-              }}
-            >
-              {/* Remove Button */}
-              <Button
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 0.0,
-                  color: '#999999',
-                  borderRadius: 2,
-                  mr:3,
-                }}
-                onClick={() => handleRemoveFromCart(item._id)}
-              >
-                <Delete fontSize="vs" />
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: 'bold', color: '#999999', fontFamily:'Roboto Slab',
-                    textDecoration: 'none', textTransform:'none' }}
-                >
-                  Remove
-                </Typography>
-              </Button>
+        //   {/* Action Row */}
+        //   <Box
+        //       sx={{
+        //         display: 'flex',
+        //         gridColumn: '2/4',
+        //         gridRow: '3',
+        //       //  width:'50%',
+        //         justifyContent: 'flex-end',
+        //         alignItems: 'center',
+        //         marginTop: 'auto',
+        //         backgroundColor:'#fff'
+        //       }}
+        //     >
+
+
+
+        //         {/* Remove Button */}
+        //         <Button
+        //         sx={{
+        //           display: 'flex',
+        //           alignItems: 'center',
+        //           gap: 0.0,
+        //           color: '#999999',
+        //           borderRadius: 2,
+        //           mr:3,
+        //         }}
+        //         onClick={() => handleRemoveFromCart(item._id)}
+        //       >
+        //         {/* <Delete fontSize="vs" /> */}
+        //         <Typography
+        //           variant="body2"
+        //           sx={{ fontWeight: 'bold', color: '#999999', fontFamily:'Roboto Slab',
+        //             textDecoration: 'underline', textTransform:'none' }}
+        //         >
+        //           Remove
+        //         </Typography>
+        //       </Button>
+
         
-              {/* Quantity Adjuster */}
-              <Box
-              sx={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                backgroundColor: '#fff',
-                color: 'yellow',
-                borderRadius: 5,
-                border: '1px solid #e2e2e2',
-                padding: '0 0px',
-                width: '135px',
-               // height: '30px',
-                marginRight: 1,
-              }}
-              onClick={(e) => e.stopPropagation()}
-              >
-              <IconButton
-                size="small"
-                sx={{ color: '#727272'}}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleRemoveFromCart();
-                }}
-              >
-                {item.quantity === 1 ? <Delete  fontSize="sm" sx={{ml:'3px'}}/> : <Remove />}
-              </IconButton>
-              <Typography sx={{ color: '#727272', fontSize: 16, fontWeight: 'bold', fontFamily:'Roboto Slab', }}>
-                {item.quantity}
-              </Typography>
-              <IconButton
-                size="small"
-                sx={{ color: '#727272' }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleAddToCart();
-                }}
-              >
-                <Add />
-              </IconButton>
-            </Box>
-
+        //       {/* Quantity Adjuster */}
+        //       <Box
+        //       sx={{
+        //         display: 'flex',
+        //         alignItems: 'center',
+        //         justifyContent: 'space-between',
+        //         backgroundColor: '#fff',
+        //         color: 'yellow',
+        //         borderRadius: 2,
+        //         border: '1px solid #e2e2e2',
+        //         padding: '0 0px',
+        //         width: '135px',
+        //        // height: '30px',
+        //         marginRight: 1,
+        //       }}
+        //       onClick={(e) => e.stopPropagation()}
+        //       >
+        //       <IconButton
+        //         size="small"
+        //         sx={{ color: '#727272'}}
+        //         onClick={(e) => {
+        //           e.stopPropagation();
+        //           handleRemoveFromCart();
+        //         }}
+        //       >
+        //         {item.quantity === 1 ? <Delete  fontSize="sm" sx={{ml:'3px'}}/> : <Remove />}
+        //       </IconButton>
+        //       <Typography sx={{ color: '#727272', fontSize: 16, fontWeight: 'bold', fontFamily:'Roboto Slab', }}>
+        //         {item.quantity}
+        //       </Typography>
+        //       <IconButton
+        //         size="small"
+        //         sx={{ color: '#727272' }}
+        //         onClick={(e) => {
+        //           e.stopPropagation();
+        //           handleAddToCart();
+        //         }}
+        //       >
+        //         <Add />
+        //       </IconButton>
+        //     </Box>
 
               
-            </Box>
+        //     </Box>
 
 
-        </Box>
+        // </Box>
         
 
 
