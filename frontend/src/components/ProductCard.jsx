@@ -110,7 +110,7 @@ const ProductCard = ({ product }) => {
 
 
   let cardCount = 2;
-  let cardWPercentage = 0.80;
+  let cardWPercentage = 0.30;
   let cardWidth = cardWPercentage * window.innerWidth/cardCount;
   let cardsGap = ((1-cardWPercentage) * window.innerWidth)/(cardCount+1);
 
@@ -124,13 +124,13 @@ const ProductCard = ({ product }) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          maxWidth: {
-            xs: `${cardWidth}px`,
-            sm: '150px',
-            md: '170px',
-            lg: '200px',
-            xl: '200px',
-          },
+          // maxWidth: {
+          //   xs: `${cardWidth}px`,
+          //   sm: '150px',
+          //   md: '170px',
+          //   lg: '200px',
+          //   xl: `${cardWidth}px`,
+          // },
           borderRadius: 2,
           overflow: 'hidden',
           position: 'relative',

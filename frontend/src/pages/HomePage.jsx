@@ -40,19 +40,43 @@ const HomePage = () => {
           fontWeight="semibold"
           alignSelf="flex-start"
           color="text.primary"
-          ml={2}
+          ml={0}
         >
           Chicken 
           {/* {window.innerWidth}x{window.innerHeight}, Aspect Ratio: {(window.innerWidth/window.innerHeight).toFixed(2)} */}
         </Typography>
 
-        <Grid2 container pl={`${cardsGap}px`} columnSpacing={`${cardsGap}px`} rowSpacing={`${cardsGap*1.5}px`} sx={{backgroundColor: '#fff', justifyContent:'flex-start'}}>
+        {/* <Grid2 container pl={`${cardsGap}px`} columnSpacing={`${cardsGap}px`} rowSpacing={`${cardsGap*1.5}px`} sx={{backgroundColor: '#fff', justifyContent:'flex-start'}}>
           {products.map((product) => (
             <Grid2 item  key={product._id}>
               <ProductCard product={product} />
               </Grid2>
           ))}
-        </Grid2>
+        </Grid2> */}
+
+
+        <Box
+          name="panelParentGrid"
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            columnGap: '5vw',
+            rowGap: '50px',
+            pb: 3,
+            mb: 3,
+            justifyContent:'space-evenly',
+            fontFamily: 'Roboto Slab',
+            backgroundColor: '#eee',
+          }}
+        >
+          {products.map((product) => (
+              <ProductCard product={product} />
+          ))}
+
+
+        </Box>
+
+
 
         {products.length === 0 && (
           <Typography

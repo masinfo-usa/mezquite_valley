@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 const ProductPanel = ({ product }) => {
   const { addOneToCart, removeOneFromCart, deleteFromCart } = useProductStore();
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 500);
@@ -59,7 +59,7 @@ const ProductPanel = ({ product }) => {
           </Box>
 
           {/* Skeleton for Price Details */}
-          <Skeleton variant="text" width="50%" height={24} sx={{ textAlign: 'right' }} />
+          <Skeleton variant="text" width="50%" height={50} sx={{ textAlign: 'right' }} />
         </Box>
       ) : (
         <Box
@@ -139,7 +139,8 @@ const ProductPanel = ({ product }) => {
                 }}
               >
                 {product.extraInfo}
-                $2.5/Lb
+                {true ? '$'+(product.price) + ' / ' + product.measuringUnit : ''}
+                
               </Typography>
             )}
           </Box>
