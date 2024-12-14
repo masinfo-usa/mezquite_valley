@@ -15,7 +15,7 @@ import {
 import { Add, Remove, Delete } from '@mui/icons-material';
 import { useProductStore } from '../store/product';
 
-const ProductCard = ({ product }) => {
+const ProductCard = ({ product, onCardClick }) => {
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
   const collapseTimeout = useRef(null);
   const [expanded, setExpanded] = useState(false);
@@ -135,7 +135,8 @@ const ProductCard = ({ product }) => {
           overflow: 'hidden',
           position: 'relative',
         }}
-        onClick={handleOpenModal}
+//        onClick={handleOpenModal}
+        onClick={onCardClick}
       >
         {/* Product Image */}
         <Box
@@ -144,6 +145,7 @@ const ProductCard = ({ product }) => {
           alt={product.name}
           sx={{
             width: '100%',
+            m: '0%',
             objectFit: 'cover',
             borderRadius: 2,
             aspectRatio: '1 / 1.02',

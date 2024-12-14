@@ -1,31 +1,39 @@
 import { Box, Container, Typography, Link, Grid2 } from "@mui/material";
 import { useProductStore } from "../store/product";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 const HomePage = () => {
-  const { fetchProducts, products } = useProductStore();
+  const { fetchProducts, products, currentAspectRatio } = useProductStore();
 
   useEffect(() => {
     fetchProducts();
   }, [fetchProducts]);
+  
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  console.log("products from HomePage: ", products);
+  const handleCardClick = (product) => {
+    setSelectedProduct(product);
+  };
 
+  const handleClose = () => {
+    setSelectedProduct(null);
+  };
 
 
   let cardCount = 2;
   let cardWPercentage = 0.80;
   let cardWidth = cardWPercentage * window.innerWidth/cardCount;
   let cardsGap = ((1-cardWPercentage) * window.innerWidth)/(cardCount+1);
-
+  let aspectRatio = currentAspectRatio;
 
 
   return (
     <Container maxWidth="100%"  sx={{
       backgroundColor: '#fff',
       width: {
-        xs: "100%",
+        xs: "95%",
         sm: "95%", 
         md: "90%", 
         lg: "75%", 
@@ -43,7 +51,8 @@ const HomePage = () => {
           ml={0}
         >
           Chicken 
-          {/* {window.innerWidth}x{window.innerHeight}, Aspect Ratio: {(window.innerWidth/window.innerHeight).toFixed(2)} */}
+          Aspect Ratio: {currentAspectRatio.toFixed(2)}, {(currentAspectRatio * 2.5).toFixed(2)}
+          {/* {window.innerWidth}x{window.innerHeight},  */}
         </Typography>
 
         {/* <Grid2 container pl={`${cardsGap}px`} columnSpacing={`${cardsGap}px`} rowSpacing={`${cardsGap*1.5}px`} sx={{backgroundColor: '#fff', justifyContent:'flex-start'}}>
@@ -59,18 +68,26 @@ const HomePage = () => {
           name="panelParentGrid"
           sx={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
-            columnGap: '5vw',
-            rowGap: '50px',
+//            gridTemplateColumns: `repeat(${aspectRatio * 2}, 1fr)`,
+            gridTemplateColumns: {
+              xs: `repeat(2, 1fr)`,
+              sm: `repeat(2, 1fr)`, 
+              md: `repeat(4, 1fr)`, 
+              lg: `repeat(5, 1fr)`, 
+              xl: `repeat(5, 1fr)`,
+            },
+            
+            columnGap: `${aspectRatio * 3}vh`,
+            rowGap: `${aspectRatio * 2.5}vh`,
             pb: 3,
             mb: 3,
             justifyContent:'space-evenly',
             fontFamily: 'Roboto Slab',
-            backgroundColor: '#eee',
+            backgroundColor: '#fff',
           }}
         >
           {products.map((product) => (
-              <ProductCard product={product} />
+              <ProductCard product={product} onCardClick={() => handleCardClick(product)}/>
           ))}
 
 
@@ -103,7 +120,23 @@ const HomePage = () => {
         </Typography>
         <Box sx={{ height: "1000px" }}></Box>
       </Box>
+
+
+      {selectedProduct && (
+        <ProductDetailsModal 
+          products={products}
+          product={selectedProduct} 
+          open={Boolean(selectedProduct)} 
+          onClose={handleClose} 
+        />
+      )}
+
     </Container>
+
+
+
+
+
   );
 };
 

@@ -156,7 +156,7 @@ const ProductPanel = ({ product }) => {
                 fontFamily: 'Roboto Slab',
               }}
             >
-              ${product.price * product.quantity}
+              ${(product.price * product.quantity).toFixed(2)}
             </Typography>
             {true && (
               <Typography

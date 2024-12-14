@@ -13,6 +13,14 @@ const getFromLocalStorage = (key, defaultValue) => {
 
 export const useProductStore = create((set, get) => ({
 
+    currentAspectRatio : (window.innerWidth/window.innerHeight),
+
+    updateAspectRatio: () =>
+        set(() => ({
+          currentAspectRatio: window.innerWidth / window.innerHeight,
+        })),
+
+        
     // Cart state and methods
     cartItems: getFromLocalStorage("cartItems", []),
 
