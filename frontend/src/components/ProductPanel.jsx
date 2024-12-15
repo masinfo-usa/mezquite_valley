@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 
 const ProductPanel = ({ product }) => {
   const { addOneToCart, removeOneFromCart, deleteFromCart } = useProductStore();
+  const { setSelectedProduct } = useProductStore();
+  
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
   const [loading, setLoading] = useState(false);
 
@@ -76,6 +78,7 @@ const ProductPanel = ({ product }) => {
             borderBottom: '1px solid #e1e1e1',
             backgroundColor: '#fff',
           }}
+          onClick={() => setSelectedProduct(product)}
         >
           {/* Product Image */}
           <Box

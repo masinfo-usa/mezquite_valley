@@ -1,45 +1,56 @@
 import React from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
-import Slide from '@mui/material/Slide';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
+import Slide from '@mui/material/Slide';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
-import { Box } from '@mui/material';
-import ProductCard from "./ProductCard";
+import { useProductStore } from '../store/product';
+import SuggestedProducts from "../components/SuggestedProducts";
+import SuggestedProductsMobile from "../components/SuggestedProductsMobile";
 
-
-
-const ProductDetailsModal = ({ products, product, open, onClose }) => {
+const ProductDetailsModal = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screens
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
+
+  // Zustand store subscription
+  const { selectedProduct, setSelectedProduct, clearSelectedProduct, products } = useProductStore();
+
+  const handleClose = () => {
+    clearSelectedProduct(); // Unset product to close modal
+  };
+
+  if (!selectedProduct) return null; // Don't render if no product is selected
 
   return (
     <Dialog
-      open={open}
-      onClose={onClose}
-      fullScreen={isMobile} // Full screen for mobile
-      PaperProps={{
-        style: isMobile
-          ? {
-              borderRadius: '16px 16px 0 0', // Rounded corners for mobile
-              position: 'absolute',
-              bottom: 0,
-              width: '100%',
-              height: 'calc(100% - 0px)', // Full height on mobile
-            }
-          : {
-              borderRadius: '16px',
-              width: '80%',
-              height: '80%',
-              margin: 'auto', // Centered on desktop
-            },
-      }}
-      TransitionComponent={isMobile ? Slide : undefined} // Slide transition for mobile
-      TransitionProps={isMobile ? { direction: 'up' } : undefined}
-    >
+  open={!!selectedProduct}
+  onClose={handleClose}
+  fullScreen={isMobile} // Full screen for mobile
+  PaperProps={{
+    style: isMobile
+      ? {
+          borderRadius: '16px 16px 0 0',
+          position: 'absolute',
+          bottom: 0,
+          width: '100%',
+          height: '100%',
+        }
+      : {
+          borderRadius: '16px',
+          maxWidth: '80%', // Use maxWidth instead of width for responsiveness
+          maxHeight: '85%',
+          width: 'calc(100vw - 64px)', // Dynamically adjust width
+          height: 'calc(100vh - 32px)', // Dynamically adjust height
+          margin: 'auto',
+        },
+  }}
+  TransitionComponent={isMobile ? Slide : undefined}
+  TransitionProps={isMobile ? { direction: 'up' } : undefined}
+>
+
       {/* Header with Close and Share buttons */}
       <div
         style={{
@@ -50,7 +61,7 @@ const ProductDetailsModal = ({ products, product, open, onClose }) => {
           borderBottom: '1px solid #ddd',
         }}
       >
-        <IconButton onClick={onClose}>
+        <IconButton onClick={handleClose}>
           <CloseIcon />
         </IconButton>
         <IconButton>
@@ -62,13 +73,13 @@ const ProductDetailsModal = ({ products, product, open, onClose }) => {
       <DialogContent
         style={{
           padding: '16px',
-          paddingBottom: isMobile ? '80px' : '16px', // Add bottom space for mobile fixed box
+          paddingBottom: isMobile ? '80px' : '16px',
           overflowY: 'auto',
         }}
       >
         <img
-          src={product.image}
-          alt={product.name}
+          src={selectedProduct.image}
+          alt={selectedProduct.name}
           style={{
             width: '100%',
             height: '200px',
@@ -77,58 +88,33 @@ const ProductDetailsModal = ({ products, product, open, onClose }) => {
             marginBottom: '16px',
           }}
         />
-        <h2>{product.name}</h2>
-        <p>Price: ${product.price}</p>
-        <p>Aisle Number: {product.aisle}</p>
-        <p>{product.description}</p>
+        <h2>{selectedProduct.name}</h2>
+        <p>Price: ${selectedProduct.price}</p>
+        <p>Aisle Number: {selectedProduct.aisle}</p>
+        <p>{selectedProduct.description}</p>
 
         <h3>Suggested Products</h3>
-        <Box
-          name="panelParentGrid"
-          sx={{
-            display: 'grid',
-//            gridTemplateColumns: `repeat(${aspectRatio * 2}, 1fr)`,
-            gridTemplateColumns: {
-              xs: `repeat(2, 1fr)`,
-              sm: `repeat(2, 1fr)`, 
-              md: `repeat(4, 1fr)`, 
-              lg: `repeat(5, 1fr)`, 
-              xl: `repeat(5, 1fr)`,
-            },
-            
-            columnGap: `${3}vh`,
-            rowGap: `${2.5}vh`,
-            pb: 3,
-            mb: 3,
-            justifyContent:'space-evenly',
-            fontFamily: 'Roboto Slab',
-            backgroundColor: '#fff',
-          }}
-        >
-          {products.map((product) => (
-              <ProductCard product={product} onCardClick={() => handleCardClick(product)}/>
+        {/* <div style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
+          {products.map((suggestedProduct) => (
+            <ProductCard product={suggestedProduct}/>
           ))}
+        </div> */}
+
+        {
+          isMobile ?
+          <SuggestedProductsMobile products={products}/>
+          :
+          <SuggestedProducts products={products}/>
+        }
 
 
-        </Box>
 
-        {/* Add to Cart Button for Desktop */}
-        {!isMobile && (
-          <button
-            style={{
-              width: '100%',
-              padding: '12px',
-              backgroundColor: '#1976d2',
-              color: '#fff',
-              fontSize: '16px',
-              border: 'none',
-              borderRadius: '4px',
-              marginTop: '16px',
-            }}
-          >
-            Add to Cart
-          </button>
-        )}
+
+
+
+
+
+
       </DialogContent>
 
       {/* Fixed Bottom Box for Mobile */}

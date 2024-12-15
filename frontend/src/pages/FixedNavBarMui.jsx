@@ -21,6 +21,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { motion } from "framer-motion";
 import { useProductStore } from "../store/product";
 import ProductPanel from "../components/ProductPanel";
+import ProductDetailsModal from '../components/ProductDetailsModal';
 
 
 
@@ -244,7 +245,11 @@ function FixedNavBarMui() {
         </Toolbar>
       </AppBar>
 
-      <Drawer
+
+      <ProductDetailsModal />
+
+
+<Drawer
   anchor="right"
   open={isCartOpen}
   onClose={() => setCartOpen(false)}
@@ -336,6 +341,17 @@ function FixedNavBarMui() {
 
   </Box>
 
+
+
+
+    {/* Selected Product Modal */}
+         
+    
+     
+
+
+
+
     {/* Cart Items */}
     
     <Box sx={{ pl: 1, flexGrow: 1, overflowY: 'auto', backgroundColor: '#fff'}}>
@@ -346,264 +362,7 @@ function FixedNavBarMui() {
         <Typography fontFamily='Roboto Slab'>No items in the cart.</Typography>
       ) : (
         cartItems.map((item) => (
-          
           <ProductPanel product={item} />
-
-
-        //   <Box
-        //   name='panelParentGrid'
-        //   sx={{
-        //     display: 'grid',
-        //     gridTemplateColumns: '72px auto auto',
-        //     gap: 0,
-        //     pl: 0,
-        //     pb: 3,
-        //     mb: 3,
-        //     ml: 0,
-        //     fontFamily:'Roboto Slab',
-        // //    border: '0px solid #ddd',
-        //     borderBottom: '1px solid #e1e1e1',
-        //     borderRadius: 0,
-        //     backgroundColor: '#fff',
-        //   }}
-        // >
-        //   {/* Product Image */}
-        //   <Box
-        //     component="img"
-        //     src={item.image}
-        //     alt={item.name}
-        //     sx={{
-        //       width: '90%',
-        //       aspectRatio:'1/1',
-              
-        //       borderRadius: 2,
-        //       objectFit: 'cover',
-        //     }}
-        //   />
-        
-        //   {/* Product Details*/}
-        //   <Box sx={{ display: 'flex', flexDirection: 'column',
-        //     pl:0, overflow: 'hidden', backgroundColor:'#fff' }}>
-        //     {/* Title and Price Row */}
-        //     <Box
-        //       sx={{
-        //         display: 'flex',
-        //         justifyContent: 'space-between',
-        //         alignItems: 'flex-start',
-        //         marginBottom: 0.25,     
-        //         backgroundColor: ''
-        //       }}
-        //     >
-        //       {/* Title */}
-        //       <Typography
-        //         variant="body1"
-        //         sx={{
-        //           fontWeight: 'normal',
-        //           whiteSpace: 'normal',
-        //           wordWrap: 'break-word',
-        //           fontSize: '0.9rem',
-        //           flex: 1,
-        //           fontFamily:'Roboto Slab',
-        //           marginRight: 1,
-        //           color: '#777777'
-        //         }}
-        //       >
-        //         {item.name}
-        //       </Typography>
-        
-        //     </Box>
-
-
-
-
-        //     {/* Extra Info item.extraInfo */}
-        //     {true && (
-        //       <Typography
-        //         variant="body2"
-        //         sx={{
-        //           backgroundColor: '#fff',
-        //           color: '#555',
-        //           fontSize: '0.75rem',
-        //           fontFamily:'Roboto Slab',
-        //           marginBottom: 2,
-
-        //         }}
-        //       >
-        //         {item.extraInfo}
-        //         $2.5/Lb
-        //       </Typography>
-        //     )}
-        
-            
-        //   </Box>
-
-        //       {/* Col3: Price Details */}
-        //       <Box sx={{ textAlign: 'right',}}>
-        //         <Typography
-        //           sx={{
-        //             fontWeight: 'bold',
-        //             color: '#333',
-        //             fontSize: '0.9rem',
-        //             pr: 1,
-        //             fontFamily:'Roboto Slab',
-        //           }}
-        //         >
-        //           ${item.price * item.quantity}
-        //         </Typography>
-        //         {true && (
-        //           <Typography
-        //             sx={{
-        //               textDecoration: 'line-through',
-        //               fontSize: '0.85rem',
-        //               color: '#f77b72',
-        //               pr: 1,
-        //               fontFamily:'Roboto Slab',
-        //             }}
-        //           >
-        //             $24.99 {item.priceBeforeDiscount}
-        //           </Typography>
-        //         )}
-        //       </Box>
-
-
-        //   {/* Action Row */}
-        //   <Box
-        //       sx={{
-        //         display: 'flex',
-        //         gridColumn: '2/4',
-        //         gridRow: '3',
-        //       //  width:'50%',
-        //         justifyContent: 'flex-end',
-        //         alignItems: 'center',
-        //         marginTop: 'auto',
-        //         backgroundColor:'#fff'
-        //       }}
-        //     >
-
-
-
-        //         {/* Remove Button */}
-        //         <Button
-        //         sx={{
-        //           display: 'flex',
-        //           alignItems: 'center',
-        //           gap: 0.0,
-        //           color: '#999999',
-        //           borderRadius: 2,
-        //           mr:3,
-        //         }}
-        //         onClick={() => handleRemoveFromCart(item._id)}
-        //       >
-        //         {/* <Delete fontSize="vs" /> */}
-        //         <Typography
-        //           variant="body2"
-        //           sx={{ fontWeight: 'bold', color: '#999999', fontFamily:'Roboto Slab',
-        //             textDecoration: 'underline', textTransform:'none' }}
-        //         >
-        //           Remove
-        //         </Typography>
-        //       </Button>
-
-        
-        //       {/* Quantity Adjuster */}
-        //       <Box
-        //       sx={{
-        //         display: 'flex',
-        //         alignItems: 'center',
-        //         justifyContent: 'space-between',
-        //         backgroundColor: '#fff',
-        //         color: 'yellow',
-        //         borderRadius: 2,
-        //         border: '1px solid #e2e2e2',
-        //         padding: '0 0px',
-        //         width: '135px',
-        //        // height: '30px',
-        //         marginRight: 1,
-        //       }}
-        //       onClick={(e) => e.stopPropagation()}
-        //       >
-        //       <IconButton
-        //         size="small"
-        //         sx={{ color: '#727272'}}
-        //         onClick={(e) => {
-        //           e.stopPropagation();
-        //           handleRemoveFromCart();
-        //         }}
-        //       >
-        //         {item.quantity === 1 ? <Delete  fontSize="sm" sx={{ml:'3px'}}/> : <Remove />}
-        //       </IconButton>
-        //       <Typography sx={{ color: '#727272', fontSize: 16, fontWeight: 'bold', fontFamily:'Roboto Slab', }}>
-        //         {item.quantity}
-        //       </Typography>
-        //       <IconButton
-        //         size="small"
-        //         sx={{ color: '#727272' }}
-        //         onClick={(e) => {
-        //           e.stopPropagation();
-        //           handleAddToCart();
-        //         }}
-        //       >
-        //         <Add />
-        //       </IconButton>
-        //     </Box>
-
-              
-        //     </Box>
-
-
-        // </Box>
-        
-
-
-
-
-
-          
-          // <Box
-          //   key={item._id}
-          //    sx={{ mb: 2, p: 1, 
-          //     display: 'flex',
-          //     flexDirection: 'row',  
-          //     border: '1px solid #ddd', borderRadius: 2 }}
-          // >
-          //   <Box
-          //     component="img"
-          //     src={item.image}
-          //     alt={item.name}
-          //     sx={{
-          //       width: '20%',
-          //       objectFit: 'cover',
-          //       borderRadius: 2,
-          //       aspectRatio: '1 / 1.02',
-          //     }}
-          //   />
-
-          //   <Box              
-          //   sx={{ mb: 2, p: 1, 
-          //     display: 'flex',
-          //     width: '100%',
-          //     flexDirection: 'column',  
-          //     border: '1px solid #ddd', borderRadius: 2 }}> 
-            
-          //   <Typography variant="subtitle1" fontFamily='Roboto Slab'>
-          //     {item.name}: {item.quantity}
-          //   </Typography>
-          //   <Typography variant="body2" fontFamily='Roboto Slab'>Price per unit: ${item.price}</Typography>
-          //   <Typography variant="body2" fontFamily='Roboto Slab'>Total: ${(item.price * item.quantity).toFixed(2)}</Typography>
-          //   <Button
-          //     variant="text"
-          //     color="error"
-          //     onClick={() => deleteFromCart(item._id)}
-          //     sx={{ textTransform: 'none', textDecoration: 'underline', fontFamily:'Roboto Slab', mt: 1 }}
-          //   >
-          //     Remove
-          //   </Button>
-            
-            
-          //   </Box>
-
-
-          // </Box>
         ))
       )}
     </Box>
@@ -662,7 +421,7 @@ function FixedNavBarMui() {
 </Drawer>
 
 
-      <Drawer anchor="left" open={isNavOpen} onClose={() => setNavOpen(false)}>
+  <Drawer anchor="left" open={isNavOpen} onClose={() => setNavOpen(false)}>
   <Box sx={{ width: 250, padding: 2, position: 'relative' }}>
     <IconButton
       onClick={() => setNavOpen(false)}

@@ -15,7 +15,9 @@ import {
 import { Add, Remove, Delete } from '@mui/icons-material';
 import { useProductStore } from '../store/product';
 
-const ProductCard = ({ product, onCardClick }) => {
+
+
+const ProductCard = ({ product }) => {
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
   const collapseTimeout = useRef(null);
   const [expanded, setExpanded] = useState(false);
@@ -34,6 +36,9 @@ const ProductCard = ({ product, onCardClick }) => {
 
  
   const { updateProduct, deleteProduct } = useProductStore();
+  const { setSelectedProduct } = useProductStore();
+
+
 
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -124,20 +129,13 @@ const ProductCard = ({ product, onCardClick }) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          // maxWidth: {
-          //   xs: `${cardWidth}px`,
-          //   sm: '150px',
-          //   md: '170px',
-          //   lg: '200px',
-          //   xl: `${cardWidth}px`,
-          // },
           borderRadius: 2,
           overflow: 'hidden',
           position: 'relative',
         }}
-//        onClick={handleOpenModal}
-        onClick={onCardClick}
-      >
+      //  
+        onClick={() => setSelectedProduct(product)}
+        >
         {/* Product Image */}
         <Box
           component="img"
@@ -149,6 +147,10 @@ const ProductCard = ({ product, onCardClick }) => {
             objectFit: 'cover',
             borderRadius: 2,
             aspectRatio: '1 / 1.02',
+          }}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleOpenModal();
           }}
         />
 

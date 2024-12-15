@@ -21,6 +21,23 @@ export const useProductStore = create((set, get) => ({
         })),
 
         
+
+
+
+    selectedProduct: null, // The product currently selected
+    setSelectedProduct: (product) => set({ selectedProduct: product }),
+    clearSelectedProduct: () => set({ selectedProduct: null }),
+      
+
+
+
+
+
+
+
+
+
+
     // Cart state and methods
     cartItems: getFromLocalStorage("cartItems", []),
 
