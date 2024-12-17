@@ -13,6 +13,9 @@ const getFromLocalStorage = (key, defaultValue) => {
 
 export const useProductStore = create((set, get) => ({
 
+    modalOpen : false,
+    setModalOpen: (value) => set({ modalOpen: value }),
+
     currentAspectRatio : (window.innerWidth/window.innerHeight),
 
     updateAspectRatio: () =>
@@ -48,7 +51,7 @@ export const useProductStore = create((set, get) => ({
             ? state.cartItems.map((item) => {
                 if (item._id === product._id) {
                     console.log("p_id: "+item._id);
-                    console.log("product quantity: " + item.quantity); // log before returning the updated item
+                    console.log("product quantity: " + (item.quantity+1)); // log before returning the updated item
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;

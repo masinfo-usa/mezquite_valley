@@ -5,7 +5,6 @@ import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
 import AAA_1 from "./pages/AAA_1";
 import FixedNavBar from "./pages/FixedNavBar";
-import FixedNavBarMui from "./pages/FixedNavBarMui";
 import Login from "./pages/Login";
 import Test from "./pages/Test";
 import { useMediaQuery, useTheme } from '@mui/material';
@@ -33,10 +32,10 @@ function App() {
 //"#f7f5f0"
   return (
       <Box px={0} sx={{backgroundColor:'#fff'}}>
-        <FixedNavBarMui />
+        <FixedNavBar />
         <Box sx={{backgroundColor:"#000", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
           <Stack
-            direction="auto"
+            direction="row"
             justifyContent="space-evenly"
             spacing={8}
             height={30}

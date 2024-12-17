@@ -2,7 +2,6 @@ import { Box, Container, Typography, Link, Grid2 } from "@mui/material";
 import { useProductStore } from "../store/product";
 import { useEffect, useState } from "react";
 import ProductCard from "../components/ProductCard";
-import ProductDetailsModal from '../components/ProductDetailsModal';
 
 const HomePage = () => {
   const { fetchProducts, products, currentAspectRatio } = useProductStore();
@@ -87,7 +86,7 @@ const HomePage = () => {
           }}
         >
           {products.map((product) => (
-              <ProductCard product={product}/>
+              <ProductCard key={product._id} product={product}/>
           ))}
 
 

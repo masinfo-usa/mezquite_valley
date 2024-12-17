@@ -17,7 +17,7 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: 'Roboto Slab, Arial, sans-serif',
-    
+  //  fontSize: 'clamp(0.85rem, 2vw, 1.0rem)',
   },
 });
 

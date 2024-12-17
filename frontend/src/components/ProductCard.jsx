@@ -125,6 +125,7 @@ const ProductCard = ({ product }) => {
   return (
     <>
       <Box
+        key={product._id}
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -168,8 +169,9 @@ const ProductCard = ({ product }) => {
             borderRadius: 5,
             border: itemCount === 0 ? '3px solid #fff' : '3px solid yellow',
             padding: expanded ? '0 5px' : 0,
-            width: expanded ? 'calc(80% - 16px)' : 40,
+            width: expanded ? 'calc(80%)' : 40,
             height: 40,
+            boxShadow: '-5px 5px 10px rgba(0, 0, 0, 0.20)',
             transition: 'all 0.3s ease',
             overflow: 'hidden',
           }}
@@ -221,10 +223,12 @@ const ProductCard = ({ product }) => {
 
         {/* Product Info */}
         <Box sx={{ width: '100%', mt: '5px' }}>
-          <Typography variant="h6" color="text.primary" align="left">
+          <Typography variant="h6" color="text.primary" align="left"
+          sx={{ fontSize: 'clamp(0.85rem, 2vw, 1.0rem)' }}>
             ${product.price}
           </Typography>
-          <Typography varaiant="body1" color="text.secondary" align="left">
+          <Typography varaiant="body1" color="text.secondary" align="left" 
+          sx={{ fontSize: 'clamp(0.85rem, 2vw, 1.0rem)' }}>
             {product.name}
           </Typography>
         </Box>

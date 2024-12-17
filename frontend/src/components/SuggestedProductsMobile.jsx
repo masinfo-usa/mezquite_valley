@@ -4,15 +4,11 @@ import ProductCard from "../components/ProductCard";
 
 const SuggestedProductsMobile = ({ products }) => {
   return (
-    <Box sx={{ width: "100%", overflow: "hidden", padding: "1rem" }}>
-      {/* Title */}
-      <Typography variant="h6" sx={{ mb: 2 }}>
-        Suggested Products
-      </Typography>
-
+    <Box sx={{ width: "100%", overflow: "hidden" }}>
       {/* Horizontal Scrollable Grid */}
       <Box
   sx={{
+    backgroundColor:'#fff',
     display: "grid",
     gridAutoFlow: "column", // Arrange items in a single horizontal row
     gridAutoColumns: "35%", // Each item explicitly takes up 40% of the width
@@ -26,8 +22,16 @@ const SuggestedProductsMobile = ({ products }) => {
 >
   {products.map((product, index) => (
     
-    <ProductCard product={product} />
+    <ProductCard key={product._id} product={product} />
   ))}
+
+
+  {/* {[...products]
+  .sort(() => Math.random() - 0.5) // Randomize the array
+  .map((product) => (
+    <ProductCard key={product._id} product={product} />
+  ))} */}
+
 </Box>
 
     </Box>

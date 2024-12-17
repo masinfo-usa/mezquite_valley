@@ -26,7 +26,8 @@ const ProductDetailsModal = () => {
 
   return (
     <Dialog
-  open={!!selectedProduct}
+  //  key={selectedProduct._id}
+  open={selectedProduct}
   onClose={handleClose}
   fullScreen={isMobile} // Full screen for mobile
   PaperProps={{
@@ -47,8 +48,8 @@ const ProductDetailsModal = () => {
           margin: 'auto',
         },
   }}
-  TransitionComponent={isMobile ? Slide : undefined}
-  TransitionProps={isMobile ? { direction: 'up' } : undefined}
+  // TransitionComponent={isMobile ? Slide : undefined}
+  // TransitionProps={isMobile ? { direction: 'up' } : undefined}
 >
 
       {/* Header with Close and Share buttons */}
