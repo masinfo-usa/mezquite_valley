@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
+import { Box } from "@mui/material";
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
@@ -15,14 +16,33 @@ const ProductDetailsModal = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
 
+ 
+
+
   // Zustand store subscription
-  const { selectedProduct, setSelectedProduct, clearSelectedProduct, products } = useProductStore();
+  const { selectedProduct, setSelectedProduct, clearSelectedProduct, products, sortedProducts, setSortedProducts } = useProductStore();
+
+  const scrollContainerRef = useRef(null);
+
+  useEffect(() => {
+    // Reset scroll position to 0 when 'products' changes
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollTop = 0;
+    }
+  }, [selectedProduct]); // Dependency array ensures effect runs when 'products' changes
+
 
   const handleClose = () => {
     clearSelectedProduct(); // Unset product to close modal
   };
 
+
+
   if (!selectedProduct) return null; // Don't render if no product is selected
+
+
+
+
 
   return (
     <Dialog
@@ -53,7 +73,7 @@ const ProductDetailsModal = () => {
 >
 
       {/* Header with Close and Share buttons */}
-      <div
+      <Box
         style={{
           display: 'flex',
           justifyContent: 'space-between',
@@ -68,22 +88,26 @@ const ProductDetailsModal = () => {
         <IconButton>
           <ShareIcon />
         </IconButton>
-      </div>
+      </Box>
 
       {/* Modal Content */}
       <DialogContent
+        ref={scrollContainerRef}
         style={{
           padding: '16px',
           paddingBottom: isMobile ? '80px' : '16px',
           overflowY: 'auto',
+          backgroundColor: '#fff',
+          justifyContent: 'center',
         }}
       >
         <img
           src={selectedProduct.image}
           alt={selectedProduct.name}
           style={{
-            width: '100%',
+            width: '200px',
             height: '200px',
+            align: 'center',
             objectFit: 'cover',
             borderRadius: '8px',
             marginBottom: '16px',
@@ -95,17 +119,19 @@ const ProductDetailsModal = () => {
         <p>{selectedProduct.description}</p>
 
         <h3>Suggested Products</h3>
-        {/* <div style={{ display: 'flex', gap: '16px', overflowX: 'auto' }}>
-          {products.map((suggestedProduct) => (
-            <ProductCard product={suggestedProduct}/>
-          ))}
-        </div> */}
+       
+
+        {/* {[...products]
+          .sort(() => Math.random() - 0.5) // Randomize the array
+          .map((product) => (
+            <ProductCard key={product._id} product={product} />
+          ))} */}
 
         {
           isMobile ?
-          <SuggestedProductsMobile products={products}/>
+          <SuggestedProductsMobile products={sortedProducts}/>
           :
-          <SuggestedProducts products={products}/>
+          <SuggestedProducts products={sortedProducts}/>
         }
 
 
@@ -120,7 +146,7 @@ const ProductDetailsModal = () => {
 
       {/* Fixed Bottom Box for Mobile */}
       {isMobile && (
-        <div
+        <Box
           style={{
             position: 'fixed',
             bottom: 0,
@@ -145,7 +171,7 @@ const ProductDetailsModal = () => {
           >
             Add to Cart
           </button>
-        </div>
+        </Box>
       )}
     </Dialog>
   );

@@ -25,14 +25,14 @@ export const useProductStore = create((set, get) => ({
 
         
 
-
+    
 
     selectedProduct: null, // The product currently selected
-    setSelectedProduct: (product) => set({ selectedProduct: product }),
+    setSelectedProduct: (product) => set({ selectedProduct: product}),
     clearSelectedProduct: () => set({ selectedProduct: null }),
       
-
-
+    sortedProducts : null,
+    setSortedProducts: (sps) => set({sortedProducts: sps}),
 
 
 

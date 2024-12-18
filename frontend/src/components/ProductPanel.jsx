@@ -8,10 +8,10 @@ const ProductPanel = ({ product }) => {
   const { setSelectedProduct } = useProductStore();
   
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 500);
+    const timer = setTimeout(() => setLoading(false), 2000);
     return () => clearTimeout(timer);
   }, []);
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, IconButton, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
@@ -14,6 +14,11 @@ const SuggestedProducts = ({ products }) => {
   // Compute the slice of products to show
   const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
 
+  useEffect(() => {
+    setCurrentIndex(0);    
+  }, [products]); // Dependency array ensures effect runs when 'products' changes
+
+  
   // Handlers for navigation buttons
   const handleNext = () => {
     if (currentIndex + itemsPerPage < products.length) {

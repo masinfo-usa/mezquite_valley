@@ -24,7 +24,7 @@ const ProductCard = ({ product }) => {
   const [updatedProduct, setUpdatedProduct] = useState(product);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { addOneToCart, removeOneFromCart, deleteFromCart, cartItems } = useProductStore();
+  const { products, setSortedProducts, addOneToCart, removeOneFromCart, deleteFromCart, cartItems } = useProductStore();
 
   // Compute the quantity of the current product from the cart
   const itemInCart = cartItems.find((item) => item._id === product._id);
@@ -135,7 +135,10 @@ const ProductCard = ({ product }) => {
           position: 'relative',
         }}
       //  
-        onClick={() => setSelectedProduct(product)}
+        onClick={() => {
+          setSelectedProduct(product);
+          setSortedProducts([...products].sort(() => Math.random() - 0.5));
+        }}
         >
         {/* Product Image */}
         <Box
