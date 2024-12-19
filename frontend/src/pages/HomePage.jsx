@@ -113,12 +113,12 @@ const HomePage = () => {
         )}
       </Box>
 
-      <Box sx={{ p: 3, mt: "120px" }}>
+      {/* <Box sx={{ p: 3, mt: "120px" }}>
         <Typography>
           Welcome to Your Brand. Scroll down to see more content...
         </Typography>
         <Box sx={{ height: "1000px" }}></Box>
-      </Box>
+      </Box> */}
 
 
 

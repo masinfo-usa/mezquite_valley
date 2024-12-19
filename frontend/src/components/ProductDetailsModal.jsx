@@ -1,78 +1,91 @@
-import React, {useState, useEffect, useRef} from 'react';
-import { Box } from "@mui/material";
-import Dialog from '@mui/material/Dialog';
-import DialogContent from '@mui/material/DialogContent';
-import IconButton from '@mui/material/IconButton';
+import React, { useState, useEffect, useRef } from 'react';
+import { Box, Dialog, DialogContent, IconButton, Typography, Accordion, AccordionSummary, AccordionDetails, Skeleton, Tooltip } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
-import Slide from '@mui/material/Slide';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import Slide from '@mui/material/Slide';
 import { useTheme } from '@mui/material/styles';
 import { useProductStore } from '../store/product';
 import SuggestedProducts from "../components/SuggestedProducts";
 import SuggestedProductsMobile from "../components/SuggestedProductsMobile";
+import FullImageModal from "./FullImageModal"; // Adjust the path
+import withLoadingSkeleton from './SkeletonForComponent';  // Import HOC
 
 const ProductDetailsModal = () => {
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down('sm')); // Detect mobile screen
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
- 
-
-
-  // Zustand store subscription
-  const { selectedProduct, setSelectedProduct, clearSelectedProduct, products, sortedProducts, setSortedProducts } = useProductStore();
+  const {
+    selectedProduct,
+    setSelectedProduct,
+    clearSelectedProduct,
+    sortedProducts,
+  } = useProductStore();
 
   const scrollContainerRef = useRef(null);
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
-    // Reset scroll position to 0 when 'products' changes
+    if (selectedProduct) {
+      setLoading(true);
+      setTimeout(() => setLoading(false), 3000); // Simulate loading delay
+    }
+
     if (scrollContainerRef.current) {
       scrollContainerRef.current.scrollTop = 0;
     }
-  }, [selectedProduct]); // Dependency array ensures effect runs when 'products' changes
+  }, [selectedProduct]);
 
+ const [isFullImageModalOpen, setFullImageModalOpen] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+  const [imageAlt, setImageAlt] = useState("");
 
   const handleClose = () => {
-    clearSelectedProduct(); // Unset product to close modal
+    clearSelectedProduct();
+  };
+
+  const handleImageClick = (image, alt) => {
+    setImageSrc(image);
+    setImageAlt(alt);
+    setFullImageModalOpen(true);
+  };
+
+  const handleFullImageModalClose = () => {
+    setFullImageModalOpen(false);
   };
 
 
 
-  if (!selectedProduct) return null; // Don't render if no product is selected
-
-
-
-
+  if (!selectedProduct) return null;
 
   return (
+    <>
     <Dialog
-  //  key={selectedProduct._id}
-  open={selectedProduct}
-  onClose={handleClose}
-  fullScreen={isMobile} // Full screen for mobile
-  PaperProps={{
-    style: isMobile
-      ? {
-          borderRadius: '16px 16px 0 0',
-          position: 'absolute',
-          bottom: 0,
-          width: '100%',
-          height: '100%',
-        }
-      : {
-          borderRadius: '16px',
-          maxWidth: '80%', // Use maxWidth instead of width for responsiveness
-          maxHeight: '85%',
-          width: 'calc(100vw - 64px)', // Dynamically adjust width
-          height: 'calc(100vh - 32px)', // Dynamically adjust height
-          margin: 'auto',
-        },
-  }}
-  // TransitionComponent={isMobile ? Slide : undefined}
-  // TransitionProps={isMobile ? { direction: 'up' } : undefined}
->
-
-      {/* Header with Close and Share buttons */}
+      open={!!selectedProduct}
+      onClose={handleClose}
+      fullScreen={isMobile}
+      PaperProps={{
+        style: isMobile
+          ? {
+              borderRadius: '16px 16px 0 0',
+              position: 'absolute',
+              bottom: 0,
+              width: '100%',
+              height: '100%',
+            }
+          : {
+              borderRadius: '16px',
+              maxWidth: '80%',
+              maxHeight: '85%',
+              margin: 'auto',
+            },
+      }}
+      TransitionComponent={isMobile ? Slide : undefined}
+      TransitionProps={isMobile ? { direction: 'up' } : undefined}
+    >
       <Box
         style={{
           display: 'flex',
@@ -90,61 +103,187 @@ const ProductDetailsModal = () => {
         </IconButton>
       </Box>
 
-      {/* Modal Content */}
       <DialogContent
         ref={scrollContainerRef}
         style={{
           padding: '16px',
           paddingBottom: isMobile ? '80px' : '16px',
           overflowY: 'auto',
-          backgroundColor: '#fff',
-          justifyContent: 'center',
         }}
       >
-        <img
-          src={selectedProduct.image}
-          alt={selectedProduct.name}
-          style={{
-            width: '200px',
-            height: '200px',
-            align: 'center',
-            objectFit: 'cover',
-            borderRadius: '8px',
-            marginBottom: '16px',
-          }}
-        />
-        <h2>{selectedProduct.name}</h2>
-        <p>Price: ${selectedProduct.price}</p>
-        <p>Aisle Number: {selectedProduct.aisle}</p>
-        <p>{selectedProduct.description}</p>
-
-        <h3>Suggested Products</h3>
-       
-
-        {/* {[...products]
-          .sort(() => Math.random() - 0.5) // Randomize the array
-          .map((product) => (
-            <ProductCard key={product._id} product={product} />
-          ))} */}
-
-        {
-          isMobile ?
-          <SuggestedProductsMobile products={sortedProducts}/>
-          :
-          <SuggestedProducts products={sortedProducts}/>
-        }
 
 
 
+<>
+
+<Box
+  sx={{
+    display: "grid",
+    justifyContent: "center", // Centers the grid container horizontally
+    justifyItems: "center", // Centers the grid items horizontally
+    alignContent: "center", // Centers the grid container vertically (if parent allows)
+    gridTemplateColumns: {
+      xs: "1fr", // Single column for extra small screens
+      sm: "1fr", // Single column for small screens
+      md: "repeat(2, auto)", // Two columns with auto width for medium screens and larger
+    },
+    gap: 2, // Spacing between items
+    backgroundColor: "#fff", // Background color for grid container
+    padding: 2, // Padding for grid container
+  }}
+>
+                <Box
+                  
+                  style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#fff', }}
+                  >
+                  <img
+                    src={selectedProduct.image}
+                    alt={selectedProduct.name}
+                    onClick={() =>
+                      handleImageClick(selectedProduct.image, selectedProduct.name)
+                    }
+                    
+                    style={{
+                      width: '300px',
+                      height: '300px',
+                      objectFit: 'cover',
+                      borderRadius: '8px', 
+                      cursor: 'pointer'
+                    }}
+                  />
+                  </Box>
+                
+                  <Box style={{ marginTop: '16px', width: '30rem', backgroundColor: '#fff' }}>
+                    <Typography variant="h5">{selectedProduct.name}</Typography>
+                    <Accordion style={{ marginTop: '16px', width:'100%', boxShadow: 'none', 
+                      borderTop: '2px solid #ddd', borderBottom: '1px solid #ddd', borderRadius: '0' }}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                      <Typography>Description</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>One package of Tyson All Natural Fresh Chicken Breast Tenderloins
+All-natural, minimally processed fresh chicken with no artificial ingredients
+22g of protein and 0g of trans fat per serving. Serving size 4 oz.
+No added preservatives
+Perfect for grilling and frying{selectedProduct.description}</Typography>
+                    </AccordionDetails>
+                  </Accordion>
+
+
+                    <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+                      <Typography fontSize={'1.5rem'} fontWeight={'bold'} color="#000">
+                        ${Math.floor(selectedProduct.price)}
+                        <sup  fontSize={'1.0rem'}>{(selectedProduct.price % 1).toFixed(2).slice(2)}</sup>
+                      </Typography>
+                      {selectedProduct.priceBeforeDiscount && (
+                        <Typography
+                          variant="body2"
+                          style={{ textDecoration: 'line-through', marginLeft: '8px' }}
+                        >
+                          ${selectedProduct.priceBeforeDiscount}
+                        </Typography>
+                      )}
+                    </Box>
+
+                    <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+                      <LocationOnIcon fontSize="small" />
+                      <Typography variant="body2">Aisle Number: {selectedProduct.aisle}</Typography>
+                    </Box>
+
+                    {true && (
+                      <Typography
+                        variant="body2"
+                        color="error"
+                        style={{ marginTop: '8px' }}
+                      >
+                        Only {selectedProduct.stockLeft} left in stock
+                      </Typography>
+                    )}
+
+                  
+
+                  </Box>
+
+                  
+</Box>
+
+                  
+
+                
+                 </> 
 
 
 
 
 
 
+
+        {/* {withLoadingSkeleton()({
+                isLoading: loading,
+                children: (
+               
+
+                ),
+              })} */}
+   
+   
+        {/* {loading ? (
+          <Box display="flex" flexDirection='column' justifyContent="center" alignItems="center">
+          <Skeleton variant="rectangular" width={200} height={200} sx={{borderRadius: "16px"}}/>
+          <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+          </Box>
+        ) : (
+          <>
+          <Box
+            onClick={() =>
+              handleImageClick(selectedProduct.image, selectedProduct.name)
+            }
+            style={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }}
+          >
+            <img
+              src={selectedProduct.image}
+              alt={selectedProduct.name}
+              style={{
+                width: '200px',
+                height: '200px',
+                objectFit: 'cover',
+                borderRadius: '8px',
+              }}
+            />
+          </Box>
+
+
+          
+          </>
+        )} */}
+
+      
+
+        {/* <Typography variant="h6" sx={{ marginTop: '24px', marginLeft: '24px', fontFamily: 'Roboto Slab', fontWeight: 'bold' }}>
+          You may also like:
+        </Typography> */}
+        {isMobile ? (
+          <SuggestedProductsMobile products={sortedProducts} />
+        ) : (
+          <SuggestedProducts products={sortedProducts} />
+        )}
+
+        <Box style={{ marginTop: '24px' }}>
+          <Typography variant="h6">Customer Comments</Typography>
+          {selectedProduct.comments && selectedProduct.comments.length > 0 ? (
+            selectedProduct.comments.map((comment, index) => (
+              <Box key={index} style={{ marginTop: '8px', borderBottom: '1px solid #ddd' }}>
+                <Typography variant="body2">{comment}</Typography>
+              </Box>
+            ))
+          ) : (
+            <Typography variant="body2" color="textSecondary">
+              No comments yet.
+            </Typography>
+          )}
+        </Box>
       </DialogContent>
 
-      {/* Fixed Bottom Box for Mobile */}
       {isMobile && (
         <Box
           style={{
@@ -155,7 +294,6 @@ const ProductDetailsModal = () => {
             backgroundColor: '#fff',
             padding: '16px',
             borderTop: '1px solid #ddd',
-            boxShadow: '0 -2px 6px rgba(0,0,0,0.1)',
           }}
         >
           <button
@@ -174,6 +312,20 @@ const ProductDetailsModal = () => {
         </Box>
       )}
     </Dialog>
+
+
+      {/* Full Image Modal */}
+      <FullImageModal
+        open={isFullImageModalOpen}
+        onClose={handleFullImageModalClose}
+        imageSrc={imageSrc}
+        imageAlt={imageAlt}
+      />
+
+    </>
+      
+
+
   );
 };
 

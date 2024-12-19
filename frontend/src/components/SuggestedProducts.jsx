@@ -33,7 +33,13 @@ const SuggestedProducts = ({ products }) => {
   };
 
   return (
+
+    
+
     <Box sx={{ width: "100%", overflow: "hidden", position: "relative", padding: "1rem" }}>
+      <Typography variant="h6" sx={{ margin: '24px', fontFamily: 'Roboto Slab', fontWeight: 'bold' }}>
+         You may also like:
+    </Typography>
       {/* Navigation Buttons */}
       <IconButton
         onClick={handlePrev}

@@ -185,7 +185,7 @@ const ProductPanel = ({ product }) => {
               justifyContent: 'flex-end',
               alignItems: 'center',
               marginTop: 'auto',
-              backgroundColor: '#fff',
+              backgroundColor: '#000',
             }}
           >
             {/* Remove Button */}

@@ -22,6 +22,7 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useProductStore } from "../store/product";
 import ProductPanel from "../components/ProductPanel";
 import ProductDetailsModal from '../components/ProductDetailsModal';
+import FullImageModal from '../components/FullImageModal';
 
 
 
