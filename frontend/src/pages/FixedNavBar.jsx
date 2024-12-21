@@ -279,19 +279,33 @@ function FixedNavBar() {
     },
   }}
 >
-  <Box
-    name="cart_header"
-    sx={{
-      backgroundColor: '#fff',
-      display: 'flex',
-      position: 'sticky',
-    top: 0,
-    zIndex: 10,
-    alignItems: 'center',
-      padding: 0.5,
-      borderBottom: '2px solid #d0d0d0',
-    }}
-  >
+
+<Box
+          name="cartheader"
+          sx={{
+            display: 'grid',
+            gridTemplateColumns: '72px 0.9fr',
+            gap: 0,
+            pt: 2,
+            pb: 2,
+            mb: 1,
+            ml: 0,
+            width:'100%',
+
+            backgroundColor: '#fff',
+            position: 'sticky',
+            top: 0,
+            zIndex: 10,
+            alignItems: 'center',
+            padding: 0.0,
+            borderBottom: '2px solid #d0d0d0',
+
+
+
+          }}
+        >
+
+
     <IconButton
   onClick={() => setCartOpen(false)}
   sx={{
@@ -300,6 +314,10 @@ function FixedNavBar() {
     width: '45px',
     height: '45px',
     justifySelf: 'center',
+    gridColumn: '1',
+    gridRow: '1',
+    mt: 1,
+    mb: 1,
     color: '#000',
     '&:hover': {
       color: '', // Color when hovered
@@ -318,33 +336,39 @@ function FixedNavBar() {
       variant="h6"
       gutterBottom
       sx={{
+        backgroundColor: '#fff',
         color: '#000',
         mr: '10%',
         width: '100%',
-        mt: '10px',
+        mt: '3px',
+        mb: '0',
         textAlign: 'center',
         fontWeight: 'bold',
-        fontFamily:'Roboto Slab'
+        fontFamily:'Roboto Slab',
+        gridColumn: '2',
+        gridRow: '1',
+        
       }}
     >
     Your Cart
     </Typography>
 
-    <Typography
-      variant="h6"
-      gutterBottom
+    {/* <Typography
       sx={{
-        color: '#000',
+        gridColumn: '2',
+        gridRow: '2',
+        color: '#a2a2a2',
         mr: '10%',
         width: '100%',
-        mt: '10px',
+        mt: '0px',
         textAlign: 'center',
-        fontWeight: 'bold',
+        fontWeight: 'normal',
+        fontSize: '0.8rem',
         fontFamily:'Roboto Slab'
       }}
     >
     Free delivery on order above $35
-    </Typography>
+    </Typography> */}
 
   </Box>
 
@@ -381,11 +405,27 @@ function FixedNavBar() {
     zIndex: 10,
     alignContent:'center',
    // height: '150px',
-    p: '15px 10px 30px 10px',
+    p: '10px 10px 30px 10px',
     borderTop: '2px solid yellow',
     backgroundColor: '#000',
   }}
 >
+
+
+<Typography
+      sx={{
+         color: '#a2a2a2',
+        textAlign: 'center',
+        fontWeight: 'normal',
+        fontSize: '0.8rem',
+        fontFamily:'Roboto Slab',
+        mb: 0.5,
+      }}
+    >
+    Free delivery on order above $35
+    </Typography>
+
+
   <Button
     sx={{
       backgroundColor: 'yellow',
@@ -406,6 +446,7 @@ function FixedNavBar() {
       alert('Proceeding to checkout!');
     }}
   >
+   
     Go to checkout
     <Box
       sx={{

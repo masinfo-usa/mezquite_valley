@@ -49,12 +49,16 @@ const FullImageModal = ({ open, onClose, imageSrc, imageAlt }) => {
       </Box>
 
       <TransformWrapper
-        initialScale={isMobile ? 1 : 0.75} // Start at 50% scale
+        initialScale={isMobile ? 1 : 0.5} // Start at 50% scale
         initialPositionX={0} // Center horizontally
         initialPositionY={0} // Center vertically
         maxScale={2}         // Allow zooming up to 200% scale
-        minScale={0.5}       // Minimum scale (50% of original)
+     //   minScale={0.5}       // Minimum scale (50% of original)
         centerOnInit={true}  // Center the image initially
+        doubleClick={{
+          step: 1,         // Amount to zoom in/out on double click or tap
+          mode: "toggle",    // Alternates between zoom-in and zoom-out
+        }}
       >
         <TransformComponent>
           <img

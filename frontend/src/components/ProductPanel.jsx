@@ -68,17 +68,21 @@ const ProductPanel = ({ product }) => {
           name="panelParentGrid"
           sx={{
             display: 'grid',
-            gridTemplateColumns: '72px auto auto',
+            gridTemplateColumns: '54px auto auto',
             gap: 0,
             pl: 0,
-            pb: 3,
-            mb: 3,
+            pb: 2,
+            mb: 2,
             ml: 0,
             fontFamily: 'Roboto Slab',
             borderBottom: '1px solid #e1e1e1',
             backgroundColor: '#fff',
           }}
-          onClick={() => setSelectedProduct(product)}
+
+          onClick={(e) => {
+            setSelectedProduct(product);
+            console.log(product);
+          }}
         >
           {/* Product Image */}
           <Box
@@ -86,10 +90,13 @@ const ProductPanel = ({ product }) => {
             src={product.image}
             alt={product.name}
             sx={{
-              width: '90%',
+              gridColumn: '1',
+              gridRow: '1/2',
+              width: '100%',
               aspectRatio: '1/1',
               borderRadius: 2,
               objectFit: 'cover',
+              backgroundColor: '#fff'
             }}
           />
 
@@ -98,7 +105,7 @@ const ProductPanel = ({ product }) => {
             sx={{
               display: 'flex',
               flexDirection: 'column',
-              pl: 0,
+              pl: 1,
               overflow: 'hidden',
               backgroundColor: '#fff',
             }}
@@ -138,7 +145,7 @@ const ProductPanel = ({ product }) => {
                   color: '#555',
                   fontSize: '0.75rem',
                   fontFamily: 'Roboto Slab',
-                  marginBottom: 2,
+                  marginBottom: 0,
                 }}
               >
                 {product.extraInfo}
@@ -181,11 +188,11 @@ const ProductPanel = ({ product }) => {
             sx={{
               display: 'flex',
               gridColumn: '2/4',
-              gridRow: '3',
+              gridRow: '2',
               justifyContent: 'flex-end',
               alignItems: 'center',
               marginTop: 'auto',
-              backgroundColor: '#000',
+              backgroundColor: '#fff',
             }}
           >
             {/* Remove Button */}

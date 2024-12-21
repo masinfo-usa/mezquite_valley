@@ -12,6 +12,7 @@ import SuggestedProducts from "../components/SuggestedProducts";
 import SuggestedProductsMobile from "../components/SuggestedProductsMobile";
 import FullImageModal from "./FullImageModal"; // Adjust the path
 import withLoadingSkeleton from './SkeletonForComponent';  // Import HOC
+import { Add, Remove, Delete } from '@mui/icons-material';
 
 const ProductDetailsModal = () => {
   const theme = useTheme();
@@ -119,15 +120,16 @@ const ProductDetailsModal = () => {
 <Box
   sx={{
     display: "grid",
+    maxWidth: '100%',
     justifyContent: "center", // Centers the grid container horizontally
     justifyItems: "center", // Centers the grid items horizontally
     alignContent: "center", // Centers the grid container vertically (if parent allows)
     gridTemplateColumns: {
       xs: "1fr", // Single column for extra small screens
       sm: "1fr", // Single column for small screens
-      md: "repeat(2, auto)", // Two columns with auto width for medium screens and larger
+      md: "repeat(3, auto)", // Two columns with auto width for medium screens and larger
     },
-    gap: 2, // Spacing between items
+    gap: 6, // Spacing between items
     backgroundColor: "#fff", // Background color for grid container
     padding: 2, // Padding for grid container
   }}
@@ -153,7 +155,7 @@ const ProductDetailsModal = () => {
                   />
                   </Box>
                 
-                  <Box style={{ marginTop: '16px', width: '30rem', backgroundColor: '#fff' }}>
+                  <Box style={{ marginTop: '16px', width: isMobile ? '90vw' : '25vw', backgroundColor: '#fff' }}>
                     <Typography variant="h5">{selectedProduct.name}</Typography>
                     <Accordion style={{ marginTop: '16px', width:'100%', boxShadow: 'none', 
                       borderTop: '2px solid #ddd', borderBottom: '1px solid #ddd', borderRadius: '0' }}>
@@ -161,16 +163,22 @@ const ProductDetailsModal = () => {
                       <Typography>Description</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Typography>One package of Tyson All Natural Fresh Chicken Breast Tenderloins
-All-natural, minimally processed fresh chicken with no artificial ingredients
-22g of protein and 0g of trans fat per serving. Serving size 4 oz.
-No added preservatives
-Perfect for grilling and frying{selectedProduct.description}</Typography>
+                      <Typography>
+                        One package of Tyson All Natural Fresh Chicken Breast Tenderloins
+                            All-natural, minimally processed fresh chicken with no artificial ingredients
+                            22g of protein and 0g of trans fat per serving. Serving size 4 oz.
+                            No added preservatives
+                            Perfect for grilling and frying{selectedProduct.description}
+                      </Typography>
                     </AccordionDetails>
                   </Accordion>
 
+                                  
 
-                    <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+                  </Box>
+
+                  <Box sx={{width: isMobile ? '90vw' : '20vw', p: 2, border: '1px solid #bbb', borderRadius: '16px' }}>
+                  <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
                       <Typography fontSize={'1.5rem'} fontWeight={'bold'} color="#000">
                         ${Math.floor(selectedProduct.price)}
                         <sup  fontSize={'1.0rem'}>{(selectedProduct.price % 1).toFixed(2).slice(2)}</sup>
@@ -200,7 +208,52 @@ Perfect for grilling and frying{selectedProduct.description}</Typography>
                       </Typography>
                     )}
 
-                  
+                    <Box
+                                  sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'space-between',
+                                    backgroundColor: '#fff',
+                                    color: 'yellow',
+                                    borderRadius: 2,
+                                    border: '1px solid #e2e2e2',
+                                    padding: '0 0px',
+                                    width: '135px',
+                                    marginRight: 1,
+                                  }}
+                                  onClick={(e) => e.stopPropagation()}
+                                >
+                                  <IconButton
+                                    size="small"
+                                    sx={{ color: '#727272' }}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleRemoveFromCart();
+                                    }}
+                                  >
+                                    {selectedProduct.quantity === 1 ? <Delete fontSize="sm" sx={{ ml: '3px' }} /> : <Remove />}
+                                  </IconButton>
+                                  <Typography
+                                    sx={{
+                                      color: '#727272',
+                                      fontSize: 16,
+                                      fontWeight: 'bold',
+                                      fontFamily: 'Roboto Slab',
+                                    }}
+                                  >
+                                    {selectedProduct.quantity}
+                                  </Typography>
+                                  <IconButton
+                                    size="small"
+                                    sx={{ color: '#727272' }}
+                                    onClick={(e) => {
+                                      e.stopPropagation();
+                                      handleAddToCart();
+                                    }}
+                                  >
+                                    <Add />
+                                  </IconButton>
+                                </Box>
 
                   </Box>
 
