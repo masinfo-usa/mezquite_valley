@@ -481,7 +481,7 @@ function FixedNavBar() {
   }}
   sx={{
     '& .MuiDrawer-paper': {
-      width: '50%'
+      width: '65%'
     },
   }}
 >

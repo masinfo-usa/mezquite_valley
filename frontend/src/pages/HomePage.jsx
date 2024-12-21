@@ -86,6 +86,8 @@ const HomePage = () => {
           }}
         >
           {products.map((product) => (
+              //<Typography>hjlkjlkj</Typography>
+              
               <ProductCard key={product._id} product={product}/>
           ))}
 
