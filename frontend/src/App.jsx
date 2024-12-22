@@ -58,7 +58,7 @@ function App() {
           <Route path="/create" element={<CreatePage />} />
           <Route path="/AAA_1" element={<AAA_1 />} />
           <Route path="/testpage" element={<FixedNavBar />} />
-          <Route path="/Login" element={<Test />} />
+          <Route path="/Login" element={<Login />} />
         </Routes>
       </Box>
   );

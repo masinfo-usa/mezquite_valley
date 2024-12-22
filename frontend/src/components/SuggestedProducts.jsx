@@ -38,7 +38,7 @@ const SuggestedProducts = ({ products }) => {
 
     <Box sx={{ width: "100%", overflow: "hidden", position: "relative", padding: "1rem" }}>
       <Typography variant="h6" sx={{ margin: '24px', fontFamily: 'Roboto Slab', fontWeight: 'bold' }}>
-         You may also like:
+      Related Suggestions:
     </Typography>
       {/* Navigation Buttons */}
       <IconButton
@@ -46,7 +46,7 @@ const SuggestedProducts = ({ products }) => {
         disabled={currentIndex === 0}
         sx={{
           position: "absolute",
-          top: "100px",
+          top: "150px",
           left: 0,
           transform: "translateY(-50%)",
           zIndex: 1,
@@ -67,7 +67,7 @@ const SuggestedProducts = ({ products }) => {
         disabled={currentIndex + itemsPerPage >= products.length}
         sx={{
           position: "absolute",
-          top: "100px",
+          top: "150px",
           right: 0,
           transform: "translateY(-50%)",
           zIndex: 1,

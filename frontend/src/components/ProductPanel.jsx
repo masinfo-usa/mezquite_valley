@@ -5,10 +5,10 @@ import { useState, useEffect } from "react";
 
 const ProductPanel = ({ product }) => {
   const { addOneToCart, removeOneFromCart, deleteFromCart } = useProductStore();
-  const { setSelectedProduct } = useProductStore();
+  const { products, setSelectedProduct, setSortedProducts } = useProductStore();
   
   const [toast, setToast] = useState({ open: false, message: '', severity: 'success' });
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 2000);
@@ -80,8 +80,8 @@ const ProductPanel = ({ product }) => {
           }}
 
           onClick={(e) => {
+            setSortedProducts([...products].sort(() => Math.random() - 0.5));
             setSelectedProduct(product);
-            console.log(product);
           }}
         >
           {/* Product Image */}
@@ -205,7 +205,9 @@ const ProductPanel = ({ product }) => {
                 borderRadius: 2,
                 mr: 3,
               }}
-              onClick={() => deleteFromCart(product._id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                deleteFromCart(product._id);}}
             >
               <Typography
                 variant="body2"

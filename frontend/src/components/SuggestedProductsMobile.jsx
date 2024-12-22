@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import ProductCard from "../components/ProductCard";
 
 const SuggestedProductsMobile = ({ products }) => {
@@ -14,6 +14,9 @@ const SuggestedProductsMobile = ({ products }) => {
 
   return (
     <Box sx={{ width: "100%", overflow: "hidden" }}>
+      <Typography variant="h6" sx={{ ml: '0px', mb: '12px', fontFamily: 'Roboto Slab', fontWeight: 'bold' }}>
+         Related Suggestions:
+    </Typography>
       {/* Horizontal Scrollable Grid */}
       <Box
         ref={scrollContainerRef}

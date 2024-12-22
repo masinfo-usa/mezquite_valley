@@ -35,31 +35,31 @@ export const useProductStore = create((set, get) => ({
     setSortedProducts: (sps) => set({sortedProducts: sps}),
 
 
-
-
-
-
-
-
     // Cart state and methods
     cartItems: getFromLocalStorage("cartItems", []),
 
-    addOneToCart: (product) =>
+    addOneToCart: (prdt) =>
         set((state) => {
-          const existingProduct = state.cartItems.find((item) => item._id === product._id);
+          const existingProduct = state.cartItems.find((item) => item._id === prdt._id);
           const updatedCartItems = existingProduct
             ? state.cartItems.map((item) => {
-                if (item._id === product._id) {
-                    console.log("p_id: "+item._id);
-                    console.log("product quantity: " + (item.quantity+1)); // log before returning the updated item
+                if (item._id === prdt._id) {
                     return { ...item, quantity: item.quantity + 1 };
                 }
                 return item;
               })
-            : [...state.cartItems, { ...product, quantity: 1 }];
+            : [...state.cartItems, { ...prdt, quantity: 1 }];
           
+           
+            
+
           saveToLocalStorage("cartItems", updatedCartItems); // Save updated cart to localStorage
           return { cartItems: updatedCartItems };
+
+
+          
+
+
         }),
 
         

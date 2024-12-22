@@ -28,7 +28,7 @@ const ProductCard = ({ product }) => {
 
   // Compute the quantity of the current product from the cart
   const itemInCart = cartItems.find((item) => item._id === product._id);
-  const itemCount = itemInCart?.quantity || 0;
+  product.quantity = itemInCart?.quantity || 0;
 
 
 
@@ -89,7 +89,7 @@ const ProductCard = ({ product }) => {
   };
 
   const handleRemoveFromCart = () => {
-    if (itemCount > 1) {
+    if (product.quantity > 1) {
       removeOneFromCart(product);
       setToast({ open: true, message: `One ${product.name} removed from cart.`, severity: 'info' });
     } else {
@@ -136,8 +136,9 @@ const ProductCard = ({ product }) => {
         }}
       //  
         onClick={() => {
-          setSelectedProduct(product);
-          setSortedProducts([...products].sort(() => Math.random() - 0.5));
+
+          handleOpenModal();
+          
         }}
         >
         {/* Product Image */}
@@ -154,7 +155,8 @@ const ProductCard = ({ product }) => {
           }}
           onClick={(e) => {
             e.stopPropagation();
-            handleOpenModal();
+            setSortedProducts([...products].sort(() => Math.random() - 0.5));
+          setSelectedProduct(product);
           }}
         />
 
@@ -170,7 +172,7 @@ const ProductCard = ({ product }) => {
             backgroundColor: '#000',
             color: 'yellow',
             borderRadius: 5,
-            border: itemCount === 0 ? '3px solid #fff' : '3px solid yellow',
+            border: product.quantity === 0 ? '3px solid #fff' : '3px solid yellow',
             padding: expanded ? '0 5px' : 0,
             width: expanded ? 'calc(80%)' : 40,
             height: 40,
@@ -190,10 +192,10 @@ const ProductCard = ({ product }) => {
                   handleRemoveFromCart();
                 }}
               >
-                {itemCount === 1 ? <Delete /> : <Remove />}
+                {product.quantity === 1 ? <Delete /> : <Remove />}
               </IconButton>
               <Typography sx={{ color: 'yellow', fontSize: 16, fontWeight: 'bold' }}>
-                {itemCount}
+                {product.quantity}
               </Typography>
               <IconButton
                 size="small"
@@ -210,16 +212,16 @@ const ProductCard = ({ product }) => {
             <Button
               onClick={(e) => {
                 e.stopPropagation();
-                {itemCount===0 ? handleAddToCart() : handleExpand()};
+                {product.quantity===0 ? handleAddToCart() : handleExpand()};
               }}
               sx={{
                 minWidth: 0,
                 color: 'yellow',
-                fontSize: itemCount === 0 ? 25 : 17,
+                fontSize: product.quantity === 0 ? 25 : 17,
                 fontWeight: 'bold',
               }}
             >
-              {itemCount === 0 ? '+' : itemCount}
+              {product.quantity === 0 ? '+' : product.quantity}
             </Button>
           )}
         </Box>
@@ -227,11 +229,11 @@ const ProductCard = ({ product }) => {
         {/* Product Info */}
         <Box sx={{ width: '100%', mt: '5px' }}>
           <Typography variant="h6" color="text.primary" align="left"
-          sx={{ fontSize: 'clamp(0.85rem, 2vw, 1.0rem)' }}>
+          sx={{ fontSize: 'clamp(0.85rem, 4vw, 1.2rem)' }}>
             ${product.price}
           </Typography>
           <Typography varaiant="body1" color="text.secondary" align="left" 
-          sx={{ fontSize: 'clamp(0.85rem, 2vw, 1.0rem)' }}>
+          sx={{ fontSize: 'clamp(0.85rem, 4vw, 1.0rem)' }}>
             {product.name}
           </Typography>
         </Box>

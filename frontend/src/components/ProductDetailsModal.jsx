@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Dialog, DialogContent, IconButton, Typography, Accordion, AccordionSummary, AccordionDetails, Skeleton, Tooltip } from "@mui/material";
+import { Box, Dialog, DialogContent, IconButton, Typography, Accordion, AccordionSummary, AccordionDetails, Skeleton, Tooltip, Button } from "@mui/material";
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import CloseIcon from '@mui/icons-material/Close';
 import ShareIcon from '@mui/icons-material/Share';
@@ -13,10 +13,19 @@ import SuggestedProductsMobile from "../components/SuggestedProductsMobile";
 import FullImageModal from "./FullImageModal"; // Adjust the path
 import withLoadingSkeleton from './SkeletonForComponent';  // Import HOC
 import { Add, Remove, Delete } from '@mui/icons-material';
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+
 
 const ProductDetailsModal = () => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const isTablet = useMediaQuery(theme.breakpoints.down('md'));
+  
+  
+  const { addOneToCart, removeOneFromCart, deleteFromCart, cartItems } = useProductStore();
+
+
+
 
   const {
     selectedProduct,
@@ -24,6 +33,9 @@ const ProductDetailsModal = () => {
     clearSelectedProduct,
     sortedProducts,
   } = useProductStore();
+
+
+ 
 
   const scrollContainerRef = useRef(null);
 
@@ -61,6 +73,12 @@ const ProductDetailsModal = () => {
 
 
   if (!selectedProduct) return null;
+
+  const itemInCart = cartItems.find((item) => item._id === selectedProduct._id);
+  selectedProduct.quantity = itemInCart?.quantity || 0;
+
+
+
 
   return (
     <>
@@ -127,16 +145,16 @@ const ProductDetailsModal = () => {
     gridTemplateColumns: {
       xs: "1fr", // Single column for extra small screens
       sm: "1fr", // Single column for small screens
-      md: "repeat(3, auto)", // Two columns with auto width for medium screens and larger
+      md: "1fr", // Two columns with auto width for medium screens and larger
+      lg: "1fr 1fr", // Two columns with auto width for medium screens and larger
     },
-    gap: 6, // Spacing between items
+    gap: isMobile ? 2 : 5, // Spacing between items
     backgroundColor: "#fff", // Background color for grid container
-    padding: 2, // Padding for grid container
+    pb: 4, // Padding for grid container
   }}
 >
                 <Box
-                  
-                  style={{ display: 'flex', justifyContent: 'center', backgroundColor: '#fff', }}
+                  sx={{ display: 'flex', justifyContent: 'flex-end', backgroundColor: '#fff', }}
                   >
                   <img
                     src={selectedProduct.image}
@@ -146,8 +164,8 @@ const ProductDetailsModal = () => {
                     }
                     
                     style={{
-                      width: '300px',
-                      height: '300px',
+                      width: isMobile ? '250px' : (isTablet ? '300px' : '400px'),
+                      height: isMobile ? '250px' : (isTablet ? '300px' : '400px'),
                       objectFit: 'cover',
                       borderRadius: '8px', 
                       cursor: 'pointer'
@@ -155,16 +173,31 @@ const ProductDetailsModal = () => {
                   />
                   </Box>
                 
-                  <Box style={{ marginTop: '16px', width: isMobile ? '90vw' : '25vw', backgroundColor: '#fff' }}>
-                    <Typography variant="h5">{selectedProduct.name}</Typography>
-                    <Accordion style={{ marginTop: '16px', width:'100%', boxShadow: 'none', 
-                      borderTop: '2px solid #ddd', borderBottom: '1px solid #ddd', borderRadius: '0' }}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                      <Typography>Description</Typography>
+                  <Box 
+                  name= 'detailsBox'
+                  sx={{ position: 'relative', p: 2, 
+                  width: {xs:'100%', sm:'100%', md:'100%', lg:'100%', xl:'100%'}, 
+                  backgroundColor: '#f9f9f9', border: '1px solid #bbb', borderRadius: '16px' }}>
+                    {/* <Typography fontFamily={'Roboto Slab'} fontSize={'1.8rem'} fontWeight={'normal'}>{selectedProduct.name}</Typography> */}
+
+                    <Accordion sx={{ 
+                  
+                  width: isMobile ? 'auto' : 'auto', 
+                  backgroundColor: 'transparent',
+                  boxShadow: 'none', 
+                  borderTop: '0px solid #f9f9f9', 
+                  borderBottom: '1px solid #ddd', 
+                  borderLeft: '0px solid #ddd', 
+                  borderRight: '0px solid #ddd', 
+                  borderRadius: '0px' }}
+                  
+                  >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />} sx={{p:'0px', borderRadius: '0px'}}>
+                    <Typography fontFamily={'Roboto Slab'} fontSize={'1.8rem'} fontWeight={'normal'}>{selectedProduct.name}</Typography>
                     </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        One package of Tyson All Natural Fresh Chicken Breast Tenderloins
+                    <AccordionDetails sx={{pl:'0px', borderRadius: '0px'}}>
+                      <Typography sx={{p:'0px', borderRadius: '0px'}}>
+                      One package of Tyson All Natural Fresh Chicken Breast Tenderloins
                             All-natural, minimally processed fresh chicken with no artificial ingredients
                             22g of protein and 0g of trans fat per serving. Serving size 4 oz.
                             No added preservatives
@@ -173,89 +206,180 @@ const ProductDetailsModal = () => {
                     </AccordionDetails>
                   </Accordion>
 
-                                  
 
-                  </Box>
 
-                  <Box sx={{width: isMobile ? '90vw' : '20vw', p: 2, border: '1px solid #bbb', borderRadius: '16px' }}>
-                  <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
-                      <Typography fontSize={'1.5rem'} fontWeight={'bold'} color="#000">
-                        ${Math.floor(selectedProduct.price)}
-                        <sup  fontSize={'1.0rem'}>{(selectedProduct.price % 1).toFixed(2).slice(2)}</sup>
-                      </Typography>
-                      {selectedProduct.priceBeforeDiscount && (
-                        <Typography
-                          variant="body2"
-                          style={{ textDecoration: 'line-through', marginLeft: '8px' }}
-                        >
-                          ${selectedProduct.priceBeforeDiscount}
-                        </Typography>
-                      )}
-                    </Box>
 
-                    <Box style={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
-                      <LocationOnIcon fontSize="small" />
-                      <Typography variant="body2">Aisle Number: {selectedProduct.aisle}</Typography>
-                    </Box>
-
-                    {true && (
+                    {selectedProduct.stockLeft <= 5 && (
                       <Typography
-                        variant="body2"
-                        color="error"
+                      fontFamily={'Roboto Slab'}
+                      color="error"
                         style={{ marginTop: '8px' }}
                       >
                         Only {selectedProduct.stockLeft} left in stock
                       </Typography>
                     )}
 
-                    <Box
-                                  sx={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'space-between',
-                                    backgroundColor: '#fff',
-                                    color: 'yellow',
-                                    borderRadius: 2,
-                                    border: '1px solid #e2e2e2',
-                                    padding: '0 0px',
-                                    width: '135px',
-                                    marginRight: 1,
-                                  }}
-                                  onClick={(e) => e.stopPropagation()}
-                                >
-                                  <IconButton
-                                    size="small"
-                                    sx={{ color: '#727272' }}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleRemoveFromCart();
-                                    }}
-                                  >
-                                    {selectedProduct.quantity === 1 ? <Delete fontSize="sm" sx={{ ml: '3px' }} /> : <Remove />}
-                                  </IconButton>
-                                  <Typography
-                                    sx={{
-                                      color: '#727272',
-                                      fontSize: 16,
-                                      fontWeight: 'bold',
-                                      fontFamily: 'Roboto Slab',
-                                    }}
-                                  >
-                                    {selectedProduct.quantity}
-                                  </Typography>
-                                  <IconButton
-                                    size="small"
-                                    sx={{ color: '#727272' }}
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      handleAddToCart();
-                                    }}
-                                  >
-                                    <Add />
-                                  </IconButton>
-                                </Box>
+
+                    <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '8px' }}>
+                      <LocationOnIcon fontSize="small" />
+                      <Typography fontFamily={'Roboto Slab'}>Aisle Number: {selectedProduct.aisle ? selectedProduct.aisle : 'N/A'}</Typography>
+                    </Box>
+
+                  <Box sx={{ display: 'flex', alignItems: 'flex-end', marginTop: '15px', mb: isMobile ? 0 : 12 }}>
+                      <Typography fontFamily={'Roboto Slab'} fontSize={'2.0rem'} fontWeight={'bold'} color= {selectedProduct.priceBeforeDiscount ? '#00b412' : '#000'}>
+                        {selectedProduct.priceBeforeDiscount ? 'Now' : ''} ${Math.floor(selectedProduct.price)}
+                        <sup style={{ fontSize:'1.1rem'}}>{(selectedProduct.price % 1).toFixed(2).slice(2)}</sup>
+                      </Typography>
+                      {selectedProduct.priceBeforeDiscount && (
+                        <Typography
+                        fontFamily={'Roboto Slab'}
+                          style={{ textDecoration: 'line-through', marginLeft: '8px', color: 'gray' }}
+                        >
+                          ${selectedProduct.priceBeforeDiscount}
+                        </Typography>
+                      )}
+                    </Box>
+                    
+                    
+
+                    
+
+                   
+                    
+                   
+
+                    { !isMobile &&
+                      (selectedProduct.quantity === 0
+                      ? (
+                        <Button
+                            sx={{
+                              display: 'flex',
+                              position: 'absolute',
+                              bottom: 20,
+                              left: '50%', // Start at the center of the parent
+                              transform: 'translateX(-50%)', // Adjust to be perfectly centered
+                              backgroundColor: 'yellow',
+                              color: '#000',
+                              fontWeight: 'bold',
+                              fontSize: '1.1rem',
+                              fontFamily: 'Roboto Slab',
+                              height: '55px',
+                              textTransform: 'none', // Prevent capitalization
+                              justifyContent: 'center', // Center the text
+                              alignItems: 'center', // Align text vertically
+                              border: '2px solid #000',
+                              borderRadius: 2,
+                              width: '90%',
+
+                            }}
+                            onClick={() => {
+                              addOneToCart(selectedProduct);
+                            }}
+                          >
+                           
+                            Add to cart
+                            
+                          </Button>
+                      )
+                      : (
+                        <Box
+                      name= 'quantityAdjuster'
+                      sx={{
+                        display: 'flex',
+                        position: 'absolute',
+                        bottom: 20,
+                        left: '50%', // Start at the center of the parent
+                        transform: 'translateX(-50%)', // Adjust to be perfectly centered
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backgroundColor: '#000',
+                        color: 'yellow',
+                        borderRadius: 2,
+                        border: '1px solid yellow',
+                        padding: '0 0px',
+                        width: '90%',
+                      //  height: '45px',
+                        mr: 0,
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button
+                          size="small"
+                          sx={{ color: '#000', 
+                            backgroundColor: 'yellow', 
+                            fontSize: '30px',
+                            m: '5px',
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: 2,
+                            border: '1px solid rgb(82, 82, 82)', }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeOneFromCart(selectedProduct);
+                          }}
+                        >
+                          {selectedProduct.quantity === 1 ? <Delete sx={{ ml: '0px' }} /> : <Remove />}
+                        </Button>
+                        <Typography
+                            sx={{
+                              m: '5px',
+                              color: 'yellow',
+                              fontSize: 20,
+                              fontWeight: 'bold',
+                              fontFamily: 'Roboto Slab',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {selectedProduct.quantity}
+                            <Typography
+                              component="span" // Change this to a valid inline or block element
+                              sx={{
+                                display: 'block', // Forces "In Cart" onto a new line
+                                fontSize: 12,
+                                fontWeight: 'bold',
+                                fontFamily: 'Roboto Slab',
+                                lineHeight: 1.2,
+                              }}
+                            >
+                              In Cart
+                            </Typography>
+                          </Typography>
+
+                        <Button
+                          size="small"
+                          sx={{ 
+                            backgroundColor: 'yellow', 
+                            color: '#000',
+                            fontSize: '30px',
+                            m: '5px',
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: 2,
+                          }}
+                            onClick={(e) => {
+                            e.stopPropagation();
+                            addOneToCart(selectedProduct);
+                          }}
+                          
+                        >
+                          +
+                        </Button>
+                    </Box>
+                      ))
+                    }
 
                   </Box>
+
+
+
+
+
+                    
+
+                                  
+
+
+                  
 
                   
 </Box>
@@ -339,29 +463,133 @@ const ProductDetailsModal = () => {
 
       {isMobile && (
         <Box
-          style={{
+          sx={{
             position: 'fixed',
             bottom: 0,
             left: 0,
             right: 0,
+            display: 'flex', // Enable flexbox
+            justifyContent: 'center', // Center children horizontally
+            alignItems: 'center', // Center children vertically (optional)
             backgroundColor: '#fff',
             padding: '16px',
-            borderTop: '1px solid #ddd',
+            borderTop: '2px solid #bbb',
           }}
         >
-          <button
-            style={{
-              width: '100%',
-              padding: '12px',
-              backgroundColor: '#1976d2',
-              color: '#fff',
-              fontSize: '16px',
-              border: 'none',
-              borderRadius: '4px',
-            }}
-          >
-            Add to Cart
-          </button>
+          
+          {
+                      selectedProduct.quantity === 0
+                      ? (
+                        <Button
+                            sx={{
+                              display: 'flex',
+                              backgroundColor: 'yellow',
+                              color: '#000',
+                              fontWeight: 'bold',
+                              fontSize: '1.1rem',
+                              fontFamily: 'Roboto Slab',
+                              height: '55px',
+                              textTransform: 'none', // Prevent capitalization
+                              justifyContent: 'center', // Center the text
+                              alignItems: 'center', // Align text vertically
+                              border: '2px solid #000',
+                              borderRadius: 2,
+                              width: '90%',
+
+                            }}
+                            onClick={() => {
+                              addOneToCart(selectedProduct);
+                            }}
+                          >
+                           
+                            Add to cart
+                            
+                          </Button>
+                      )
+                      : (
+                        <Box
+                      name= 'quantityAdjuster'
+                      sx={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        backgroundColor: '#000',
+                        color: 'yellow',
+                        borderRadius: 2,
+                        border: '1px solid yellow',
+                        padding: '0 0px',
+                        width: '90%',
+                      //  height: '45px',
+                        mr: 0,
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                      >
+                        <Button
+                          size="small"
+                          sx={{ color: '#000', 
+                            backgroundColor: 'yellow', 
+                            fontSize: '30px',
+                            m: '5px',
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: 2,
+                            border: '1px solid rgb(82, 82, 82)', }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            removeOneFromCart(selectedProduct);
+                          }}
+                        >
+                          {selectedProduct.quantity === 1 ? <Delete sx={{ ml: '0px' }} /> : <Remove />}
+                        </Button>
+                        <Typography
+                            sx={{
+                              m: '5px',
+                              color: 'yellow',
+                              fontSize: 20,
+                              fontWeight: 'bold',
+                              fontFamily: 'Roboto Slab',
+                              textAlign: 'center',
+                            }}
+                          >
+                            {selectedProduct.quantity}
+                            <Typography
+                              component="span" // Change this to a valid inline or block element
+                              sx={{
+                                display: 'block', // Forces "In Cart" onto a new line
+                                fontSize: 12,
+                                fontWeight: 'bold',
+                                fontFamily: 'Roboto Slab',
+                                lineHeight: 1.2,
+                              }}
+                            >
+                              In Cart
+                            </Typography>
+                          </Typography>
+
+                        <Button
+                          size="small"
+                          sx={{ 
+                            backgroundColor: 'yellow', 
+                            color: '#000',
+                            fontSize: '30px',
+                            m: '5px',
+                            width: '44px',
+                            height: '44px',
+                            borderRadius: 2,
+                          }}
+                            onClick={(e) => {
+                            e.stopPropagation();
+                            addOneToCart(selectedProduct);
+                          }}
+                          
+                        >
+                          +
+                        </Button>
+                    </Box>
+                      )
+                    }
+
+
         </Box>
       )}
     </Dialog>

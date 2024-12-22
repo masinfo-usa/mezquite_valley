@@ -77,7 +77,7 @@ const HomePage = () => {
             },
             
             columnGap: `${aspectRatio * 3}vh`,
-            rowGap: `${aspectRatio * 2.5}vh`,
+            rowGap: `${aspectRatio * 4}vh`,
             pb: 3,
             mb: 3,
             justifyContent:'space-evenly',
