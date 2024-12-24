@@ -476,6 +476,32 @@ const ProductDetailsModal = () => {
             borderTop: '2px solid #bbb',
           }}
         >
+
+
+      <Button
+                size="small"
+                sx={{ 
+                  backgroundColor: '#000', 
+                  color: 'yellow',
+                  fontSize: '20px',
+                  ml: '15px',
+                  mr: '15px',
+                  height: '55px',
+                  textTransform : 'none',
+                  pl: 2,
+                  pr: 2,
+                  borderRadius: 2,
+                  border: '1px solid yellow'
+                }}
+                  onClick={(e) => {
+                  e.stopPropagation();
+                  handleClose();
+                }}
+                
+              >
+            Close
+            </Button>
+
           
           {
                       selectedProduct.quantity === 0
@@ -588,6 +614,8 @@ const ProductDetailsModal = () => {
                     </Box>
                       )
                     }
+
+                    
 
 
         </Box>

@@ -94,7 +94,7 @@ function FixedNavBar() {
                }}>
         <Toolbar 
         
-        sx={{ backgroundColor: '#000',//"#f7f5f0",  
+        sx={{ backgroundColor: '#222',//"#f7f5f0",  
         borderBottom: "1px solid #dfdbce",
         m:0, p:1, 
         boxShadow: 'none' , display:'flex',
@@ -407,7 +407,7 @@ function FixedNavBar() {
    // height: '150px',
     p: '10px 10px 30px 10px',
     borderTop: '2px solid yellow',
-    backgroundColor: '#000',
+    backgroundColor: '#222',
   }}
 >
 

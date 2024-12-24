@@ -174,8 +174,9 @@ const ProductCard = ({ product }) => {
             borderRadius: 5,
             border: product.quantity === 0 ? '3px solid #fff' : '3px solid yellow',
             padding: expanded ? '0 5px' : 0,
-            width: expanded ? 'calc(80%)' : 40,
+            width: expanded ? 'calc(80%)' : 'auto',
             height: 40,
+            minWidth: 40,
             boxShadow: '-5px 5px 10px rgba(0, 0, 0, 0.20)',
             transition: 'all 0.3s ease',
             overflow: 'hidden',
@@ -217,11 +218,12 @@ const ProductCard = ({ product }) => {
               sx={{
                 minWidth: 0,
                 color: 'yellow',
-                fontSize: product.quantity === 0 ? 25 : 17,
+                fontSize: product.quantity === 0 ? 17 : 17,
                 fontWeight: 'bold',
+                textTransform: 'none'
               }}
             >
-              {product.quantity === 0 ? '+' : product.quantity}
+              {product.quantity === 0 ? '+Add' : product.quantity}
             </Button>
           )}
         </Box>

@@ -5,8 +5,10 @@ import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
 import AAA_1 from "./pages/AAA_1";
 import FixedNavBar from "./pages/FixedNavBar";
+import CommonFooter from "./pages/CommonFooter";
 import Login from "./pages/Login";
-import Test from "./pages/Test";
+import AddressForm from "./pages/ReservationForm";
+//import AddressForm from "./pages/Test";
 import { useMediaQuery, useTheme } from '@mui/material';
 import { useProductStore } from './store/product';
 
@@ -33,7 +35,7 @@ function App() {
   return (
       <Box px={0} sx={{backgroundColor:'#fff'}}>
         <FixedNavBar />
-        <Box sx={{backgroundColor:"#000", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
+        <Box sx={{backgroundColor:"#222", justifyItems:'center'}} width="100%" paddingTop={'70px'}>
           <Stack
             direction="row"
             justifyContent="space-evenly"
@@ -56,10 +58,12 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/create" element={<CreatePage />} />
-          <Route path="/AAA_1" element={<AAA_1 />} />
+          <Route path="/AAA_1" element={<AddressForm />} />
           <Route path="/testpage" element={<FixedNavBar />} />
           <Route path="/Login" element={<Login />} />
         </Routes>
+        <CommonFooter />
+        
       </Box>
   );
 }
