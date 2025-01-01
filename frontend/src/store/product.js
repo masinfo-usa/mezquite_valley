@@ -136,6 +136,7 @@ export const useProductStore = create((set, get) => ({
     
     createProduct: async (newProduct) => {
         if(!newProduct.category || !newProduct.name || !newProduct.image || !newProduct.price){
+            console.log(newProduct);
             return {success: false, message: "Please fill in all fields."}
         }
         const res = await fetch("/api/products",{

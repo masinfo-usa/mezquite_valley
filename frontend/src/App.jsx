@@ -3,7 +3,6 @@ import { Box, Link, Stack } from "@mui/material";
 import { Route, Routes, BrowserRouter as Router } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import CreatePage from "./pages/CreatePage";
-import AAA_1 from "./pages/AAA_1";
 import FixedNavBar from "./pages/FixedNavBar";
 import CommonFooter from "./pages/CommonFooter";
 import Login from "./pages/Login";
@@ -46,7 +45,7 @@ function App() {
           >
             <Link href="/" color='#fff' underline="none">Home</Link>
             <Link href="/create" color='#fff' underline="none">Our Story</Link>
-            <Link href="/AAA_1" color='#fff' underline="none">Our Process</Link>
+            <Link href="#our-process" color='#fff' underline="none">Our Process</Link>
             <Link href="#contact-us" color='#fff' underline="none">Contact Us</Link>
             <Link href="#halal-certifications" color='#fff' underline="none">Halal Certifications</Link>
             <Link href="#faqs" color='#fff' underline="none">FAQs</Link>
