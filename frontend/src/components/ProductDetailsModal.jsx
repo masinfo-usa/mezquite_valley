@@ -145,7 +145,7 @@ const ProductDetailsModal = () => {
     gridTemplateColumns: {
       xs: "1fr", // Single column for extra small screens
       sm: "1fr", // Single column for small screens
-      md: "1fr", // Two columns with auto width for medium screens and larger
+      md: "1fr 1fr", // Two columns with auto width for medium screens and larger
       lg: "1fr 1fr", // Two columns with auto width for medium screens and larger
     },
     gap: isMobile ? 2 : 5, // Spacing between items
@@ -164,8 +164,8 @@ const ProductDetailsModal = () => {
                     }
                     
                     style={{
-                      width: isMobile ? '250px' : (isTablet ? '300px' : '400px'),
-                      height: isMobile ? '250px' : (isTablet ? '300px' : '400px'),
+                      width: isMobile ? '250px' : (isTablet ? '300px' : '300px'),
+                      height: isMobile ? '250px' : (isTablet ? '300px' : '300px'),
                       objectFit: 'cover',
                       borderRadius: '8px', 
                       cursor: 'pointer'

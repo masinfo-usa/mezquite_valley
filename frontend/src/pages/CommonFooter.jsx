@@ -5,7 +5,7 @@ import { Facebook, YouTube } from '@mui/icons-material'; // MUI icons for social
 
 const links = [
   { text: "Home", href: "/" },
-  { text: "Our Story", href: "/create" },
+  { text: "Add Product", href: "/create" },
   { text: "Our Process", href: "/our-process" },
   { text: "Contact Us", href: "/contact-us" },
   { text: "Halal Certifications", href: "/halal-certifications" },

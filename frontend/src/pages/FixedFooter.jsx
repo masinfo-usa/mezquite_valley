@@ -4,7 +4,7 @@ import { Box, Grid, Typography } from '@mui/material';
 
 const links = [
   { text: "Home", href: "/" },
-  { text: "Our Story", href: "/create" },
+  { text: "Add Product", href: "/create" },
   { text: "Our Process", href: "/our-process" },
   { text: "Contact Us", href: "/contact-us" },
   { text: "Halal Certifications", href: "/halal-certifications" },

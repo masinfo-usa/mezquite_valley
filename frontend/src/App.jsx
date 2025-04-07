@@ -38,18 +38,18 @@ function App() {
           <Stack
             direction="row"
             justifyContent="space-evenly"
-            spacing={8}
+            spacing={''}
             height={30}
             display={isMediumScreen ? "none" : "flex"}
             width="80%"
           >
             <Link href="/" color='#fff' underline="none">Home</Link>
-            <Link href="/create" color='#fff' underline="none">Our Story</Link>
+            <Link href="/create" color='#fff' underline="none">Add Product</Link>
             <Link href="#our-process" color='#fff' underline="none">Our Process</Link>
             <Link href="#contact-us" color='#fff' underline="none">Contact Us</Link>
             <Link href="#halal-certifications" color='#fff' underline="none">Halal Certifications</Link>
             <Link href="#faqs" color='#fff' underline="none">FAQs</Link>
-            <Link href="#faqs" color='#fff' underline="none">TestPage</Link>
+            <Link href="/testpage" color='#fff' underline="none">TestPage</Link>
           </Stack>
         </Box>
 
@@ -57,8 +57,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/create" element={<CreatePage />} />
-          <Route path="/AAA_1" element={<AddressForm />} />
-          <Route path="/testpage" element={<FixedNavBar />} />
+          <Route path="/testpage" element={<AddressForm />} />
           <Route path="/Login" element={<Login />} />
         </Routes>
         <CommonFooter />
