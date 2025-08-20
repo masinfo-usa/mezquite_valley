@@ -45,12 +45,12 @@ const HomePage = () => {
           variant="h4"
           fontSize={`30px`}
           fontWeight="semibold"
-          alignSelf="flex-start"
+          alignSelf="center"
           color="text.primary"
-          ml={0}
+          mt={2}
         >
-          Chicken 
-          Aspect Ratio: {currentAspectRatio.toFixed(2)}, {(currentAspectRatio * 2.5).toFixed(2)}
+          Mezquite Valley Menu 
+          {/* Aspect Ratio: {currentAspectRatio.toFixed(2)}, {(currentAspectRatio * 2.5).toFixed(2)} */}
           {/* {window.innerWidth}x{window.innerHeight},  */}
         </Typography>
 

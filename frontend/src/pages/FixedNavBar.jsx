@@ -23,7 +23,7 @@ import { useProductStore } from "../store/product";
 import ProductPanel from "../components/ProductPanel";
 import ProductDetailsModal from '../components/ProductDetailsModal';
 import FullImageModal from '../components/FullImageModal';
-
+import MezquiteLogo from "../images/MezquiteLogo.png";
 
 
 
@@ -39,6 +39,8 @@ const theme = createTheme({
     },
   },
 });
+
+const brightColor = 'lightgreen'
 
 const links = [
   { text: "Home", href: "/" },
@@ -99,7 +101,7 @@ function FixedNavBar() {
         borderBottom: "1px solid #dfdbce",
         m:0, p:1, 
         boxShadow: 'none' , display:'flex',
-        justifyContent: "space-around", // Spread left and right sections
+        justifyContent: "space-between", // Spread left and right sections
         alignItems: "center", // Center vertically
           
       }}>
@@ -112,7 +114,7 @@ function FixedNavBar() {
               sx={{ marginLeft: '0px',
                 marginRight: '2px',
                 backgroundColor: 'default', 
-                color: 'yellow', 
+                color: brightColor, 
                 borderRadius: '8px',
                 
                }}
@@ -122,12 +124,22 @@ function FixedNavBar() {
           )}
           {/* Title */}
           {!(isMediumScreen && isSearchFocused) && (
-            <Typography variant="h6" fontWeight={'bold'} color="#fff"  component="a" href="/" sx={{ minWidth:'30%', textDecoration: 'none' }}>
-              Your Brand
-            </Typography>
+            <Box sx={{ display: "flex", alignItems: "center" }} component="a" href="/">
+      <img
+        src={MezquiteLogo}
+        alt="Mezquite Logo"
+        style={{ height: 45, width: "auto" }}
+        
+      />
+    </Box>
+
+
+            // <Typography variant="h6" fontWeight={'bold'} color="#fff"  component="a" href="/" sx={{ minWidth:'', textDecoration: 'none' }}>
+            //   Mezquite Valley
+            // </Typography>
           )}
             
-            <Box name="searchMainBg"
+            {/* <Box name="searchMainBg"
               sx={{
                 backgroundColor: "#fff",
                 width: '100%',
@@ -189,7 +201,7 @@ function FixedNavBar() {
               )}
             
 
-          </Box>
+          </Box> */}
           {isSearchFocused && isMediumScreen && (
                 <Button
                   onMouseUp={() => {
@@ -202,7 +214,7 @@ function FixedNavBar() {
                 </Button>
               )}
               
-          {!(isSearchFocused || isMediumScreen) && (
+          {/* {!(isSearchFocused || isMediumScreen) && (
               <Button
               name='Login'
               variant="contained"
@@ -222,7 +234,7 @@ function FixedNavBar() {
               }}>
                 Login
             </Button>
-            )}
+            )} */}
 
           {!(isSearchFocused && isMediumScreen) && (
               <Button
@@ -233,7 +245,7 @@ function FixedNavBar() {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: 'yellow',
+                backgroundColor: brightColor,
                 borderRadius: 20, 
                 padding: '5px 10px', 
                 textTransform: 'none',
@@ -429,7 +441,7 @@ function FixedNavBar() {
 
   <Button
     sx={{
-      backgroundColor: 'yellow',
+      backgroundColor: brightColor,
       borderRadius: '30px',
       color: '#000',
       fontWeight: 'bold',
@@ -454,7 +466,7 @@ function FixedNavBar() {
         position: 'absolute',
         right: '16px', // Position from the right side
         backgroundColor: '#3f3f00',
-        color: 'yellow',
+        color: brightColor,
         fontSize: '0.9rem',
         fontWeight: 'bold',
         px: 2,
