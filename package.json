@@ -2,7 +2,7 @@
   "name": "mern_project",
   "version": "1.0.0",
   "main": "index.js",
-  "scripts": {
+    "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "cross-env NODE_ENV=development nodemon backend/server.js",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
@@ -29,6 +29,7 @@
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.3",
     "cross-env": "^7.0.3",
+    "gh-pages": "^6.3.0",
     "nodemon": "^3.1.7",
     "vite": "^5.4.10"
   }
