@@ -93,13 +93,15 @@ function FixedNavBar() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <AppBar position="fixed" sx={{ backgroundColor: "transparent", zIndex: theme.zIndex.drawer - 1, boxShadow: 'none', 
+      <AppBar position="fixed" sx={{backgroundColor: "#222", 
+      zIndex: theme.zIndex.drawer - 1, boxShadow: 'none', 
+      borderBottom: "1px solid lightgreen",
+        
                }}>
         <Toolbar 
         
-        sx={{ backgroundColor: '#222',//"#f7f5f0",  
-        borderBottom: "1px solid #dfdbce",
-        m:0, p:1, 
+        sx={{ backgroundColor: 'transparent',//"#f7f5f0",  
+        mx:'5%', p:1, 
         boxShadow: 'none' , display:'flex',
         justifyContent: "space-between", // Spread left and right sections
         alignItems: "center", // Center vertically
@@ -124,7 +126,7 @@ function FixedNavBar() {
           )}
           {/* Title */}
           {!(isMediumScreen && isSearchFocused) && (
-            <Box sx={{ display: "flex", alignItems: "center" }} component="a" href="/">
+            <Box sx={{ display: "flex", alignItems: "center" }} component="a" href="/mezquite_valley/">
       <img
         src={MezquiteLogo}
         alt="Mezquite Logo"
